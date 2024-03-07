@@ -5,66 +5,50 @@
 package frc.robot.commands.BasicCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Tilter;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 
-public class ShootNoteCMD extends Command {
-  
 
-  public Intake intake;
-  public Elevator elevator;
-  public Tilter tilter;
-  public Shooter shooter;
-  public Double shootAngle;
-  public Timer timer;
-  public ShootNoteCMD(Tilter m_Tilter, Shooter m_Shooter, Double m_shootAngle) {
+public class ZeroGyro extends Command {
+ 
+  public SwerveSubsystem swerveSubsystem;
+  /** Creates a new AmpScoreCMD. */
+  public ZeroGyro(SwerveSubsystem m_SwerveSubsystem){
+  //, Tilter m_Tilter, Shooter m_Shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
-
-    tilter = m_Tilter;
-    shooter = m_Shooter;
-    shootAngle = m_shootAngle;
+    swerveSubsystem = m_SwerveSubsystem;
+    
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() 
   {
-    timer = new Timer();
-    tilter.GoToPosition(shootAngle);
-    shooter.StartShooter(.6);
+  // tilter.GoToPosition(Constants.Tilter.ampPosition); 
+  // shooter.StartShooter();
+   swerveSubsystem.zeroGyro();
   }
-
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() 
   {
-    if(shooter.IsShooterAboveRPM(2500) && tilter.atSetpoint())
-    {
-      shooter.StartFeeder(.5);
-      timer.start();
-    }
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) 
   {
-    shooter.StopAllMotors();
+
+    
+  // shooter.StopAllMotors(); 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (timer.hasElapsed(0.5)) 
-    {
+   
       return true;
-    }
-    else
-    {
-      return false;
-    }
   }
 }

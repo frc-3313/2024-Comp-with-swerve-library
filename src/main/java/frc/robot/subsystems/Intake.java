@@ -28,7 +28,6 @@ public class Intake extends SubsystemBase
   private AbsoluteEncoder alternateEncoder;
 
   private double newTargetPosition;
-  private boolean overrideHasNote = false;
 
   //Intake Motor Setup
   private final CANSparkMax intakeMotor = new CANSparkMax(Constants.Intake.IntakeMotor_ID, MotorType.kBrushless);
@@ -66,6 +65,7 @@ public class Intake extends SubsystemBase
     pidController.setIZone(kIz);
     pidController.setFF(kFF);
     pidController.setOutputRange(kMinOutput, kMaxOutput);
+    pidController.setSmartMotionMaxAccel(1000, 0);
 
     SmartDashboard.putBoolean("Display Intake", displaySmartDashboard);
   }
@@ -89,21 +89,16 @@ public class Intake extends SubsystemBase
   }
   public boolean hasNote()
   { 
-    if(distanceSensor.isConnected())
+
+    if(GetDistance() > 58)
     {
-      if(GetDistance() > 58)
-      {
-        return true;
-      }
-      else
-      {
-        return false;
-      }
+      return true;
     }
     else
     {
-      return overrideHasNote;
+      return false;
     }
+
   }
 
    public int GetDistance()
@@ -122,7 +117,13 @@ public class Intake extends SubsystemBase
     else
       return false;
   }
-
+   public boolean atSetpoint(double Setpoint) {
+    //return pid.atSetpoint();
+    if((getDegrees() < newTargetPosition + Setpoint) && (getDegrees() > newTargetPosition - Setpoint))
+      return true;
+    else
+      return false;
+  }
   public double getDegrees() {
     return alternateEncoder.getPosition();
   }
@@ -131,9 +132,8 @@ public class Intake extends SubsystemBase
   public void periodic() 
   {
     displaySmartDashboard = SmartDashboard.getBoolean("Display Elevator", displaySmartDashboard);
-    if(displaySmartDashboard)
-    {
-      pidController.setReference(newTargetPosition, CANSparkMax.ControlType.kPosition);
+
+    pidController.setReference(newTargetPosition, CANSparkMax.ControlType.kPosition);
       SmartDashboard.putNumber("Intake Setpoint", newTargetPosition);
       SmartDashboard.putNumber("intake position", alternateEncoder.getPosition());
       SmartDashboard.putNumber("intake sensor", distanceSensor.getProximity());
@@ -141,19 +141,11 @@ public class Intake extends SubsystemBase
       SmartDashboard.putBoolean("Intake At Set", atSetpoint());
       SmartDashboard.putBoolean("Intake sensor connected", distanceSensor.isConnected());
 
-    }
+    
     SmartDashboard.putBoolean("intake has note", hasNote());
     SmartDashboard.putBoolean("Intake At Set", atSetpoint());
     SmartDashboard.putBoolean("Intake sensor connected", distanceSensor.isConnected());
-    if(!distanceSensor.isConnected())
-    {
-      SmartDashboard.putBoolean("Override Intake has note", false);
-      overrideHasNote = SmartDashboard.getBoolean("Override Intake has note", false);
-    }
-    else
-    {
-      overrideHasNote = false;
-    }
+
   }
   
 }

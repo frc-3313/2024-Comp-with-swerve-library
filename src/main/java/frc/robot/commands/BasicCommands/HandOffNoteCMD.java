@@ -61,7 +61,7 @@ public class HandOffNoteCMD extends Command
   @Override
   public void end(boolean interrupted) 
   {
-    shooter.MoveFeederDistance(500);
+    shooter.MoveFeederDistance(50);
     tilter.GoToPosition(Constants.Tilter.stowPosition);
     shooter.StopFeeder();
     intake.StopIntake();

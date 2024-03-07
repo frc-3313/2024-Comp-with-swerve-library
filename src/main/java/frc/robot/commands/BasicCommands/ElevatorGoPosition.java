@@ -5,17 +5,22 @@
 package frc.robot.commands.BasicCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Tilter;
+
 
 public class ElevatorGoPosition extends Command {
   public Elevator elevator;
   public double position;
+  public Tilter tilter;
   /** Creates a new AmpScoreCMD. */
-  public ElevatorGoPosition(Elevator m_Elevator, double m_position){
+  public ElevatorGoPosition(Elevator m_Elevator, double m_position, Tilter m_tilter){
   //, Tilter m_Tilter, Shooter m_Shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
     elevator = m_Elevator;
     position = m_position;
+    tilter = m_tilter;
   }
 
   // Called when the command is initially scheduled.
@@ -24,14 +29,15 @@ public class ElevatorGoPosition extends Command {
   {
   // tilter.GoToPosition(Constants.Tilter.ampPosition); 
   // shooter.StartShooter();
-      elevator.GoToHeight(position);
+      tilter.GoToPosition(Constants.Tilter.shootFromSpeaker);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() 
   {
-
+    if (tilter.atSetpoint())
+      elevator.GoToHeight(position);
   }
 
   // Called once the command ends or is interrupted.

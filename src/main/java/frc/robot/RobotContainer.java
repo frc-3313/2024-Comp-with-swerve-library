@@ -19,12 +19,15 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.BasicCommands.AmpScoreCMD;
+import frc.robot.commands.BasicCommands.DeployIntakeCMD;
+import frc.robot.commands.BasicCommands.ElevatorGoPosition;
 import frc.robot.commands.BasicCommands.HandOffNoteBCMD;
 import frc.robot.commands.BasicCommands.HandOffNoteCMD;
 import frc.robot.commands.BasicCommands.JogIntake;
 import frc.robot.commands.BasicCommands.JogShooter;
 import frc.robot.commands.BasicCommands.ReturnToNormal;
 import frc.robot.commands.BasicCommands.ShootNoteCMD;
+import frc.robot.commands.BasicCommands.ZeroGyro;
 import frc.robot.commands.CompoundCommands.SmartIntakeCMD;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -71,6 +74,7 @@ public class RobotContainer
     NamedCommands.registerCommand("ShootFromSpeaker", new ShootNoteCMD(tilter, shooter, Constants.Tilter.shootFromSpeaker));
     NamedCommands.registerCommand("ShootAmp", new AmpScoreCMD(intake, elevator, tilter, shooter));
     NamedCommands.registerCommand("ReturnToNormal", new ReturnToNormal(intake, elevator, tilter, shooter).withTimeout(1));
+    NamedCommands.registerCommand("DeployIntakeCMD", new DeployIntakeCMD(intake, shooter));
 
     // Configure the trigger bindings
     configureBindings();
@@ -104,9 +108,9 @@ public class RobotContainer
     // left stick controls translation
     // right stick controls the angular velocity of the robot
     Command driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverXbox.getRawAxis(2));
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+        () -> -driverXbox.getRightX());
 
     Command driveFieldOrientedDirectAngleSim = drivebase.simDriveCommand(
         () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
@@ -140,6 +144,7 @@ public class RobotContainer
 //    new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
 
     //oporator buttons 
+    driverXbox.b().onTrue(new ZeroGyro(drivebase));
     //intake=A 
     manipulatorXbox.a().toggleOnTrue(new SmartIntakeCMD(intake, tilter, shooter));
   
@@ -147,11 +152,11 @@ public class RobotContainer
     manipulatorXbox.x().onTrue(new HandOffNoteBCMD(intake, tilter, shooter));
     
     //shoot high =y
-    manipulatorXbox.y().whileTrue(new ShootNoteCMD(tilter, shooter, Constants.Tilter.shootFromStage));
-    manipulatorXbox.y().onFalse(new ReturnToNormal(intake, elevator, tilter, shooter).withTimeout(1));;
-
-    manipulatorXbox.povUp().whileTrue(new ShootNoteCMD(tilter, shooter, Constants.Tilter.shootFromSpeaker));
+    manipulatorXbox.povUp().whileTrue(new ShootNoteCMD(tilter, shooter, Constants.Tilter.shootFromStage));
     manipulatorXbox.povUp().onFalse(new ReturnToNormal(intake, elevator, tilter, shooter).withTimeout(1));;
+
+    manipulatorXbox.y().whileTrue(new ShootNoteCMD(tilter, shooter, Constants.Tilter.shootFromSpeaker));
+    manipulatorXbox.y().onFalse(new ReturnToNormal(intake, elevator, tilter, shooter).withTimeout(1));;
     
     //amp=b
     manipulatorXbox.b().whileTrue(new AmpScoreCMD(intake, elevator, tilter, shooter));
@@ -163,6 +168,9 @@ public class RobotContainer
     manipulatorXbox.leftBumper().onTrue(new JogShooter(shooter, false));
     manipulatorXbox.leftTrigger(.5).onTrue(new JogShooter(shooter, true)); 
    
+    manipulatorXbox.start().onTrue(new ElevatorGoPosition(elevator, Constants.Elevator.elvAmpPosition, tilter));
+    manipulatorXbox.back().onTrue(new ElevatorGoPosition(elevator, Constants.Elevator.elvBottomPosition, tilter));
+
   }
 
   /**

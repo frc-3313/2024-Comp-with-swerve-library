@@ -4,67 +4,58 @@
 
 package frc.robot.commands.BasicCommands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Tilter;
-import edu.wpi.first.wpilibj.Timer;
 
-public class ShootNoteCMD extends Command {
-  
-
+public class DeployIntakeCMD extends Command 
+{
   public Intake intake;
-  public Elevator elevator;
-  public Tilter tilter;
   public Shooter shooter;
-  public Double shootAngle;
-  public Timer timer;
-  public ShootNoteCMD(Tilter m_Tilter, Shooter m_Shooter, Double m_shootAngle) {
-    // Use addRequirements() here to declare subsystem dependencies.
 
-    tilter = m_Tilter;
+  public DeployIntakeCMD(Intake m_intake, Shooter m_Shooter)
+  {
+    // Use addRequirements() here to declare subsystem dependencies.
+    intake = m_intake;
     shooter = m_Shooter;
-    shootAngle = m_shootAngle;
+    
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() 
   {
-    timer = new Timer();
-    tilter.GoToPosition(shootAngle);
-    shooter.StartShooter(.6);
+    if(!intake.hasNote() && !shooter.hasNote())
+    {
+      intake.DeployIntake();
+      intake.RunIntake(.3);
+    }
+    
+    SmartDashboard.putBoolean("intake is done", false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() 
   {
-    if(shooter.IsShooterAboveRPM(2500) && tilter.atSetpoint())
-    {
-      shooter.StartFeeder(.5);
-      timer.start();
-    }
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) 
   {
-    shooter.StopAllMotors();
+      intake.StopIntake();
+      intake.RetractIntake();
+      SmartDashboard.putBoolean("intake is done", true);
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
-    if (timer.hasElapsed(0.5)) 
-    {
+  public boolean isFinished() 
+  {  
       return true;
-    }
-    else
-    {
-      return false;
-    }
+    
   }
 }

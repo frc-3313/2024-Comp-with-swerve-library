@@ -28,7 +28,6 @@ public class Shooter extends SubsystemBase
 
   private SparkPIDController feederPID;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
-  private boolean overrideHasNote = false;
 
   public Shooter() 
   {
@@ -37,6 +36,7 @@ public class Shooter extends SubsystemBase
     shooterMotorOne.setSmartCurrentLimit(80);
     feederMotor.setSmartCurrentLimit(40);
     feederMotor.setInverted(true);
+    feederPID = feederMotor.getPIDController();
     SmartDashboard.putBoolean("Display Shooter", displaySmartDashboard);
 
 
@@ -97,21 +97,16 @@ public class Shooter extends SubsystemBase
 
   public boolean hasNote()
   {
-    if(distanceSensor.isConnected())
+
+    if(GetDistance() > 50 )
     {
-      if(GetDistance() > 50 )
-      {
-        return true;
-      }
-      else
-      {
-        return false;
-      }
+      return true;
     }
     else
     {
-      return overrideHasNote;
+      return false;
     }
+
   }
 
    public int GetDistance()
@@ -143,14 +138,6 @@ public class Shooter extends SubsystemBase
     }
     SmartDashboard.putBoolean("shooter has note", hasNote());
     SmartDashboard.putBoolean("shooter sensor connected", distanceSensor.isConnected());
-    if(!distanceSensor.isConnected())
-    {
-      SmartDashboard.putBoolean("Override shooter has note", false);
-      overrideHasNote = SmartDashboard.getBoolean("Override shooter has note", false);
-    }
-    else
-    {
-      overrideHasNote = false;
-    }
+
   }
 }

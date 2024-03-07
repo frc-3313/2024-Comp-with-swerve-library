@@ -35,7 +35,7 @@ public class HandOffNoteBCMD extends Command
   {
     timer = new Timer();
     timer.reset();
-    timer.start();
+    
     tilter.GoToPosition(Constants.Tilter.handOffPosition);
     intake.GoToPosition(Constants.Intake.HandOffPosition);
   }
@@ -44,10 +44,11 @@ public class HandOffNoteBCMD extends Command
   @Override
   public void execute() 
   {
-    if(tilter.atSetpoint() && intake.atSetpoint())
+    if(tilter.atSetpoint() && intake.atSetpoint(5))
     {
       intake.RunIntake(-.6);
       shooter.StartFeeder(.35);
+      timer.start();
     }
   }
   
