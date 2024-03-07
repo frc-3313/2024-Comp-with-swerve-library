@@ -28,6 +28,7 @@ public class Intake extends SubsystemBase
   private AbsoluteEncoder alternateEncoder;
 
   private double newTargetPosition;
+  private boolean overrideHasNote = false;
 
   //Intake Motor Setup
   private final CANSparkMax intakeMotor = new CANSparkMax(Constants.Intake.IntakeMotor_ID, MotorType.kBrushless);
@@ -88,13 +89,20 @@ public class Intake extends SubsystemBase
   }
   public boolean hasNote()
   { 
-    if(GetDistance() > 58 )
+    if(distanceSensor.isConnected())
     {
-      return true;
+      if(GetDistance() > 58)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     }
     else
     {
-      return false;
+      return overrideHasNote;
     }
   }
 
@@ -131,8 +139,21 @@ public class Intake extends SubsystemBase
       SmartDashboard.putNumber("intake sensor", distanceSensor.getProximity());
       SmartDashboard.putBoolean("intake has note", hasNote());
       SmartDashboard.putBoolean("Intake At Set", atSetpoint());
-    }
+      SmartDashboard.putBoolean("Intake sensor connected", distanceSensor.isConnected());
 
+    }
+    SmartDashboard.putBoolean("intake has note", hasNote());
+    SmartDashboard.putBoolean("Intake At Set", atSetpoint());
+    SmartDashboard.putBoolean("Intake sensor connected", distanceSensor.isConnected());
+    if(!distanceSensor.isConnected())
+    {
+      SmartDashboard.putBoolean("Override Intake has note", false);
+      overrideHasNote = SmartDashboard.getBoolean("Override Intake has note", false);
+    }
+    else
+    {
+      overrideHasNote = false;
+    }
   }
   
 }
