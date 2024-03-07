@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.BasicCommands.AmpScoreCMD;
+import frc.robot.commands.BasicCommands.HandOffNoteBCMD;
 import frc.robot.commands.BasicCommands.HandOffNoteCMD;
 import frc.robot.commands.BasicCommands.JogIntake;
 import frc.robot.commands.BasicCommands.JogShooter;
@@ -65,6 +66,7 @@ public class RobotContainer
   {
     // Register Named Commands
     NamedCommands.registerCommand("SmartIntakeCMD", new SmartIntakeCMD(intake, tilter, shooter));
+    NamedCommands.registerCommand("HandOffNoteBCMD", new HandOffNoteBCMD(intake, tilter, shooter));
     NamedCommands.registerCommand("ShootFromStage", new ShootNoteCMD(tilter, shooter, Constants.Tilter.shootFromStage));
     NamedCommands.registerCommand("ShootFromSpeaker", new ShootNoteCMD(tilter, shooter, Constants.Tilter.shootFromSpeaker));
     NamedCommands.registerCommand("ShootAmp", new AmpScoreCMD(intake, elevator, tilter, shooter));
@@ -142,7 +144,7 @@ public class RobotContainer
     manipulatorXbox.a().toggleOnTrue(new SmartIntakeCMD(intake, tilter, shooter));
   
     //handoff = x
-    manipulatorXbox.x().onTrue(new HandOffNoteCMD(intake, tilter, shooter));
+    manipulatorXbox.x().onTrue(new HandOffNoteBCMD(intake, tilter, shooter));
     
     //shoot high =y
     manipulatorXbox.y().whileTrue(new ShootNoteCMD(tilter, shooter, Constants.Tilter.shootFromStage));

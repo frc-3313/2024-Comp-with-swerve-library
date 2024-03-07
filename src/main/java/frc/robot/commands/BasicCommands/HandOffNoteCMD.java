@@ -61,6 +61,7 @@ public class HandOffNoteCMD extends Command
   @Override
   public void end(boolean interrupted) 
   {
+    shooter.MoveFeederDistance(500);
     tilter.GoToPosition(Constants.Tilter.stowPosition);
     shooter.StopFeeder();
     intake.StopIntake();
@@ -72,7 +73,6 @@ public class HandOffNoteCMD extends Command
   {
     if(shooter.hasNote() || timer.hasElapsed(3))
     {
-      tilter.GoToPosition(Constants.Tilter.stowPosition);
       return true;
     }
     else
