@@ -66,12 +66,6 @@
           "data": {
             "name": "ReturnToNormal"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Path 4 middle long"
-          }
         }
       ]
     }

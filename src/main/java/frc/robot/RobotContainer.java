@@ -49,7 +49,7 @@ public class RobotContainer
 {
 
   // The robot's subsystems and commands are defined here...
-  private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
+  public final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                          "swerve/neo"));
   private final Intake intake = new Intake();
   private final Elevator elevator = new Elevator();
@@ -75,7 +75,7 @@ public class RobotContainer
     NamedCommands.registerCommand("ShootAmp", new AmpScoreCMD(intake, elevator, tilter, shooter));
     NamedCommands.registerCommand("ReturnToNormal", new ReturnToNormal(intake, elevator, tilter, shooter).withTimeout(1));
     NamedCommands.registerCommand("DeployIntakeCMD", new DeployIntakeCMD(intake, shooter));
-
+    
     // Configure the trigger bindings
     configureBindings();
 
@@ -105,7 +105,7 @@ public class RobotContainer
     // Applies deadbands and inverts controls because joysticks
     // are back-right positive while robot
     // controls are front-left positive
-    // left stick controls translation
+    // left stick controls translati on
     // right stick controls the angular velocity of the robot
     Command driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
         () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),

@@ -68,9 +68,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Path 4 middle long"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SmartIntakeCMD"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Path 9 middle long grab"
+                }
+              }
+            ]
           }
         }
       ]
