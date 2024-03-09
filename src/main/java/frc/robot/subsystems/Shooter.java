@@ -12,7 +12,6 @@ import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -23,7 +22,6 @@ public class Shooter extends SubsystemBase
   private RelativeEncoder feederEncoder = feederMotor.getEncoder();
   private static double maxSpeed = 1.0f;
   private ColorSensorV3 distanceSensor = new ColorSensorV3(Port.kMXP); 
-  private boolean displaySmartDashboard;
 
   private SparkPIDController feederPID;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;

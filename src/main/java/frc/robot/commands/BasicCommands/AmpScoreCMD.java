@@ -55,8 +55,10 @@ public class AmpScoreCMD extends Command {
     {
       shooter.StartFeeder(.5);
     }
-    
-  // shooter.StopAllMotors(); 
+    tilter.GoToPosition(Constants.Tilter.stowPosition);
+    elevator.GoToHeight(Constants.Elevator.elvBottomPosition);
+    shooter.StopAllMotors();
+    intake.StopIntake();
   }
 
   // Returns true when the command should end.

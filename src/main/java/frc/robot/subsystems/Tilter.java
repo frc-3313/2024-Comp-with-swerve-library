@@ -25,7 +25,6 @@ public class Tilter extends SubsystemBase
   private AbsoluteEncoder alternateEncoder;
 
   private double newTargetPosition;
-  private boolean displaySmartDashboard, dashboardDisplayed;
   public Tilter() 
   {
     tilterMotor.restoreFactoryDefaults();
@@ -36,7 +35,6 @@ public class Tilter extends SubsystemBase
     pidController = tilterMotor.getPIDController();
     pidController.setFeedbackDevice(alternateEncoder);
     //SmartDashboard.putBoolean("Display Tilter", displaySmartDashboard);
-    dashboardDisplayed = false;
 
     //PID
     kP = 0.015; //how aggresive towards target
@@ -72,7 +70,7 @@ public class Tilter extends SubsystemBase
 
   public boolean atSetpoint() {
     //return pid.atSetpoint();
-    if((getDegrees() < newTargetPosition + 2) && (getDegrees() > newTargetPosition - 2))
+    if((getDegrees() < newTargetPosition + 3) && (getDegrees() > newTargetPosition - 3))
       return true;
     else
       return false;

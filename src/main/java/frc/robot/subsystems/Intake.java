@@ -35,11 +35,8 @@ public class Intake extends SubsystemBase
   //Distance sensor
    private ColorSensorV3 distanceSensor = new ColorSensorV3(Port.kOnboard); 
 
-  private Boolean displaySmartDashboard;
-
   public Intake() 
   {
-    displaySmartDashboard = false;
     intakeTilterMotor.restoreFactoryDefaults();
     intakeTilterMotor.setIdleMode(IdleMode.kBrake);
     alternateEncoder = intakeTilterMotor.getAbsoluteEncoder(kAltEncType);

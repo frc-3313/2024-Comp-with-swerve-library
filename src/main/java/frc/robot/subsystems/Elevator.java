@@ -11,7 +11,6 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import frc.robot.Constants;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Elevator extends SubsystemBase {
   
@@ -23,13 +22,11 @@ public class Elevator extends SubsystemBase {
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
   private final PIDController pid;
   private double minPowerAtExtended = 0.00;
-  private Boolean displaySmartDashboard;
 
   private double newTargetPosition;
 
   public Elevator() 
   {
-    displaySmartDashboard = false;
     elevatorMotor1 = new CANSparkMax(Constants.Elevator.ElevatorMotor1_ID, MotorType.kBrushless);
     elevatorMotor2 = new CANSparkMax(Constants.Elevator.ElevatorMotor2_ID, MotorType.kBrushless);
     elevatorMotor1.restoreFactoryDefaults();

@@ -23,7 +23,7 @@ public class IntakeStopCMD extends Command
   public void initialize() 
   {
     intake.StopIntake();
-      intake.RetractIntake();
+    intake.RetractIntake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -22,7 +22,6 @@ import frc.robot.commands.BasicCommands.AmpScoreCMD;
 import frc.robot.commands.BasicCommands.DeployIntakeCMD;
 import frc.robot.commands.BasicCommands.ElevatorGoPosition;
 import frc.robot.commands.BasicCommands.HandOffNoteBCMD;
-import frc.robot.commands.BasicCommands.HandOffNoteCMD;
 import frc.robot.commands.BasicCommands.JogIntake;
 import frc.robot.commands.BasicCommands.JogShooter;
 import frc.robot.commands.BasicCommands.ReturnToNormal;
@@ -97,11 +96,11 @@ public class RobotContainer
     // controls are front-left positive
     // left stick controls translation
     // right stick controls the desired angle NOT angular rotation
-    Command driveFieldOrientedDirectAngle = drivebase.driveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverXbox.getRightX(),
-        () -> driverXbox.getRightY());
+    //Command driveFieldOrientedDirectAngle = drivebase.driveCommand(
+    //   () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+    //    () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+    //    () -> driverXbox.getRightX(),
+    //    () -> driverXbox.getRightY());
 
     // Applies deadbands and inverts controls because joysticks
     // are back-right positive while robot
@@ -113,10 +112,10 @@ public class RobotContainer
         () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
         () -> -driverXbox.getRightX());
 
-    Command driveFieldOrientedDirectAngleSim = drivebase.simDriveCommand(
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverXbox.getRawAxis(2));
+    //Command driveFieldOrientedDirectAngleSim = drivebase.simDriveCommand(
+    //    () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+    //    () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+    //    () -> driverXbox.getRawAxis(2));
 
     drivebase.setDefaultCommand(
         !RobotBase.isSimulation() ? driveFieldOrientedAnglularVelocity : closedAbsoluteDriveAdv);

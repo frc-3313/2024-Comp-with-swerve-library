@@ -43,25 +43,23 @@ public class ReturnToNormal extends Command {
   @Override
   public void execute() 
   {
-    if(timer.hasElapsed(.5))
-    {
-      tilter.GoToPosition(Constants.Tilter.stowPosition);
-      elevator.GoToHeight(Constants.Elevator.elvBottomPosition);
-      shooter.StopAllMotors();
-      intake.StopIntake();
-    }
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) 
   {
+      tilter.GoToPosition(Constants.Tilter.stowPosition);
+      elevator.GoToHeight(Constants.Elevator.elvBottomPosition);
+      shooter.StopAllMotors();
+      intake.StopIntake();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (timer.hasElapsed(1))
+    if (timer.hasElapsed(.5))
     {
         return true;
     }

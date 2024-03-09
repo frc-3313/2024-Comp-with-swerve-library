@@ -5,17 +5,13 @@
 package frc.robot.commands.BasicCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
+import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
 import edu.wpi.first.wpilibj.Timer;
 
 public class ShootNoteCMD extends Command {
   
-
-  public Intake intake;
-  public Elevator elevator;
   public Tilter tilter;
   public Shooter shooter;
   public Double shootAngle;
@@ -52,6 +48,8 @@ public class ShootNoteCMD extends Command {
   @Override
   public void end(boolean interrupted) 
   {
+    shooter.StopAllMotors();
+    tilter.GoToPosition(Constants.Tilter.stowPosition);
     shooter.StopAllMotors();
   }
 

@@ -7,7 +7,6 @@ package frc.robot.commands.BasicCommands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
@@ -16,7 +15,6 @@ public class HandOffNoteCMD extends Command
 {
 
   public Intake intake;
-  public Elevator elevator;
   public Tilter tilter;
   public Shooter shooter;
   public Timer timer;
