@@ -2,7 +2,7 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.76,
+      "x": 0.8,
       "y": 4.47
     },
     "rotation": -57.0
@@ -26,12 +26,6 @@
                 "data": {
                   "name": "ShootFromSpeaker"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "DeployIntakeCMD"
-                }
               }
             ]
           }
@@ -41,42 +35,18 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "SmartIntakeCMD"
+                  "pathName": "Path 5 sorce side long"
                 }
               },
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "P_GrabFarNote"
+                  "name": "DeployIntakeCMD"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "P_ReturnFarNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootFromSpeaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ReturnToNormal"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "P_GrabFarNote"
           }
         }
       ]

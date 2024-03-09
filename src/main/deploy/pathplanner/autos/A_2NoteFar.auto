@@ -26,14 +26,14 @@
                 "data": {
                   "name": "ShootFromSpeaker"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "DeployIntakeCMD"
-                }
               }
             ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 8.0
           }
         },
         {

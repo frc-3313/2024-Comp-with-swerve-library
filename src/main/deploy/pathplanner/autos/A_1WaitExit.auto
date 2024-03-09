@@ -3,9 +3,9 @@
   "startingPose": {
     "position": {
       "x": 0.8,
-      "y": 4.47
+      "y": 6.64
     },
-    "rotation": -57.0
+    "rotation": 53.18951461358747
   },
   "command": {
     "type": "sequential",
@@ -33,13 +33,26 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 7.0
+            "waitTime": 10.0
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Path 5 sorce side long"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SmartIntakeCMD"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Path 8 amp side long"
+                }
+              }
+            ]
           }
         }
       ]

@@ -59,6 +59,7 @@ public class HandOffNoteBCMD extends Command
     tilter.GoToPosition(Constants.Tilter.stowPosition);
     shooter.StopFeeder();
     intake.StopIntake();
+    shooter.MoveFeederDistance(-3);
   }
 
   // Returns true when the command should end.

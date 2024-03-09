@@ -129,21 +129,16 @@ public class Intake extends SubsystemBase
   @Override
   public void periodic() 
   {
-    //displaySmartDashboard = SmartDashboard.getBoolean("Display Elevator", displaySmartDashboard);
 
     pidController.setReference(newTargetPosition, CANSparkMax.ControlType.kPosition);
-    /*   SmartDashboard.putNumber("Intake Setpoint", newTargetPosition);
-      SmartDashboard.putNumber("intake position", alternateEncoder.getPosition());
-      SmartDashboard.putNumber("intake sensor", distanceSensor.getProximity());
-      SmartDashboard.putBoolean("intake has note", hasNote());
-      SmartDashboard.putBoolean("Intake At Set", atSetpoint());
-      SmartDashboard.putBoolean("Intake sensor connected", distanceSensor.isConnected());
+    //   SmartDashboard.putNumber("Intake Setpoint", newTargetPosition);
+    //  SmartDashboard.putNumber("intake position", alternateEncoder.getPosition());
 
     
     SmartDashboard.putBoolean("intake has note", hasNote());
     SmartDashboard.putBoolean("Intake At Set", atSetpoint());
-    SmartDashboard.putBoolean("Intake sensor connected", distanceSensor.isConnected());*/
-    SmartDashboard.putNumber("intake sensor", distanceSensor.getProximity());
+    //SmartDashboard.putBoolean("Intake sensor connected", distanceSensor.isConnected());
+    //SmartDashboard.putNumber("intake sensor", distanceSensor.getProximity());
     if(intakeMotor.getEncoder().getVelocity() > 10)
     {
       SmartDashboard.putBoolean("Intake running", true);

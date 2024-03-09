@@ -26,12 +26,6 @@
                 "data": {
                   "name": "ShootFromSpeaker"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "DeployIntakeCMD"
-                }
               }
             ]
           }
@@ -68,15 +62,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "ReturnToNormal"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Path 8 amp side long"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SmartIntakeCMD"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Path 8 amp side long"
+                }
+              }
+            ]
           }
         }
       ]

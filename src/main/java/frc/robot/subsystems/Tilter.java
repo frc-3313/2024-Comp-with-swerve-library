@@ -91,47 +91,10 @@ public class Tilter extends SubsystemBase
   @Override
   public void periodic() 
   {
-    // read PID coefficients from SmartDashboard
-   /*  displaySmartDashboard = SmartDashboard.getBoolean("Display Elevator", displaySmartDashboard);
-    if(displaySmartDashboard)
-    {
-      if(!dashboardDisplayed)
-      {
-        SmartDashboard.putNumber("P Gain", kP);
-        SmartDashboard.putNumber("I Gain", kI);
-        SmartDashboard.putNumber("D Gain", kD);
-        SmartDashboard.putNumber("I Zone", kIz);
-        SmartDashboard.putNumber("Feed Forward", kFF);
-        SmartDashboard.putNumber("Max Output", kMaxOutput);
-        SmartDashboard.putNumber("Min Output", kMinOutput);
-        dashboardDisplayed = true;
-      }
-      else
-      {
-        double p = SmartDashboard.getNumber("P Gain", 0);
-        double i = SmartDashboard.getNumber("I Gain", 0);
-        double d = SmartDashboard.getNumber("D Gain", 0);
-        double iz = SmartDashboard.getNumber("I Zone", 0);
-        double ff = SmartDashboard.getNumber("Feed Forward", 0);
-        double max = SmartDashboard.getNumber("Max Output", 0);
-        double min = SmartDashboard.getNumber("Min Output", 0);
-
-    // if PID coefficients on SmartDashboard have changed, write new values to controller
-        if((p != kP)) { pidController.setP(p); kP = p; }
-        if((i != kI)) { pidController.setI(i); kI = i; }
-        if((d != kD)) { pidController.setD(d); kD = d; }
-        if((iz != kIz)) { pidController.setIZone(iz); kIz = iz; }
-        if((ff != kFF)) { pidController.setFF(ff); kFF = ff; }
-        if((max != kMaxOutput) || (min != kMinOutput)) 
-        {
-          pidController.setOutputRange(min, max); 
-          kMinOutput = min; kMaxOutput = max; 
-        }
-      }    
-      SmartDashboard.putNumber("Tilter SetPoint", newTargetPosition);
-      SmartDashboard.putNumber("tilter absolute enc", alternateEncoder.getPosition());
+  
+     // SmartDashboard.putNumber("tilter absolute enc", alternateEncoder.getPosition());
       SmartDashboard.putBoolean("tilter at set", atSetpoint());
-    }*/
+    
     pidController.setReference(newTargetPosition, CANSparkMax.ControlType.kPosition);
     SmartDashboard.putNumber("Tilter SetPoint", newTargetPosition);
 

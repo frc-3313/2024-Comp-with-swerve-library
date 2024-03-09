@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -126,15 +127,13 @@ public class Shooter extends SubsystemBase
   @Override
   public void periodic() 
   {
-   /*  displaySmartDashboard = SmartDashboard.getBoolean("Display Elevator", displaySmartDashboard);
-    if(displaySmartDashboard)
-    {
-      SmartDashboard.putNumber("DIo sensor", distanceSensor.getProximity());
-      SmartDashboard.putNumber("shooter speed", shooterMotorOne.getEncoder().getVelocity());
+
+    //  SmartDashboard.putNumber("DIo sensor", distanceSensor.getProximity());
+    //  SmartDashboard.putNumber("shooter speed", shooterMotorOne.getEncoder().getVelocity());
       SmartDashboard.putNumber("shooter sensor", distanceSensor.getProximity());
-    }
+    
     SmartDashboard.putBoolean("shooter has note", hasNote());
-    SmartDashboard.putBoolean("shooter sensor connected", distanceSensor.isConnected());*/
+    SmartDashboard.putBoolean("shooter sensor connected", distanceSensor.isConnected());
 
   }
 }

@@ -26,12 +26,6 @@
                 "data": {
                   "name": "ShootFromSpeaker"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "DeployIntakeCMD"
-                }
               }
             ]
           }
@@ -65,12 +59,6 @@
           "type": "named",
           "data": {
             "name": "ShootFromSpeaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ReturnToNormal"
           }
         },
         {

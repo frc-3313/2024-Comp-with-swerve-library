@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.32,
-      "y": 5.54
+      "x": 0.81,
+      "y": 6.602
     },
-    "rotation": 0.0
+    "rotation": 57.0
   },
   "command": {
     "type": "sequential",
@@ -26,14 +26,39 @@
                 "data": {
                   "name": "ShootFromSpeaker"
                 }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Path 6 amp side start"
+                }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "DeployIntakeCMD"
+                  "name": "SmartIntakeCMD"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Path 7 amp side return"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootFromSpeaker"
           }
         },
         {
@@ -49,28 +74,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Path 4 middle long"
+                  "pathName": "Path 8 amp side long"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "ShootFromSpeaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ReturnToNormal"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Path 15 middle long return"
+            "pathName": "Path 16 amp side long return"
           }
         },
         {
