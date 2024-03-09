@@ -74,16 +74,28 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "SmartIntakeCMD"
+                  "name": "DeployIntakeCMD"
                 }
               },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Path 9 middle long grab"
+                  "pathName": "Path 4 middle long"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Path 15 middle long return"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootFromSpeaker"
           }
         }
       ]
