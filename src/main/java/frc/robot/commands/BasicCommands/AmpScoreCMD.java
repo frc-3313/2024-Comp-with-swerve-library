@@ -17,13 +17,14 @@ public class AmpScoreCMD extends Command {
   public Tilter tilter;
   public Shooter shooter;
   /** Creates a new AmpScoreCMD. */
-  public AmpScoreCMD(Intake m_Intake, Elevator m_Elevator, Tilter m_Tilter, Shooter m_Shooter){
-  //, Tilter m_Tilter, Shooter m_Shooter) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public AmpScoreCMD(Intake m_Intake, Elevator m_Elevator, Tilter m_Tilter, Shooter m_Shooter)
+  {
+    addRequirements(intake, elevator, tilter, shooter);
     intake = m_Intake;
     elevator = m_Elevator;
     tilter = m_Tilter;
     shooter = m_Shooter;
+    
   }
 
   // Called when the command is initially scheduled.

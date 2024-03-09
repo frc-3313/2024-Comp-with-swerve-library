@@ -16,11 +16,11 @@ public class ElevatorGoPosition extends Command {
   public Tilter tilter;
   /** Creates a new AmpScoreCMD. */
   public ElevatorGoPosition(Elevator m_Elevator, double m_position, Tilter m_tilter){
-  //, Tilter m_Tilter, Shooter m_Shooter) {
-    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(elevator, tilter);
     elevator = m_Elevator;
     position = m_position;
     tilter = m_tilter;
+    
   }
 
   // Called when the command is initially scheduled.
