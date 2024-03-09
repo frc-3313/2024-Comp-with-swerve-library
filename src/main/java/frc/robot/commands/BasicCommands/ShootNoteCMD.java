@@ -17,11 +17,11 @@ public class ShootNoteCMD extends Command {
   public Double shootAngle;
   public Timer timer;
   public ShootNoteCMD(Tilter m_Tilter, Shooter m_Shooter, Double m_shootAngle) {
-    // Use addRequirements() here to declare subsystem dependencies.
-
+    addRequirements(tilter, shooter);
     tilter = m_Tilter;
     shooter = m_Shooter;
     shootAngle = m_shootAngle;
+    addRequirements(tilter, shooter);
   }
 
   // Called when the command is initially scheduled.

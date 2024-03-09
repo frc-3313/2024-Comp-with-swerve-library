@@ -13,8 +13,9 @@ public class IntakeStopCMD extends Command
 
   public IntakeStopCMD(Intake m_intake) 
   {
-    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(intake);
     intake = m_intake;
+    addRequirements(intake);
     
   }
 
@@ -24,6 +25,7 @@ public class IntakeStopCMD extends Command
   {
     intake.StopIntake();
     intake.RetractIntake();
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.

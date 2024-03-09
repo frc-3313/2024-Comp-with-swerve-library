@@ -26,6 +26,7 @@ public class Shooter extends SubsystemBase
 
   private SparkPIDController feederPID;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
+  private double setDistance;
 
   public Shooter() 
   {
@@ -91,6 +92,7 @@ public class Shooter extends SubsystemBase
   public void MoveFeederDistance(double distance)
   {
     feederPID.setReference(feederEncoder.getPosition() + distance, ControlType.kPosition);
+    setDistance = distance;
   }
 
   public boolean hasNote()
@@ -112,6 +114,14 @@ public class Shooter extends SubsystemBase
       return distanceSensor.getProximity();
    }
 
+  
+  public boolean FeederDone()
+  {
+    if(feederEncoder.getPosition() < setDistance + 3 &&  feederEncoder.getPosition() > setDistance - 3)
+      return true;
+    else
+      return false;
+  }
   public boolean IsShooterAboveRPM(int rpm)
   {
     if(shooterMotorOne.getEncoder().getVelocity() > rpm)

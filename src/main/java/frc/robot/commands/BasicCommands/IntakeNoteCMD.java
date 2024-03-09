@@ -16,9 +16,10 @@ public class IntakeNoteCMD extends Command
 
   public IntakeNoteCMD(Intake m_intake, Shooter m_Shooter)
   {
-    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(intake, shooter);
     intake = m_intake;
     shooter = m_Shooter;
+    
     
   }
 
