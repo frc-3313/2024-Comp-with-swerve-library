@@ -27,6 +27,7 @@ import frc.robot.commands.BasicCommands.JogIntake;
 import frc.robot.commands.BasicCommands.JogShooter;
 import frc.robot.commands.BasicCommands.ReturnToNormal;
 import frc.robot.commands.BasicCommands.ShootNoteCMD;
+import frc.robot.commands.BasicCommands.SorceIntakeCMD;
 import frc.robot.commands.BasicCommands.ZeroGyro;
 import frc.robot.commands.CompoundCommands.SmartIntakeCMD;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDriveAdv;
@@ -145,6 +146,9 @@ public class RobotContainer
 
     //oporator buttons 
     driverXbox.b().onTrue(new ZeroGyro(drivebase));
+    //intake from sorce=d pad down
+    manipulatorXbox.povDown().whileTrue(new SorceIntakeCMD(intake, elevator, tilter, shooter));
+    //manipulatorXbox.povDown().onFalse(new ReturnToNormal(intake, elevator, tilter, shooter));;
     //intake=A 
     manipulatorXbox.a().toggleOnTrue(new SmartIntakeCMD(intake, tilter, shooter));
   

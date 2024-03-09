@@ -29,14 +29,15 @@ public class ElevatorGoPosition extends Command {
   {
   // tilter.GoToPosition(Constants.Tilter.ampPosition); 
   // shooter.StartShooter();
-      tilter.GoToPosition(Constants.Tilter.shootFromSpeaker);
+    elevator.setmaxcurrent();
+      tilter.GoToPosition(Constants.Tilter.stowPosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() 
   {
-    if (tilter.atSetpoint())
+    
       elevator.GoToHeight(position);
   }
 

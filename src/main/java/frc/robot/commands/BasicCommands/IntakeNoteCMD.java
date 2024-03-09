@@ -29,14 +29,14 @@ public class IntakeNoteCMD extends Command
     if(!intake.hasNote() && !shooter.hasNote())
     {
       intake.DeployIntake();
-      intake.RunIntake(.3);
+      intake.RunIntake(.32);
     }
     else
     {
       intake.RetractIntake();
       intake.StopIntake();
     }
-    SmartDashboard.putBoolean("intake is done", false);
+    //SmartDashboard.putBoolean("intake is done", false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -60,6 +60,8 @@ public class IntakeNoteCMD extends Command
   public boolean isFinished() {
     if(intake.hasNote() && intake.atSetpoint() || shooter.hasNote())
     {
+      intake.StopIntake();
+      intake.RetractIntake();
       return true;
     }
     else

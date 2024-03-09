@@ -47,7 +47,7 @@ public class HandOffNoteBCMD extends Command
     if(tilter.atSetpoint() && intake.atSetpoint(5))
     {
       intake.RunIntake(-.6);
-      shooter.StartFeeder(.35);
+      shooter.StartFeeder(.2);
       timer.start();
     }
   }

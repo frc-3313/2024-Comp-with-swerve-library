@@ -36,7 +36,7 @@ public class Shooter extends SubsystemBase
     feederMotor.setSmartCurrentLimit(40);
     feederMotor.setInverted(true);
     feederPID = feederMotor.getPIDController();
-    SmartDashboard.putBoolean("Display Shooter", displaySmartDashboard);
+   // SmartDashboard.putBoolean("Display Shooter", displaySmartDashboard);
 
 
     //PID
@@ -128,7 +128,7 @@ public class Shooter extends SubsystemBase
   @Override
   public void periodic() 
   {
-    displaySmartDashboard = SmartDashboard.getBoolean("Display Elevator", displaySmartDashboard);
+   /*  displaySmartDashboard = SmartDashboard.getBoolean("Display Elevator", displaySmartDashboard);
     if(displaySmartDashboard)
     {
       SmartDashboard.putNumber("DIo sensor", distanceSensor.getProximity());
@@ -136,7 +136,7 @@ public class Shooter extends SubsystemBase
       SmartDashboard.putNumber("shooter sensor", distanceSensor.getProximity());
     }
     SmartDashboard.putBoolean("shooter has note", hasNote());
-    SmartDashboard.putBoolean("shooter sensor connected", distanceSensor.isConnected());
+    SmartDashboard.putBoolean("shooter sensor connected", distanceSensor.isConnected());*/
 
   }
 }

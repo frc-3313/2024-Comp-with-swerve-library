@@ -67,7 +67,7 @@ public class Intake extends SubsystemBase
     pidController.setOutputRange(kMinOutput, kMaxOutput);
     pidController.setSmartMotionMaxAccel(1000, 0);
 
-    SmartDashboard.putBoolean("Display Intake", displaySmartDashboard);
+    //SmartDashboard.putBoolean("Display Intake", displaySmartDashboard);
   }
 
   public void DeployIntake()
@@ -81,8 +81,8 @@ public class Intake extends SubsystemBase
 
   public void RunIntake(double speed)
   {
-    //intakeMotor.set(speed);FIXME
-    intakeMotor.set(0);
+    intakeMotor.set(speed);
+   
   }
   public void StopIntake()
   {
@@ -91,7 +91,7 @@ public class Intake extends SubsystemBase
   public boolean hasNote()
   { 
 
-    if(GetDistance() > 58)
+    if(GetDistance() > 70)
     {
       return true;
     }
@@ -132,10 +132,10 @@ public class Intake extends SubsystemBase
   @Override
   public void periodic() 
   {
-    displaySmartDashboard = SmartDashboard.getBoolean("Display Elevator", displaySmartDashboard);
+    //displaySmartDashboard = SmartDashboard.getBoolean("Display Elevator", displaySmartDashboard);
 
     pidController.setReference(newTargetPosition, CANSparkMax.ControlType.kPosition);
-      SmartDashboard.putNumber("Intake Setpoint", newTargetPosition);
+    /*   SmartDashboard.putNumber("Intake Setpoint", newTargetPosition);
       SmartDashboard.putNumber("intake position", alternateEncoder.getPosition());
       SmartDashboard.putNumber("intake sensor", distanceSensor.getProximity());
       SmartDashboard.putBoolean("intake has note", hasNote());
@@ -145,8 +145,16 @@ public class Intake extends SubsystemBase
     
     SmartDashboard.putBoolean("intake has note", hasNote());
     SmartDashboard.putBoolean("Intake At Set", atSetpoint());
-    SmartDashboard.putBoolean("Intake sensor connected", distanceSensor.isConnected());
-
+    SmartDashboard.putBoolean("Intake sensor connected", distanceSensor.isConnected());*/
+    SmartDashboard.putNumber("intake sensor", distanceSensor.getProximity());
+    if(intakeMotor.getEncoder().getVelocity() > 10)
+    {
+      SmartDashboard.putBoolean("Intake running", true);
+    }
+    else
+    {
+      SmartDashboard.putBoolean("Intake running", false);
+    }
   }
   
 }

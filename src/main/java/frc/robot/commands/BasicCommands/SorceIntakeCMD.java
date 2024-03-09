@@ -12,72 +12,63 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
 
-public class HandOffNoteCMD extends Command 
-{
-
+public class SorceIntakeCMD extends Command {
   public Intake intake;
   public Elevator elevator;
   public Tilter tilter;
   public Shooter shooter;
   public Timer timer;
-
-  public HandOffNoteCMD(Intake m_Intake, Tilter m_Tilter, Shooter m_Shooter) {
+  /** Creates a new AmpScoreCMD. */
+  public SorceIntakeCMD(Intake m_Intake, Elevator m_Elevator, Tilter m_Tilter, Shooter m_Shooter){
+  //, Tilter m_Tilter, Shooter m_Shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
-  intake = m_Intake;
-  //elevator = m_Elevator;
-  tilter = m_Tilter;
-  shooter = m_Shooter;
-  
+    intake = m_Intake;
+    elevator = m_Elevator;
+    tilter = m_Tilter;
+    shooter = m_Shooter;
   }
-
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() 
   {
-    timer = new Timer();
-    timer.reset();
+  // tilter.GoToPosition(Constants.Tilter.ampPosition); 
+  // shooter.StartShooter();
+    timer= new Timer();
     timer.start();
-    if (intake.hasNote() && !shooter.hasNote())
+    if (!shooter.hasNote()) 
     {
-     tilter.GoToPosition(Constants.Tilter.handOffPosition);
-     intake.GoToPosition(Constants.Intake.HandOffPosition);
-    }
+      elevator.GoToHeight(Constants.Elevator.SorceIntakePosition);
+      tilter.GoToPosition(Constants.Tilter.shootFromStage);
+      shooter.StartShooter(-.3);
+    } 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() 
   {
-    if(tilter.atSetpoint() && intake.atSetpoint() && !shooter.hasNote()) 
-    {
-      intake.RunIntake(-.6);
-      shooter.StartFeeder(.2);
-    }
-   }
-  
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) 
   {
-    shooter.MoveFeederDistance(50);
-    tilter.GoToPosition(Constants.Tilter.stowPosition);
-    shooter.StopFeeder();
-    intake.StopIntake();
+
+    shooter.StopShooter();
+   elevator.GoToHeight(Constants.Elevator.elvLowest);   
+   tilter.GoToPosition(Constants.Tilter.stowPosition); 
+  // shooter.StopAllMotors(); 
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() 
-  {
-    if(shooter.hasNote() || timer.hasElapsed(3))
+  public boolean isFinished() {
+    if (shooter.hasNote()) 
     {
-      return true;
+     return true; 
     }
-    else
-    {
-      return false;
-    }
+    return false;
   }
 }

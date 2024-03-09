@@ -37,8 +37,8 @@ public class Elevator extends SubsystemBase {
     elevatorMotor1.follow(elevatorMotor2,true);
     
 
-    elevatorMotor1.setIdleMode(IdleMode.kCoast);
-    elevatorMotor2.setIdleMode(IdleMode.kCoast);
+    elevatorMotor1.setIdleMode(IdleMode.kBrake);
+    elevatorMotor2.setIdleMode(IdleMode.kBrake);
     elevatorMotor1.setSmartCurrentLimit(20);
     elevatorMotor2.setSmartCurrentLimit(20); 
 
@@ -57,7 +57,7 @@ public class Elevator extends SubsystemBase {
     kMinOutput = 0.3; //max motor speed in oppisite direction 
     pid = new PIDController(kP, kI, kD);
     pid.setTolerance(0);
-    SmartDashboard.putBoolean("Display Elevator", displaySmartDashboard);
+    //SmartDashboard.putBoolean("Display Elevator", displaySmartDashboard);
   }
 
   public void GoToHeight(double height)
@@ -71,12 +71,12 @@ public class Elevator extends SubsystemBase {
   {
     // read PID coefficients from SmartDashboard
     elevatorMotor2.set(getPidOutput());
-    displaySmartDashboard = SmartDashboard.getBoolean("Display Elevator", displaySmartDashboard);
+   /*  displaySmartDashboard = SmartDashboard.getBoolean("Display Elevator", displaySmartDashboard);
     if(displaySmartDashboard)
     {
       SmartDashboard.putNumber("SetPoint", newTargetPosition);
       SmartDashboard.putNumber("Elevator Encoder", elevatorMotor1.getEncoder().getPosition());
-    }
+    }*/
   }
   public double getPidOutput() {
     double speed = pid.calculate(getDegrees(), newTargetPosition) + getFeedForward();
@@ -103,5 +103,10 @@ public class Elevator extends SubsystemBase {
   }
   public double getDegrees() {
     return m_encoder.getPosition();
+  }
+  public void setmaxcurrent()
+  {
+    elevatorMotor1.setSmartCurrentLimit(80);
+    elevatorMotor2.setSmartCurrentLimit(80); 
   }
 }

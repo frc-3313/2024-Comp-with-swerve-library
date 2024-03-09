@@ -35,7 +35,7 @@ public class Tilter extends SubsystemBase
     alternateEncoder.setPositionConversionFactor(360);
     pidController = tilterMotor.getPIDController();
     pidController.setFeedbackDevice(alternateEncoder);
-    SmartDashboard.putBoolean("Display Tilter", displaySmartDashboard);
+    //SmartDashboard.putBoolean("Display Tilter", displaySmartDashboard);
     dashboardDisplayed = false;
 
     //PID
@@ -53,7 +53,7 @@ public class Tilter extends SubsystemBase
     pidController.setIZone(kIz);
     pidController.setFF(kFF);
     pidController.setOutputRange(kMinOutput, kMaxOutput);
-    newTargetPosition = Constants.Tilter.stowPosition;
+    newTargetPosition = Constants.Tilter.shootFromSpeaker;
 
     // display PID coefficients on SmartDashboard
     // SmartDashboard.putNumber("P Gain", kP);
@@ -77,6 +77,15 @@ public class Tilter extends SubsystemBase
     else
       return false;
   }
+
+  public boolean atSetpoint(double setpoint) {
+    //return pid.atSetpoint();
+    if((getDegrees() < newTargetPosition + setpoint) && (getDegrees() > newTargetPosition - setpoint))
+      return true;
+    else
+      return false;
+  }
+
   public double getDegrees() {
     return alternateEncoder.getPosition();
   }
@@ -85,7 +94,7 @@ public class Tilter extends SubsystemBase
   public void periodic() 
   {
     // read PID coefficients from SmartDashboard
-    displaySmartDashboard = SmartDashboard.getBoolean("Display Elevator", displaySmartDashboard);
+   /*  displaySmartDashboard = SmartDashboard.getBoolean("Display Elevator", displaySmartDashboard);
     if(displaySmartDashboard)
     {
       if(!dashboardDisplayed)
@@ -124,7 +133,9 @@ public class Tilter extends SubsystemBase
       SmartDashboard.putNumber("Tilter SetPoint", newTargetPosition);
       SmartDashboard.putNumber("tilter absolute enc", alternateEncoder.getPosition());
       SmartDashboard.putBoolean("tilter at set", atSetpoint());
-    }
+    }*/
     pidController.setReference(newTargetPosition, CANSparkMax.ControlType.kPosition);
+    SmartDashboard.putNumber("Tilter SetPoint", newTargetPosition);
+
   }
 }
