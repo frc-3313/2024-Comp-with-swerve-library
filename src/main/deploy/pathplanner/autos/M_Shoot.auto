@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.76,
-      "y": 4.47
+      "x": 1.32,
+      "y": 5.54
     },
-    "rotation": -57.0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -28,12 +28,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Path 5 sorce side long"
           }
         }
       ]

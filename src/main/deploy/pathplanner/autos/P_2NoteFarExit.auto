@@ -41,15 +41,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "Path 2 sorce side start"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "SmartIntakeCMD"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "P_GrabFarNote"
                 }
               }
             ]
@@ -58,7 +58,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Path 3 sorce side return"
+            "pathName": "P_ReturnFarNote"
           }
         },
         {
@@ -74,22 +74,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "DeployIntakeCMD"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Copy of Path 10 sorce side long grab"
-                }
-              }
-            ]
+            "pathName": "P_GrabFarNote"
           }
         }
       ]
