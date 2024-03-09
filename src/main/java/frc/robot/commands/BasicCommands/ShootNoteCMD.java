@@ -16,6 +16,7 @@ public class ShootNoteCMD extends Command {
   public Shooter shooter;
   public Double shootAngle;
   public Timer timer;
+
   public ShootNoteCMD(Tilter m_Tilter, Shooter m_Shooter, Double m_shootAngle) {
     // Use addRequirements() here to declare subsystem dependencies.
 
@@ -28,20 +29,13 @@ public class ShootNoteCMD extends Command {
   @Override
   public void initialize() 
   {
-    timer = new Timer();
-    tilter.GoToPosition(shootAngle);
-    shooter.StartShooter(.6);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() 
   {
-    if(shooter.IsShooterAboveRPM(2500) && tilter.atSetpoint())
-    {
-      shooter.StartFeeder(.5);
-      timer.start();
-    }
   }
 
   // Called once the command ends or is interrupted.
@@ -55,9 +49,12 @@ public class ShootNoteCMD extends Command {
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
-    if (timer.hasElapsed(0.5)) 
+  public boolean isFinished() 
+  {
+    if(shooter.IsShooterAboveRPM(2500) && tilter.atSetpoint())
     {
+      shooter.MoveFeederDistance(300);
+      shooter.FeederDone();
       return true;
     }
     else
