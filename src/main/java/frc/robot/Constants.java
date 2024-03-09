@@ -86,6 +86,7 @@ public final class Constants
               public static final double handOffPosition = 310; 
               public static final double shootFromStage = 305;
               public static final double shootFromSpeaker = 322;
-              public static final double ampPosition = 240; 
+              public static final double ampPosition = 240;
+              public static final double passPosition = 260;
           }
 }

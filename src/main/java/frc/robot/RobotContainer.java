@@ -175,6 +175,10 @@ public class RobotContainer
     manipulatorXbox.start().onTrue(new ElevatorGoPosition(elevator, Constants.Elevator.elvAmpPosition, tilter));
     manipulatorXbox.back().onTrue(new ElevatorGoPosition(elevator, Constants.Elevator.elvBottomPosition, tilter));
 
+    //pass=povLeft
+    manipulatorXbox.povLeft().whileTrue(new ShootNoteCMD(tilter, shooter, Constants.Tilter.passPosition));
+    manipulatorXbox.povLeft().onFalse(new ReturnToNormal(intake, elevator, tilter, shooter).withTimeout(1));;
+
   }
 
   /**
