@@ -15,9 +15,9 @@ public class JogShooter extends Command {
   public Timer timer;
   /** Creates a new AmpScoreCMD. */
   public JogShooter(Shooter m_shooter, Boolean m_inward){
-    addRequirements(shooter);
     shooter = m_shooter;
     inward = m_inward;
+    addRequirements(shooter);
     
   }
 

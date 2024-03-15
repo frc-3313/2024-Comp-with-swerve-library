@@ -16,10 +16,9 @@ public class IntakeNoteCMD extends Command
 
   public IntakeNoteCMD(Intake m_intake, Shooter m_Shooter)
   {
-    addRequirements(intake, shooter);
     intake = m_intake;
     shooter = m_Shooter;
-    
+    addRequirements(intake, shooter);
     
   }
 

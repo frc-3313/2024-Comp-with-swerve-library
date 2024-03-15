@@ -13,7 +13,6 @@ public class IntakeStopCMD extends Command
 
   public IntakeStopCMD(Intake m_intake) 
   {
-    addRequirements(intake);
     intake = m_intake;
     addRequirements(intake);
     

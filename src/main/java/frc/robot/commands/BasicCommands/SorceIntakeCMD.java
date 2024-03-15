@@ -20,11 +20,11 @@ public class SorceIntakeCMD extends Command {
   public Timer timer;
   /** Creates a new AmpScoreCMD. */
   public SorceIntakeCMD(Intake m_Intake, Elevator m_Elevator, Tilter m_Tilter, Shooter m_Shooter){
-    addRequirements(intake, tilter, shooter, elevator);
     intake = m_Intake;
     elevator = m_Elevator;
     tilter = m_Tilter;
     shooter = m_Shooter;
+    addRequirements(intake, tilter, shooter, elevator);
     
   }
 
