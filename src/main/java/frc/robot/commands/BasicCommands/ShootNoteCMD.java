@@ -5,45 +5,26 @@
 package frc.robot.commands.BasicCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
-import edu.wpi.first.wpilibj.Timer;
 
 public class ShootNoteCMD extends Command {
   
   public Tilter tilter;
   public Shooter shooter;
-  public Double shootAngle;
-  public Timer timer;
+  public Elevator elevator;
 
-  public ShootNoteCMD(Tilter m_Tilter, Shooter m_Shooter, Double m_shootAngle) {
-    tilter = m_Tilter;
-    shooter = m_Shooter;
-    shootAngle = m_shootAngle;
-    addRequirements(tilter, shooter);
-
+  public ShootNoteCMD(Tilter tilter, Shooter shooter, Elevator elevator) {
+    this.tilter = tilter;
+    this.shooter = shooter;
+    this.elevator = elevator;
+    addRequirements(tilter, shooter, elevator);
   }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() 
-  {
-
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() 
-  {
-  }
-
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) 
   {
-    shooter.StopAllMotors();
-    tilter.GoToPosition(Constants.Tilter.stowPosition);
     shooter.StopAllMotors();
   }
 
@@ -51,11 +32,17 @@ public class ShootNoteCMD extends Command {
   @Override
   public boolean isFinished() 
   {
-    if(shooter.IsShooterAboveRPM(2500) && tilter.atSetpoint())
+    if(shooter.IsShooterAboveRPM(2500) && tilter.atSetpoint() && elevator.atSetpoint())
     {
       shooter.MoveFeederDistance(300);
-      shooter.FeederDone();
-      return true;
+      if(shooter.FeederDone())
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     }
     else
     {

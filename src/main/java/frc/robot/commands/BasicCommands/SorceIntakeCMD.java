@@ -40,7 +40,7 @@ public class SorceIntakeCMD extends Command {
     {
       elevator.GoToHeight(Constants.Elevator.SorceIntakePosition);
       tilter.GoToPosition(Constants.Tilter.shootFromStage);
-      shooter.StartShooter(-.3);
+      shooter.SetShooterSpeed(-.3);
     } 
   }
 

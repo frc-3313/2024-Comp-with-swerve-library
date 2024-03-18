@@ -56,14 +56,12 @@ public class Shooter extends SubsystemBase
     feederPID.setOutputRange(kMinOutput, kMaxOutput);
   }
 
-  public void StartShooter()
-  {
-    shooterMotorOne.set(maxSpeed);
-  }
- public void StartShooter(double speed)
+
+ public void SetShooterSpeed(double speed)
   {
     shooterMotorOne.set(speed);
   }
+  
   public void StartFeeder(double speed)
   {
     feederMotor.set(speed);
