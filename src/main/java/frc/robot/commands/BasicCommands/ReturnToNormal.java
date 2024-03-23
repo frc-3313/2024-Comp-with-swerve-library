@@ -20,12 +20,11 @@ public class ReturnToNormal extends Command {
   public Timer timer;
   /** Creates a new AmpScoreCMD. */
   public ReturnToNormal(Intake m_Intake, Elevator m_Elevator, Tilter m_Tilter, Shooter m_Shooter){
-  //, Tilter m_Tilter, Shooter m_Shooter) {
-    // Use addRequirements() here to declare subsystem dependencies.
     intake = m_Intake;
     elevator = m_Elevator;
     tilter = m_Tilter;
     shooter = m_Shooter;
+    addRequirements(intake, elevator, tilter, shooter);
   }
 
   // Called when the command is initially scheduled.

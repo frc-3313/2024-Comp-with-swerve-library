@@ -15,10 +15,10 @@ public class JogIntake extends Command {
   public Timer timer;
   /** Creates a new AmpScoreCMD. */
   public JogIntake(Intake m_Intake, Boolean m_inward){
-  //, Tilter m_Tilter, Shooter m_Shooter) {
-    // Use addRequirements() here to declare subsystem dependencies.
     intake = m_Intake;
     inward = m_inward;
+    addRequirements(intake);
+    
   }
 
   // Called when the command is initially scheduled.

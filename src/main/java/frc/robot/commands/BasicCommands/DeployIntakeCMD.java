@@ -16,10 +16,10 @@ public class DeployIntakeCMD extends Command
 
   public DeployIntakeCMD(Intake m_intake, Shooter m_Shooter)
   {
-    // Use addRequirements() here to declare subsystem dependencies.
+    
     intake = m_intake;
     shooter = m_Shooter;
-    
+    addRequirements(intake, shooter);
   }
 
   // Called when the command is initially scheduled.

@@ -20,10 +20,11 @@ public class HandOffNoteBCMD extends Command
   public Timer timer;
 
   public HandOffNoteBCMD(Intake m_Intake, Tilter m_Tilter, Shooter m_Shooter) {
-    // Use addRequirements() here to declare subsystem dependencies.
-  intake = m_Intake;
-  tilter = m_Tilter;
-  shooter = m_Shooter;
+    
+    intake = m_Intake;
+    tilter = m_Tilter;
+    shooter = m_Shooter;
+    addRequirements(tilter, shooter, intake);
   }
 
 

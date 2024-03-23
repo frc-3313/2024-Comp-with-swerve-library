@@ -15,10 +15,10 @@ public class JogShooter extends Command {
   public Timer timer;
   /** Creates a new AmpScoreCMD. */
   public JogShooter(Shooter m_shooter, Boolean m_inward){
-  //, Tilter m_Tilter, Shooter m_Shooter) {
-    // Use addRequirements() here to declare subsystem dependencies.
     shooter = m_shooter;
     inward = m_inward;
+    addRequirements(shooter);
+    
   }
 
   // Called when the command is initially scheduled.
