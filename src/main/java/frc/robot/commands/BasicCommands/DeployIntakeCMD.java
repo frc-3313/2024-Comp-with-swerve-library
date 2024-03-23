@@ -28,7 +28,7 @@ public class DeployIntakeCMD extends Command
   {
     if(!intake.hasNote() && !shooter.hasNote())
     {
-      intake.DeployIntake();
+      
       intake.RunIntake(.3);
     }
     
@@ -47,7 +47,7 @@ public class DeployIntakeCMD extends Command
   public void end(boolean interrupted) 
   {
       intake.StopIntake();
-      intake.RetractIntake();
+
       SmartDashboard.putBoolean("intake is done", true);
   }
 

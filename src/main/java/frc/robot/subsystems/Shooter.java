@@ -11,6 +11,8 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,8 +24,7 @@ public class Shooter extends SubsystemBase
   private final CANSparkMax feederMotor = new CANSparkMax(Constants.Shooter.FeederMotor_ID, MotorType.kBrushless);
   private RelativeEncoder feederEncoder = feederMotor.getEncoder();
   private static double maxSpeed = 1.0f;
-  private ColorSensorV3 distanceSensor = new ColorSensorV3(Port.kMXP); 
-
+  private DigitalInput ShootBeam = new DigitalInput(0);
   private SparkPIDController feederPID;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
@@ -35,6 +36,7 @@ public class Shooter extends SubsystemBase
     feederMotor.setSmartCurrentLimit(40);
     feederMotor.setInverted(true);
     feederPID = feederMotor.getPIDController();
+    
    // SmartDashboard.putBoolean("Display Shooter", displaySmartDashboard);
 
 
@@ -96,7 +98,7 @@ public class Shooter extends SubsystemBase
   public boolean hasNote()
   {
 
-    if(GetDistance() > 50 )
+    if(!ShootNoteBeam())
     {
       return true;
     }
@@ -106,10 +108,11 @@ public class Shooter extends SubsystemBase
     }
 
   }
-
-   public int GetDistance()
+   
+   
+   public Boolean ShootNoteBeam()
    {
-      return distanceSensor.getProximity();
+      return ShootBeam.get();
    }
 
   public boolean IsShooterAboveRPM(int rpm)
@@ -130,10 +133,10 @@ public class Shooter extends SubsystemBase
 
     //  SmartDashboard.putNumber("DIo sensor", distanceSensor.getProximity());
     //  SmartDashboard.putNumber("shooter speed", shooterMotorOne.getEncoder().getVelocity());
-      SmartDashboard.putNumber("shooter sensor", distanceSensor.getProximity());
+      SmartDashboard.putBoolean("shooter sensor", ShootBeam.get());
     
-    SmartDashboard.putBoolean("shooter has note", hasNote());
-    SmartDashboard.putBoolean("shooter sensor connected", distanceSensor.isConnected());
+   // SmartDashboard.putBoolean("shooter has note", hasNote());
+    
 
   }
 }

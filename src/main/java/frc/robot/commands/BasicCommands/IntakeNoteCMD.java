@@ -28,12 +28,12 @@ public class IntakeNoteCMD extends Command
   {
     if(!intake.hasNote() && !shooter.hasNote())
     {
-      intake.DeployIntake();
+     
       intake.RunIntake(.32);
     }
     else
     {
-      intake.RetractIntake();
+    
       intake.StopIntake();
     }
     //SmartDashboard.putBoolean("intake is done", false);
@@ -51,17 +51,17 @@ public class IntakeNoteCMD extends Command
   public void end(boolean interrupted) 
   {
       intake.StopIntake();
-      intake.RetractIntake();
+      
       SmartDashboard.putBoolean("intake is done", true);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(intake.hasNote() && intake.atSetpoint() || shooter.hasNote())
+    if(intake.hasNote()|| shooter.hasNote())
     {
       intake.StopIntake();
-      intake.RetractIntake();
+      
       return true;
     }
     else

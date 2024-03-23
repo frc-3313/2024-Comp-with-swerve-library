@@ -80,11 +80,11 @@ public class RobotContainer
     configureBindings();
 
     AbsoluteDriveAdv closedAbsoluteDriveAdv = new AbsoluteDriveAdv(drivebase,
-                                                                   () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
+                                                                   () -> MathUtil.applyDeadband(driverXbox.getLeftY()/5,
                                                                                                 OperatorConstants.LEFT_Y_DEADBAND),
-                                                                   () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
+                                                                   () -> MathUtil.applyDeadband(driverXbox.getLeftX()/5,
                                                                                                 OperatorConstants.LEFT_X_DEADBAND),
-                                                                   () -> MathUtil.applyDeadband(driverXbox.getRightX(),
+                                                                   () -> MathUtil.applyDeadband(driverXbox.getRightX()/5,
                                                                                                 OperatorConstants.RIGHT_X_DEADBAND),
                                                                    () -> driverXbox.y().getAsBoolean(),
                                                                    () -> driverXbox.a().getAsBoolean(),

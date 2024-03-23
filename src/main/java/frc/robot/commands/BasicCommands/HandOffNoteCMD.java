@@ -39,7 +39,7 @@ public class HandOffNoteCMD extends Command
     if (intake.hasNote() && !shooter.hasNote())
     {
      tilter.GoToPosition(Constants.Tilter.handOffPosition);
-     intake.GoToPosition(Constants.Intake.HandOffPosition);
+     
     }
   }
 
@@ -47,9 +47,9 @@ public class HandOffNoteCMD extends Command
   @Override
   public void execute() 
   {
-    if(tilter.atSetpoint() && intake.atSetpoint() && !shooter.hasNote()) 
+    if(tilter.atSetpoint() && !shooter.hasNote()) 
     {
-      intake.RunIntake(-.6);
+      intake.RunIntake(.6);
       shooter.StartFeeder(.2);
     }
    }

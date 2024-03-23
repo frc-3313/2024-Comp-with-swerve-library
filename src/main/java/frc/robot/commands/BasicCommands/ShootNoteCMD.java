@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 
 public class ShootNoteCMD extends Command {
@@ -31,6 +32,7 @@ public class ShootNoteCMD extends Command {
     timer = new Timer();
     tilter.GoToPosition(shootAngle);
     shooter.StartShooter(.6);
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.

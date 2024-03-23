@@ -12,6 +12,7 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,7 +21,7 @@ import com.revrobotics.ColorSensorV3;
 public class Intake extends SubsystemBase 
 {
   //Tilter Motor Setup
-  private final CANSparkMax intakeTilterMotor = new CANSparkMax(Constants.Intake.IntakeTilterMotor_ID, MotorType.kBrushless);
+  
   private static final SparkAbsoluteEncoder.Type kAltEncType = SparkAbsoluteEncoder.Type.kDutyCycle;
 
   private SparkPIDController pidController;
@@ -33,20 +34,14 @@ public class Intake extends SubsystemBase
   private final CANSparkMax intakeMotor = new CANSparkMax(Constants.Intake.IntakeMotor_ID, MotorType.kBrushless);
 
   //Distance sensor
-   private ColorSensorV3 distanceSensor = new ColorSensorV3(Port.kOnboard); 
-
+   
+   DigitalInput IntakeBeam = new DigitalInput(1);
   public Intake() 
   {
-    intakeTilterMotor.restoreFactoryDefaults();
-    intakeTilterMotor.setIdleMode(IdleMode.kBrake);
-    alternateEncoder = intakeTilterMotor.getAbsoluteEncoder(kAltEncType);
-    alternateEncoder.setZeroOffset(.5);
-    alternateEncoder.setPositionConversionFactor(360);
-    pidController = intakeTilterMotor.getPIDController();
-    pidController.setFeedbackDevice(alternateEncoder);
-    newTargetPosition = Constants.Intake.RetractPosition;
+    
+    
     intakeMotor.setIdleMode(IdleMode.kBrake);
-
+/*
     //PID
     kP = .005; //how aggresive towards target
     kI = 0; //accumlation of past errors
@@ -63,18 +58,10 @@ public class Intake extends SubsystemBase
     pidController.setFF(kFF);
     pidController.setOutputRange(kMinOutput, kMaxOutput);
     pidController.setSmartMotionMaxAccel(1000, 0);
-
-    //SmartDashboard.putBoolean("Display Intake", displaySmartDashboard);
+    //SmartDashboard.putBoolean("Display Intake", displaySmartDashboard); */
   }
 
-  public void DeployIntake()
-  {
-    newTargetPosition = Constants.Intake.DeployPosition;
-  }
-  public void RetractIntake()
-  {
-    newTargetPosition = Constants.Intake.HandOffPosition;
-  }
+  
 
   public void RunIntake(double speed)
   {
@@ -88,7 +75,7 @@ public class Intake extends SubsystemBase
   public boolean hasNote()
   { 
 
-    if(GetDistance() > 70)
+    if(!IntakeNoteBeam())
     {
       return true;
     }
@@ -99,44 +86,44 @@ public class Intake extends SubsystemBase
 
   }
 
-   public int GetDistance()
+   public boolean IntakeNoteBeam()
    {
-      return distanceSensor.getProximity();
+      return IntakeBeam.get();
    }
 
-   public void GoToPosition(double position)
-   {
-     newTargetPosition = position;
-   }
-   public boolean atSetpoint() {
+  // public void GoToPosition(double position)
+  // {
+   //  newTargetPosition = position;
+   //}
+   //public boolean atSetpoint() {
     //return pid.atSetpoint();
-    if((getDegrees() < newTargetPosition + 2) && (getDegrees() > newTargetPosition - 2))
-      return true;
-    else
-      return false;
-  }
-   public boolean atSetpoint(double Setpoint) {
+   // if((getDegrees() < newTargetPosition + 2) && (getDegrees() > newTargetPosition - 2))
+   //   return true;
+   // else
+   //   return false;
+  //}
+  // public boolean atSetpoint(double Setpoint) {
     //return pid.atSetpoint();
-    if((getDegrees() < newTargetPosition + Setpoint) && (getDegrees() > newTargetPosition - Setpoint))
-      return true;
-    else
-      return false;
-  }
-  public double getDegrees() {
-    return alternateEncoder.getPosition();
-  }
+  //  if((getDegrees() < newTargetPosition + Setpoint) && (getDegrees() > newTargetPosition - Setpoint))
+   //   return true;
+   // else
+    //  return false;
+ // }
+ // public double getDegrees() {
+  //  return alternateEncoder.getPosition();
+  //}
 
   @Override
   public void periodic() 
   {
 
-    pidController.setReference(newTargetPosition, CANSparkMax.ControlType.kPosition);
+    //pidController.setReference(newTargetPosition, CANSparkMax.ControlType.kPosition);
     //   SmartDashboard.putNumber("Intake Setpoint", newTargetPosition);
     //  SmartDashboard.putNumber("intake position", alternateEncoder.getPosition());
 
     
     SmartDashboard.putBoolean("intake has note", hasNote());
-    SmartDashboard.putBoolean("Intake At Set", atSetpoint());
+   // SmartDashboard.putBoolean("Intake At Set", atSetpoint());
     //SmartDashboard.putBoolean("Intake sensor connected", distanceSensor.isConnected());
     //SmartDashboard.putNumber("intake sensor", distanceSensor.getProximity());
     if(intakeMotor.getEncoder().getVelocity() > 10)
