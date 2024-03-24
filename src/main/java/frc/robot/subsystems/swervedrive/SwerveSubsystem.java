@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.io.File;
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
@@ -195,26 +196,6 @@ public class SwerveSubsystem extends SubsystemBase
     });
   }
 
-  /**
-   * Command to drive the robot using translative values and heading as a setpoint.
-   *
-   * @param translationX Translation in the X direction.
-   * @param translationY Translation in the Y direction.
-   * @param rotation     Rotation as a value between [-1, 1] converted to radians.
-   * @return Drive command.
-   */
-  public Command simDriveCommand(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier rotation)
-  {
-    // swerveDrive.setHeadingCorrection(true); // Normally you would want heading correction for this kind of control.
-    return run(() -> {
-      // Make the robot move
-      driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(translationX.getAsDouble(),
-                                                                      translationY.getAsDouble(),
-                                                                      rotation.getAsDouble() * Math.PI,
-                                                                      swerveDrive.getOdometryHeading().getRadians(),
-                                                                      swerveDrive.getMaximumVelocity()));
-    });
-  }
 
   /**
    * Command to drive the robot using translative values and heading as angular velocity.
@@ -236,6 +217,25 @@ public class SwerveSubsystem extends SubsystemBase
     });
   }
 
+    /**
+   * Command to drive the robot using translative values and heading as angular velocity.
+   *
+   * @param translationX     Translation in the X direction. Cubed for smoother controls.
+   * @param translationY     Translation in the Y direction. Cubed for smoother controls.
+   * @param angularRotationX Angular velocity of the robot to set. Cubed for smoother controls.
+   * @return Drive command.
+   */
+  public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier angularRotationX,
+                              BooleanSupplier down, BooleanSupplier downLeft, BooleanSupplier left, BooleanSupplier upLeft,
+                              BooleanSupplier up, BooleanSupplier upRight, BooleanSupplier right, BooleanSupplier downRight)
+  {
+    return run(() -> {
+      // Make the robot move
+      drive(translationX.getAsDouble(), translationY.getAsDouble(), angularRotationX.getAsDouble(),
+                        down.getAsBoolean(), downLeft.getAsBoolean(), left.getAsBoolean(), upLeft.getAsBoolean(), 
+                        up.getAsBoolean(), upRight.getAsBoolean(), right.getAsBoolean(), downRight.getAsBoolean());
+    });
+  }
   /**
    * The primary method for controlling the drivebase.  Takes a {@link Translation2d} and a rotation rate, and
    * calculates and commands module states accordingly.  Can use either open-loop or closed-loop velocity control for
@@ -258,6 +258,74 @@ public class SwerveSubsystem extends SubsystemBase
                       false); // Open loop is disabled since it shouldn't be used most of the time.
   }
 
+    public void drive(double translationX, double translationY, double rotation,
+                      Boolean down, Boolean downLeft, Boolean left, Boolean upLeft,
+                      Boolean up, Boolean upRight, Boolean right, Boolean downRight)
+  {
+      if(down || downLeft || left || upLeft || up || upRight || right || downRight)
+      {
+        double xInput = Math.pow(translationX, 3); // Smooth controll out
+        double yInput = Math.pow(translationY, 3); // Smooth controll out
+        double headingX = 0;
+        double headingY = 0;
+      // Make the robot move
+        if(down)
+        {
+          headingX = -1;
+          headingY = 0;
+        }
+        else if(downLeft)
+        {
+          headingX = -1;
+          headingY = -1;
+        } 
+        else if(left)
+        {
+          headingX = 0;
+          headingY = -1;          
+        } 
+        else if(upLeft)
+        {
+          headingX = 1;
+          headingY = -1;         
+        } 
+        else if(up)
+        {
+          headingX = 1;
+          headingY = 0;            
+        } 
+        else if(upRight)
+        {
+          headingX = 1;
+          headingY = 1;  
+        } 
+        else if(right)
+        {
+          headingX = 0;
+          headingY = 1;          
+        } 
+        else if(downRight)
+        {
+          headingX = -1;
+          headingY = 1;            
+        } 
+
+        swerveDrive.driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(xInput, yInput,
+                                                                      headingX,
+                                                                      headingY,
+                                                                      swerveDrive.getOdometryHeading().getRadians(),
+                                                                      swerveDrive.getMaximumVelocity()));
+      }
+      else 
+      {
+                  swerveDrive.drive(new Translation2d(Math.pow(translationX, 3) * swerveDrive.getMaximumVelocity(),
+                                          Math.pow(translationY, 3) * swerveDrive.getMaximumVelocity()),
+                                          Math.pow(rotation, 3) * swerveDrive.getMaximumAngularVelocity(),
+                        true,
+                        false);
+      }              
+
+  }
   /**
    * Drive the robot given a chassis field oriented velocity.
    *

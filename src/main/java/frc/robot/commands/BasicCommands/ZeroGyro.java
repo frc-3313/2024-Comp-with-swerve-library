@@ -13,7 +13,6 @@ public class ZeroGyro extends Command {
   public SwerveSubsystem swerveSubsystem;
   /** Creates a new AmpScoreCMD. */
   public ZeroGyro(SwerveSubsystem m_SwerveSubsystem){
-  //, Tilter m_Tilter, Shooter m_Shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
     swerveSubsystem = m_SwerveSubsystem;
     
