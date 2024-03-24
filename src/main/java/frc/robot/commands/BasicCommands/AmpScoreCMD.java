@@ -7,24 +7,21 @@ package frc.robot.commands.BasicCommands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
 
 public class AmpScoreCMD extends Command {
-  public Intake intake;
   public Elevator elevator;
   public Tilter tilter;
   public Shooter shooter;
   /** Creates a new AmpScoreCMD. */
-  public AmpScoreCMD(Intake m_Intake, Elevator m_Elevator, Tilter m_Tilter, Shooter m_Shooter)
+  public AmpScoreCMD(Elevator m_Elevator, Tilter m_Tilter, Shooter m_Shooter)
   {
     
-    intake = m_Intake;
     elevator = m_Elevator;
     tilter = m_Tilter;
     shooter = m_Shooter;
-    addRequirements(intake, elevator, tilter, shooter);
+    addRequirements(elevator, tilter, shooter);
     
   }
 
