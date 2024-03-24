@@ -3,41 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.76,
-        "y": 4.47
+        "x": 1.32,
+        "y": 5.53650223579517
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2888463383764373,
-        "y": 3.718741112695901
+        "x": 2.320000000000001,
+        "y": 5.53650223579517
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.7269277444537785,
-        "y": 1.871064710790391
+        "x": 2.47,
+        "y": 5.54
       },
       "prevControl": {
-        "x": 3.499041527997585,
-        "y": 2.1751127262938272
-      },
-      "nextControl": {
-        "x": 6.021716859296661,
-        "y": 1.5504502633054884
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 8.048067606106722,
-        "y": 2.479160741797268
-      },
-      "prevControl": {
-        "x": 7.048067606106722,
-        "y": 2.479160741797268
+        "x": 2.37,
+        "y": 5.54
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,7 +30,25 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.1,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "SmartIntakeCMD"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 6.0,
     "maxAcceleration": 1.25,
@@ -59,9 +61,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Middle",
   "previewStartingState": {
-    "rotation": -55.75877913772623,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

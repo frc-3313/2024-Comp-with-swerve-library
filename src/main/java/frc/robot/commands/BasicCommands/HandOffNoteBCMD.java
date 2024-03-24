@@ -36,16 +36,16 @@ public class HandOffNoteBCMD extends Command
     timer.reset();
     
     tilter.GoToPosition(Constants.Tilter.handOffPosition);
-    intake.GoToPosition(Constants.Intake.HandOffPosition);
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() 
   {
-    if(tilter.atSetpoint() && intake.atSetpoint(5))
+    if(tilter.atSetpoint())
     {
-      intake.RunIntake(-.6);
+      intake.RunIntake(.6);
       shooter.StartFeeder(.2);
       timer.start();
     }
@@ -56,11 +56,10 @@ public class HandOffNoteBCMD extends Command
   @Override
   public void end(boolean interrupted) 
   {
-    shooter.MoveFeederDistance(500);
     tilter.GoToPosition(Constants.Tilter.stowPosition);
     shooter.StopFeeder();
     intake.StopIntake();
-    shooter.MoveFeederDistance(-3);
+    shooter.MoveFeederDistance(Constants.Shooter.FeederBackDistance);
   }
 
   // Returns true when the command should end.

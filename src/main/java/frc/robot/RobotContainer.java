@@ -76,7 +76,6 @@ public class RobotContainer
     NamedCommands.registerCommand("ShootFromSpeaker", new PrimeShootCMD(tilter, shooter, elevator, 0.5, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
     NamedCommands.registerCommand("ShootAmp", new PrimeShootCMD(tilter, shooter, elevator, .3, Constants.Tilter.ampPosition, Constants.Elevator.elvAmpPosition));
     NamedCommands.registerCommand("ReturnToNormal", new ReturnToNormal(intake, elevator, tilter, shooter).withTimeout(1));
-    NamedCommands.registerCommand("DeployIntakeCMD", new DeployIntakeCMD(intake, shooter));
     
     // Configure the trigger bindings
     configureBindings();
@@ -92,6 +91,7 @@ public class RobotContainer
       () -> driverXbox.a().getAsBoolean(),
       () -> driverXbox.x().getAsBoolean(),
       () -> driverXbox.b().getAsBoolean());
+
 
     // Applies deadbands and inverts controls because joysticks
     // are back-right positive while robot

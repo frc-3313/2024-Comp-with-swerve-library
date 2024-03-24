@@ -8,6 +8,7 @@ import com.pathplanner.lib.util.PIDConstants;
 
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DigitalInput;
 import swervelib.math.Matter;
 
 /**
@@ -52,19 +53,18 @@ public final class Constants
           public static final class Intake
           {
               //INTAKE
-              public static final int IntakeTilterMotor_ID = 28;
-              public static final int Intake_ENCODER_ID = 3;
-              public static final int IntakeMotor_ID = 29;
-              public static final double HandOffPosition = 166;
-              public static final double DeployPosition = 313;
-              public static final double RetractPosition = 174;
-          }
+              
+              
+              public static final int IntakeMotor_ID = 23;
+             
+              DigitalInput IntakeBeam = new DigitalInput(0);
+          }   
           public static final class Elevator
           {
               //ELEVATOR
               public static final int ElevatorMotor1_ID = 22;
               public static final int Elevator_ENCODER_ID = 2;
-              public static final int ElevatorMotor2_ID = 23;
+              public static final int ElevatorMotor2_ID = 28;
               public static final double elvLowest = 1;
               public static final double elvBottomPosition = 0; 
               public static final double elvAmpPosition = 65;
@@ -77,6 +77,7 @@ public final class Constants
               //SHOOTER
               public static final int ShooterMotor1_ID = 24;
               public static final int FeederMotor_ID = 26;
+              DigitalInput ShootBeam = new DigitalInput(1);
           }
           public static final class Tilter
           {   
