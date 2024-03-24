@@ -20,7 +20,7 @@ public class SmartIntakeCMD extends SequentialCommandGroup {
   public SmartIntakeCMD(Intake intake, Tilter tilter, Shooter shooter)
   {
   addCommands(
-    new IntakeNoteCMD(intake, shooter),
+    new IntakeNoteCMD(intake, shooter, tilter),
     new HandOffNoteCMD(intake, tilter, shooter));
   }
 }
