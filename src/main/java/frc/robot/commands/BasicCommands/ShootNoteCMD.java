@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 
 public class ShootNoteCMD extends Command {
@@ -31,7 +30,14 @@ public class ShootNoteCMD extends Command {
   {
     timer = new Timer();
     tilter.GoToPosition(shootAngle);
-    shooter.StartShooter(.6);
+    if(shooter.noteToClose())
+    {
+      shooter.MoveFeederDistance(Constants.Shooter.FeederBackDistance);
+    }
+    else
+    {
+      shooter.StartShooter(.6);
+    }
     
   }
 
@@ -42,6 +48,14 @@ public class ShootNoteCMD extends Command {
     if(shooter.IsShooterAboveRPM(2500) && tilter.atSetpoint())
     {
       shooter.StartFeeder(.5);
+    }
+    else if(!shooter.noteToClose())
+    {
+      shooter.StartShooter(.6);
+      shooter.StopFeeder();
+    }
+    if(!shooter.hasNote() && ! shooter.noteToClose())
+    {
       timer.start();
     }
   }
@@ -58,7 +72,7 @@ public class ShootNoteCMD extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (timer.hasElapsed(0.5)) 
+    if (timer.hasElapsed(0.1)) 
     {
       return true;
     }

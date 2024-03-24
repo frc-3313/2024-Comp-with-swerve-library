@@ -18,35 +18,15 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootFromSpeaker"
-                }
-              }
-            ]
+            "name": "ShootFromSpeaker"
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Path 6 amp side start"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "SmartIntakeCMD"
-                }
-              }
-            ]
+            "pathName": "Path 6 amp side start"
           }
         },
         {
@@ -62,27 +42,14 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "SmartIntakeCMD"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Path 8 amp side long"
-                }
-              }
-            ]
+            "pathName": "Path 8 amp side long"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "Amp",
   "choreoAuto": false
 }

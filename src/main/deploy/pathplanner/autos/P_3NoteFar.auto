@@ -18,41 +18,15 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootFromSpeaker"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "DeployIntakeCMD"
-                }
-              }
-            ]
+            "name": "ShootFromSpeaker"
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Path 2 sorce side start"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "SmartIntakeCMD"
-                }
-              }
-            ]
+            "pathName": "Path 2 sorce side start"
           }
         },
         {
@@ -68,28 +42,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "ReturnToNormal"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "DeployIntakeCMD"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "P_GrabFarNote"
-                }
-              }
-            ]
+            "pathName": "P_GrabFarNote"
           }
         },
         {
@@ -107,6 +62,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "Pillar",
   "choreoAuto": false
 }

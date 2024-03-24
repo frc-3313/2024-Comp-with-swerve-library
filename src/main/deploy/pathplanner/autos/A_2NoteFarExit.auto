@@ -18,35 +18,15 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootFromSpeaker"
-                }
-              }
-            ]
+            "name": "ShootFromSpeaker"
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "SmartIntakeCMD"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "A_GrabFarNote"
-                }
-              }
-            ]
+            "pathName": "A_GrabFarNote"
           }
         },
         {
@@ -64,12 +44,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": "A_GrabFarNote"
+            "pathName": "A_GoFarNote"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "Amp",
   "choreoAuto": false
 }

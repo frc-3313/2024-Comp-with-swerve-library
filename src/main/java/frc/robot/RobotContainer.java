@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.BasicCommands.AmpScoreCMD;
-import frc.robot.commands.BasicCommands.DeployIntakeCMD;
 import frc.robot.commands.BasicCommands.ElevatorGoPosition;
 import frc.robot.commands.BasicCommands.HandOffNoteBCMD;
 import frc.robot.commands.BasicCommands.JogIntake;
@@ -72,9 +71,8 @@ public class RobotContainer
     NamedCommands.registerCommand("HandOffNoteBCMD", new HandOffNoteBCMD(intake, tilter, shooter));
     NamedCommands.registerCommand("ShootFromStage", new ShootNoteCMD(tilter, shooter, Constants.Tilter.shootFromStage));
     NamedCommands.registerCommand("ShootFromSpeaker", new ShootNoteCMD(tilter, shooter, Constants.Tilter.shootFromSpeaker));
-    NamedCommands.registerCommand("ShootAmp", new AmpScoreCMD(intake, elevator, tilter, shooter));
+    NamedCommands.registerCommand("ShootAmp", new AmpScoreCMD(elevator, tilter, shooter));
     NamedCommands.registerCommand("ReturnToNormal", new ReturnToNormal(intake, elevator, tilter, shooter).withTimeout(1));
-    NamedCommands.registerCommand("DeployIntakeCMD", new DeployIntakeCMD(intake, shooter));
     
     // Configure the trigger bindings
     configureBindings();
@@ -162,7 +160,7 @@ public class RobotContainer
     manipulatorXbox.y().onFalse(new ReturnToNormal(intake, elevator, tilter, shooter).withTimeout(1));;
     
     //amp=b
-    manipulatorXbox.b().whileTrue(new AmpScoreCMD(intake, elevator, tilter, shooter));
+    manipulatorXbox.b().whileTrue(new AmpScoreCMD(elevator, tilter, shooter));
     manipulatorXbox.b().onFalse(new ReturnToNormal(intake, elevator, tilter, shooter).withTimeout(1));;
 
     //Jog commands

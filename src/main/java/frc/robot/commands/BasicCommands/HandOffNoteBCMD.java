@@ -56,11 +56,10 @@ public class HandOffNoteBCMD extends Command
   @Override
   public void end(boolean interrupted) 
   {
-    shooter.MoveFeederDistance(500);
     tilter.GoToPosition(Constants.Tilter.stowPosition);
     shooter.StopFeeder();
     intake.StopIntake();
-    shooter.MoveFeederDistance(-3);
+    shooter.MoveFeederDistance(Constants.Shooter.FeederBackDistance);
   }
 
   // Returns true when the command should end.
