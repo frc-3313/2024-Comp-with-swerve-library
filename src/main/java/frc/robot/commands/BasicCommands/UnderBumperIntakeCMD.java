@@ -4,24 +4,30 @@
 
 package frc.robot.commands.BasicCommands;
 
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Tilter;
 import frc.robot.Constants;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Tilter;
 
-public class AmpScoreCMD extends Command {
-  public Elevator elevator;
-  public Tilter tilter;
+public class UnderBumperIntakeCMD extends Command 
+{
+  public Intake intake;
   public Shooter shooter;
-  /** Creates a new AmpScoreCMD. */
-  public AmpScoreCMD(Elevator m_Elevator, Tilter m_Tilter, Shooter m_Shooter)
+  public Tilter tilter;
+  public Timer timer;
+  public boolean timerStarted;
+
+
+  public UnderBumperIntakeCMD(Tilter m_Tilter, Shooter m_Shooter)
   {
     
-    elevator = m_Elevator;
     tilter = m_Tilter;
     shooter = m_Shooter;
-    addRequirements(elevator, tilter, shooter);
+    addRequirements(tilter, shooter);
     
   }
 
@@ -29,14 +35,9 @@ public class AmpScoreCMD extends Command {
   @Override
   public void initialize() 
   {
-  // tilter.GoToPosition(Constants.Tilter.ampPosition); 
-  // shooter.StartShooter();
-    if (shooter.hasNote()) 
-    {
-      elevator.GoToHeight(Constants.Elevator.elvAmpPosition);
-      tilter.GoToPosition(Constants.Tilter.ampPosition);
-      shooter.StartShooter(.3);
-    } 
+    tilter.GoToPosition(Constants.Tilter.handOffPosition);
+    intake.RunIntake(.4);
+    shooter.StartFeeder(.2);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -50,16 +51,14 @@ public class AmpScoreCMD extends Command {
   @Override
   public void end(boolean interrupted) 
   {
-    if(shooter.hasNote())
-    {
-      shooter.StartFeeder(.5);
-    }
-
+    intake.StopIntake();
+    shooter.StopFeeder();
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
+  public boolean isFinished() 
+  {
     return false;
   }
 }

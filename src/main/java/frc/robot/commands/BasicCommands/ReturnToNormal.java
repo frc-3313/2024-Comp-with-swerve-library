@@ -5,14 +5,14 @@
 package frc.robot.commands.BasicCommands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
 
-public class ReturnToNormal extends Command {
+public class ReturnToNormal extends InstantCommand {
   public Intake intake;
   public Elevator elevator;
   public Tilter tilter;
@@ -31,40 +31,9 @@ public class ReturnToNormal extends Command {
   @Override
   public void initialize() 
   {
-  // tilter.GoToPosition(Constants.Tilter.ampPosition); 
-  // shooter.StartShooter();
-  timer = new Timer();
-  timer.start();
-   
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() 
-  {
-
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) 
-  {
-      tilter.GoToPosition(Constants.Tilter.stowPosition);
-      elevator.GoToHeight(Constants.Elevator.elvBottomPosition);
-      shooter.StopAllMotors();
-      intake.StopIntake();
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    if (timer.hasElapsed(.5))
-    {
-        return true;
-    }
-    else
-    {
-      return false;
-    }
+    tilter.GoToPosition(Constants.Tilter.stowPosition);
+    elevator.GoToHeight(Constants.Elevator.elvBottomPosition);
+    shooter.StopAllMotors();
+    intake.StopIntake();
   }
 }
