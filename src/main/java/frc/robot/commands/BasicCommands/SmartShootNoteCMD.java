@@ -48,7 +48,7 @@ public class SmartShootNoteCMD extends Command
 
   @Override
   public boolean isFinished() {
-    if(limelight.isTargetValid() && shooter.IsShooterAboveRPM(2500) && tilter.atSetpoint())
+    if(limelight.isTargetValid() && shooter.IsShooterAboveRPM() && tilter.atSetpoint())
     {
       shooter.MoveFeederDistance(300);
       if(shooter.FeederDone())

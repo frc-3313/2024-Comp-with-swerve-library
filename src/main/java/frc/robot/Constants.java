@@ -84,7 +84,7 @@ public final class Constants
           {   
               //TILTER
               public static final int TilterMotor_ID = 27;
-              public static final double stowPosition = 245; 
+              public static final double stowPosition = 255; 
               public static final double handOffPosition = 310; 
               public static final double shootFromStage = 305;
               public static final double shootFromSpeaker = 322;

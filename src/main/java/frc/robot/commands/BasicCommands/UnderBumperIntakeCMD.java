@@ -33,7 +33,9 @@ public class UnderBumperIntakeCMD extends Command
   @Override
   public void initialize() 
   {
-
+    tilter.GoToPosition(Constants.Tilter.handOffPosition);
+    intake.RunIntake(.4);
+    shooter.StartFeeder(.2);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -47,7 +49,8 @@ public class UnderBumperIntakeCMD extends Command
   @Override
   public void end(boolean interrupted) 
   {
-
+    intake.StopIntake();
+    shooter.StopFeeder();
   }
 
   // Returns true when the command should end.
