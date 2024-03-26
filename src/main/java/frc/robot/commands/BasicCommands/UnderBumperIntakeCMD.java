@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Tilter;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Shooter;
 
 public class UnderBumperIntakeCMD extends Command 
@@ -20,13 +21,14 @@ public class UnderBumperIntakeCMD extends Command
   public Timer timer;
   public boolean timerStarted;
 
-  public UnderBumperIntakeCMD(Intake m_intake, Shooter m_Shooter, Tilter m_Tilter)
+
+  public UnderBumperIntakeCMD(Tilter m_Tilter, Shooter m_Shooter)
   {
-    // Use addRequirements() here to declare subsystem dependencies.
-    intake = m_intake;
-    shooter = m_Shooter;
+    
     tilter = m_Tilter;
-    addRequirements(shooter, intake, tilter);
+    shooter = m_Shooter;
+    addRequirements(tilter, shooter);
+    
   }
 
   // Called when the command is initially scheduled.
