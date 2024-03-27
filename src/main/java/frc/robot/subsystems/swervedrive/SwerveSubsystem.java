@@ -226,14 +226,12 @@ public class SwerveSubsystem extends SubsystemBase
    * @return Drive command.
    */
   public Command driveCommand(DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier angularRotationX,
-                              BooleanSupplier down, BooleanSupplier downLeft, BooleanSupplier left, BooleanSupplier upLeft,
-                              BooleanSupplier up, BooleanSupplier upRight, BooleanSupplier right, BooleanSupplier downRight)
+                              BooleanSupplier x, BooleanSupplier y, BooleanSupplier b, BooleanSupplier a)
   {
     return run(() -> {
       // Make the robot move
       drive(translationX.getAsDouble(), translationY.getAsDouble(), angularRotationX.getAsDouble(),
-                        down.getAsBoolean(), downLeft.getAsBoolean(), left.getAsBoolean(), upLeft.getAsBoolean(), 
-                        up.getAsBoolean(), upRight.getAsBoolean(), right.getAsBoolean(), downRight.getAsBoolean());
+                        x.getAsBoolean(), y.getAsBoolean(), b.getAsBoolean(), a.getAsBoolean());
     });
   }
   /**
@@ -259,55 +257,44 @@ public class SwerveSubsystem extends SubsystemBase
   }
 
     public void drive(double translationX, double translationY, double rotation,
-                      Boolean down, Boolean downLeft, Boolean left, Boolean upLeft,
-                      Boolean up, Boolean upRight, Boolean right, Boolean downRight)
+                      Boolean x, Boolean y, Boolean b, Boolean a)
   {
-      if(down || downLeft || left || upLeft || up || upRight || right || downRight)
+      if(x || y || b || a)
       {
         double xInput = Math.pow(translationX, 3); // Smooth controll out
         double yInput = Math.pow(translationY, 3); // Smooth controll out
         double headingX = 0;
         double headingY = 0;
       // Make the robot move
-        if(down)
+        if(x)
         {
           headingX = -1;
           headingY = 0;
         }
-        else if(downLeft)
-        {
-          headingX = -1;
-          headingY = -1;
-        } 
-        else if(left)
+        else if(y)
         {
           headingX = 0;
-          headingY = -1;          
+          headingY = 1;
         } 
-        else if(upLeft)
+        else if(b)
         {
           headingX = 1;
-          headingY = -1;         
+          headingY = 0;          
         } 
-        else if(up)
-        {
-          headingX = 1;
-          headingY = 0;            
-        } 
-        else if(upRight)
-        {
-          headingX = 1;
-          headingY = 1;  
-        } 
-        else if(right)
+        else if(a)
         {
           headingX = 0;
-          headingY = 1;          
+          headingY = 1;         
         } 
-        else if(downRight)
+        else if(x && y)
         {
           headingX = -1;
           headingY = 1;            
+        } 
+        else if(y && b)
+        {
+          headingX = 1;
+          headingY = 1;  
         } 
 
         swerveDrive.driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(xInput, yInput,

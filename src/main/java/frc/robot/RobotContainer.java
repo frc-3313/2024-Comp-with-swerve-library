@@ -79,14 +79,11 @@ public class RobotContainer
         () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
         () -> -driverXbox.getRightX(), 
-        () -> driverXbox.povDown().getAsBoolean(),
-        () -> driverXbox.povDownLeft().getAsBoolean(),
-        () -> driverXbox.povLeft().getAsBoolean(),
-        () -> driverXbox.povUpLeft().getAsBoolean(),
-        () -> driverXbox.povUp().getAsBoolean(),
-        () -> driverXbox.povUpRight().getAsBoolean(),
-        () -> driverXbox.povRight().getAsBoolean(),
-        () -> driverXbox.povDownRight().getAsBoolean());
+        () -> driverXbox.x().getAsBoolean(),
+        () -> driverXbox.y().getAsBoolean(),
+        () -> driverXbox.b().getAsBoolean(),
+        () -> driverXbox.a().getAsBoolean());
+        
       
      Command driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
         () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
@@ -94,9 +91,9 @@ public class RobotContainer
         () -> -driverXbox.getRightX());
          
 
-    drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
+    drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocityNew);
     
-    auto_chooser = AutoBuilder.buildAutoChooser();
+    //auto_chooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData(auto_chooser);
   }
 
