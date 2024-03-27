@@ -34,8 +34,8 @@ public class Elevator extends SubsystemBase {
     elevatorMotor1.follow(elevatorMotor2,true);
     
 
-    elevatorMotor1.setIdleMode(IdleMode.kBrake);
-    elevatorMotor2.setIdleMode(IdleMode.kBrake);
+    elevatorMotor1.setIdleMode(IdleMode.kCoast);
+    elevatorMotor2.setIdleMode(IdleMode.kCoast);
     elevatorMotor1.setSmartCurrentLimit(20);
     elevatorMotor2.setSmartCurrentLimit(20); 
 
@@ -84,6 +84,16 @@ public class Elevator extends SubsystemBase {
       return -1;
     }
     return speed;
+  }
+  public void setMotorBrake()
+  {
+    elevatorMotor1.setIdleMode(IdleMode.kBrake);
+    elevatorMotor2.setIdleMode(IdleMode.kBrake);
+  }
+  public void setMotorAmp(int amp)
+  {
+    elevatorMotor1.setSmartCurrentLimit(amp);
+    elevatorMotor2.setSmartCurrentLimit(amp);
   }
   public boolean atSetpoint() {
     if((getDegrees() < newTargetPosition + 3) && (getDegrees() > newTargetPosition - 3))

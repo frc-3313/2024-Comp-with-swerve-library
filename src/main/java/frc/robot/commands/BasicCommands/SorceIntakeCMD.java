@@ -40,7 +40,7 @@ public class SorceIntakeCMD extends Command {
     {
       elevator.GoToHeight(Constants.Elevator.SorceIntakePosition);
       tilter.GoToPosition(Constants.Tilter.shootFromStage);
-      shooter.SetShooterSpeed(-.3);
+      shooter.SetShooterSpeed(Constants.Shooter.sourceIntakeSpeed);
     } 
   }
 
@@ -56,17 +56,18 @@ public class SorceIntakeCMD extends Command {
   public void end(boolean interrupted) 
   {
 
-   elevator.GoToHeight(Constants.Elevator.elvLowest);   
+   elevator.GoToHeight(Constants.Elevator.elvBottomPosition);   
    tilter.GoToPosition(Constants.Tilter.stowPosition); 
    shooter.StopAllMotors(); 
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
+  public boolean isFinished() 
+  {
     if (shooter.hasNote()) 
     {
-     return true; 
+      return true; 
     }
     return false;
   }

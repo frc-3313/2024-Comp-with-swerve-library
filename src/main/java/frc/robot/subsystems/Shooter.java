@@ -24,7 +24,9 @@ public class Shooter extends SubsystemBase
   private DigitalInput shootToCloseBeam = new DigitalInput(0);
   private DigitalInput shootHasNoteBeam = new DigitalInput(1);
   private SparkPIDController feederPID;
-  public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
+  private SparkPIDController shooterPID;
+  public double feedkP, feedkI, feedkD, feedkIz, feedkFF, feedkMaxOutput, feedkMinOutput;
+  public double shootkP, shootkI, shootkD, shootkIz, shootkFF, shootkMaxOutput, shootkMinOutput;
   private double setDistance;
   private double estRPM;
   private boolean feederStarted;
@@ -32,6 +34,7 @@ public class Shooter extends SubsystemBase
   public Shooter() 
   {
     shooterMotorOne.setIdleMode(IdleMode.kCoast);
+    shooterPID = shooterMotorOne.getPIDController();
     feederMotor.setIdleMode(IdleMode.kCoast);
     shooterMotorOne.setSmartCurrentLimit(80);
     feederMotor.setSmartCurrentLimit(40);
@@ -40,27 +43,42 @@ public class Shooter extends SubsystemBase
     feederStarted = false;
     
     //PID
-    kP = 0.02; //how aggresive towards target
-    kI = 0; //accumlation of past errors
-    kD = 0.0005; //how rate of change responds
-    kIz = 0;  //integral zone how much of the zone it looks at
-    kFF = 0;  //feed forward again estimates the future based on past
-    kMaxOutput = .5; //max motor speed
-    kMinOutput = -.5; //max motor speed in oppisite direction 
+    feedkP = 0.02; //how aggresive towards target
+    feedkI = 0; //accumlation of past errors
+    feedkD = 0.0005; //how rate of change responds
+    feedkIz = 0;  //integral zone how much of the zone it looks at
+    feedkFF = 0;  //feed forward again estimates the future based on past
+    feedkMaxOutput = .5; //max motor speed
+    feedkMinOutput = -.5; //max motor speed in oppisite direction 
 
-    feederPID.setP(kP);
-    feederPID.setI(kI);
-    feederPID.setD(kD);
-    feederPID.setIZone(kIz);
-    feederPID.setFF(kFF);
-    feederPID.setOutputRange(kMinOutput, kMaxOutput);
+    feederPID.setP(feedkP);
+    feederPID.setI(feedkI);
+    feederPID.setD(feedkD);
+    feederPID.setIZone(feedkIz);
+    feederPID.setFF(feedkFF);
+    feederPID.setOutputRange(feedkMinOutput, feedkMaxOutput);
+
+    shootkP = 0.02; //how aggresive towards target
+    shootkI = 0; //accumlation of past errors
+    shootkD = 0.0005; //how rate of change responds
+    shootkIz = 0;  //integral zone how much of the zone it looks at
+    shootkFF = 0;  //feed forward again estimates the future based on past
+    shootkMaxOutput = 1; //max motor speed
+    shootkMinOutput = -.3; //max motor speed in oppisite direction 
+
+    shooterPID.setP(shootkP);
+    shooterPID.setI(shootkI);
+    shooterPID.setD(shootkD);
+    shooterPID.setIZone(shootkIz);
+    shooterPID.setFF(shootkFF);
+    shooterPID.setOutputRange(shootkMinOutput, shootkMaxOutput);
   }
 
 
  public void SetShooterSpeed(double speed)
   {
-    shooterMotorOne.set(speed);
-    estRPM = ((1700/.3) * speed) -300;
+    shooterPID.setReference(speed, ControlType.kVelocity);
+    estRPM = speed-50;
   }
   
   public void StartFeeder(double speed)
@@ -77,8 +95,7 @@ public class Shooter extends SubsystemBase
 
   public void StopShooter()
   {
-    feederStarted = false;
-    shooterMotorOne.set(0);
+    shooterPID.setReference(0, ControlType.kVelocity);
   }
 
   public void StopFeeder()
@@ -89,7 +106,7 @@ public class Shooter extends SubsystemBase
   public void StopAllMotors()
   {
     feederStarted = false;
-    shooterMotorOne.set(0);
+    shooterPID.setReference(0, ControlType.kVelocity);
     feederPID.setReference(0, ControlType.kVelocity);
   }
 

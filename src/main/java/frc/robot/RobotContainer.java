@@ -64,9 +64,9 @@ public class RobotContainer
   public RobotContainer()
   {
     // Register Named Commands
-    NamedCommands.registerCommand("ShootFromStage", new PrimeShootCMD(tilter, shooter, elevator, 0.5, Constants.Tilter.shootFromStage, Constants.Elevator.elvBottomPosition));
-    NamedCommands.registerCommand("ShootFromSpeaker", new PrimeShootCMD(tilter, shooter, elevator, 0.5, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
-    NamedCommands.registerCommand("ShootAmp", new PrimeShootCMD(tilter, shooter, elevator, .3, Constants.Tilter.ampPosition, Constants.Elevator.elvAmpPosition));
+    NamedCommands.registerCommand("ShootFromStage", new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromStage, Constants.Elevator.elvBottomPosition));
+    NamedCommands.registerCommand("ShootFromSpeaker", new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
+    NamedCommands.registerCommand("ShootAmp", new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.ampShotSpeed, Constants.Tilter.ampPosition, Constants.Elevator.elvAmpPosition));
     NamedCommands.registerCommand("ReturnToNormal", new ReturnToNormal(intake, elevator, tilter, shooter).withTimeout(1));
     
     // Configure the trigger bindings
@@ -143,13 +143,13 @@ public class RobotContainer
     manipulatorXbox.a().onTrue(new SequentialCommandGroup(new IntakeNoteCMD(intake, shooter, tilter),new ReturnToNormal(intake, elevator, tilter, shooter)));
   
     //scoer amp = B
-    manipulatorXbox.b().onTrue(new PrimeShootCMD(tilter, shooter, elevator, .4, Constants.Tilter.ampPosition, Constants.Elevator.elvAmpPosition));
+    manipulatorXbox.b().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.ampShotSpeed, Constants.Tilter.ampPosition, Constants.Elevator.elvAmpPosition));
     manipulatorXbox.b().onFalse(new SequentialCommandGroup(
       new ShootNoteCMD(tilter, shooter, elevator, false),
       new ReturnToNormal(intake, elevator, tilter, shooter)));
 
     //shoot from speaker = Y
-    manipulatorXbox.y().onTrue(new PrimeShootCMD(tilter, shooter, elevator, 0.7, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
+    manipulatorXbox.y().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
     manipulatorXbox.y().onFalse(new SequentialCommandGroup(
       new ShootNoteCMD(tilter, shooter, elevator, false),
       new ReturnToNormal(intake, elevator, tilter, shooter)));
@@ -159,7 +159,7 @@ public class RobotContainer
       new ReturnToNormal(intake, elevator, tilter, shooter)));
         
     //shoot from the stage = D pad up
-    manipulatorXbox.povUp().onTrue(new PrimeShootCMD(tilter, shooter, elevator, 0.7, Constants.Tilter.shootFromStage, Constants.Elevator.elvBottomPosition));
+    manipulatorXbox.povUp().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromStage, Constants.Elevator.elvBottomPosition));
     manipulatorXbox.povUp().onFalse(new SequentialCommandGroup(
       new ShootNoteCMD(tilter, shooter, elevator, false),
       new ReturnToNormal(intake, elevator, tilter, shooter)));

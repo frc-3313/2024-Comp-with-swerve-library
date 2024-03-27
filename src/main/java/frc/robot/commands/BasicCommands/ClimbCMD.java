@@ -27,6 +27,8 @@ public class ClimbCMD extends Command
   {
     elevator.GoToHeight(Constants.Elevator.elvAmpPosition);
     tilter.GoToPosition(Constants.Tilter.ampPosition);
+    elevator.setMotorAmp(80);
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,6 +40,8 @@ public class ClimbCMD extends Command
   public void end(boolean interrupted)
   {
     elevator.GoToHeight(Constants.Elevator.climbLowPosition);
+    elevator.setMotorBrake();
+    
   }
 
   // Returns true when the command should end.

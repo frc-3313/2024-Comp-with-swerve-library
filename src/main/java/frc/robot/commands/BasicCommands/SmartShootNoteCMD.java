@@ -31,7 +31,7 @@ public class SmartShootNoteCMD extends Command
   @Override
   public void initialize() 
   {
-    shooter.SetShooterSpeed(.6);
+    shooter.SetShooterSpeed(2600);
     tilter.GoToPosition(Constants.Tilter.shootFromSpeaker);
   }
 

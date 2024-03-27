@@ -14,12 +14,19 @@ public class ShootNoteCMD extends Command {
   public Tilter tilter;
   public Shooter shooter;
   public Elevator elevator;
+  public Boolean endBoolean;
 
   public ShootNoteCMD(Tilter tilter, Shooter shooter, Elevator elevator, Boolean end) {
     this.tilter = tilter;
     this.shooter = shooter;
     this.elevator = elevator;
     addRequirements(tilter, shooter, elevator);
+  }
+
+  @Override
+  public void initialize() 
+  {
+    endBoolean = false;
   }
 
   @Override
@@ -34,9 +41,10 @@ public class ShootNoteCMD extends Command {
   {
     if(shooter.IsShooterAboveRPM() && tilter.atSetpoint() && elevator.atSetpoint())
     {
-      if (!shooter.feederStarted())
+      if (!endBoolean)
       {
         shooter.MoveFeederDistance(10);
+        endBoolean = true;
       }
       return false;
     }
