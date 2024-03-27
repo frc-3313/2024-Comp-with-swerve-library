@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.BasicCommands.ClimbCMD;
 import frc.robot.commands.BasicCommands.ElevatorGoPosition;
-import frc.robot.commands.BasicCommands.HandOffNoteBCMD;
 import frc.robot.commands.BasicCommands.IntakeNoteCMD;
 import frc.robot.commands.BasicCommands.JogIntake;
 import frc.robot.commands.BasicCommands.JogShooter;
@@ -25,7 +24,6 @@ import frc.robot.commands.BasicCommands.ShootNoteCMD;
 import frc.robot.commands.BasicCommands.SmartShootNoteCMD;
 import frc.robot.commands.BasicCommands.SorceIntakeCMD;
 import frc.robot.commands.BasicCommands.ZeroGyro;
-import frc.robot.commands.CompoundCommands.SmartIntakeCMD;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Elevator;
@@ -66,12 +64,10 @@ public class RobotContainer
   public RobotContainer()
   {
     // Register Named Commands
-    NamedCommands.registerCommand("HandOffNoteCMD", new HandOffNoteBCMD(intake, tilter, shooter));
     NamedCommands.registerCommand("ShootFromStage", new PrimeShootCMD(tilter, shooter, elevator, 0.5, Constants.Tilter.shootFromStage, Constants.Elevator.elvBottomPosition));
     NamedCommands.registerCommand("ShootFromSpeaker", new PrimeShootCMD(tilter, shooter, elevator, 0.5, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
     NamedCommands.registerCommand("ShootAmp", new PrimeShootCMD(tilter, shooter, elevator, .3, Constants.Tilter.ampPosition, Constants.Elevator.elvAmpPosition));
     NamedCommands.registerCommand("ReturnToNormal", new ReturnToNormal(intake, elevator, tilter, shooter).withTimeout(1));
-    NamedCommands.registerCommand("SmartIntakeCMD", new IntakeNoteCMD(intake, shooter, tilter));
     
     // Configure the trigger bindings
     configureBindings();
@@ -107,7 +103,7 @@ public class RobotContainer
         () -> -driverXbox.getRightX());
     drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocityNew);
     
-    //auto_chooser = AutoBuilder.buildAutoChooser();
+    auto_chooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData(auto_chooser);
   }
 
@@ -122,7 +118,7 @@ public class RobotContainer
   {
     //*** Driver ***//
     //hold to raise elevator and on release it will climb = right bumper
-    driverXbox.rightBumper().whileTrue(new ClimbCMD(elevator));
+    driverXbox.rightBumper().whileTrue(new ClimbCMD(elevator, tilter));
 
     //TODO
     //Add Button to rotate towards speaker 
@@ -172,10 +168,10 @@ public class RobotContainer
     manipulatorXbox.x().onTrue(new ReturnToNormal(intake, elevator, tilter, shooter));
 
     //Jog commands
-    // manipulatorXbox.rightBumper().onTrue(new JogIntake(intake, false));
-    // manipulatorXbox.rightTrigger(.5).onTrue(new JogIntake(intake, true));
-    // manipulatorXbox.leftBumper().onTrue(new JogShooter(shooter, false));
-    // manipulatorXbox.leftTrigger(.5).onTrue(new JogShooter(shooter, true)); 
+     //manipulatorXbox.rightBumper().onTrue(new JogIntake(intake, false));
+     //manipulatorXbox.rightTrigger(.5).onTrue(new JogIntake(intake, true));
+     //manipulatorXbox.leftBumper().onTrue(new JogShooter(shooter, false));
+     //manipulatorXbox.leftTrigger(.5).onTrue(new JogShooter(shooter, true)); 
    
     // manipulatorXbox.start().onTrue(new ElevatorGoPosition(elevator, Constants.Elevator.elvAmpPosition, tilter));
     // manipulatorXbox.back().onFalse(new ElevatorGoPosition(elevator, Constants.Elevator.elvBottomPosition, tilter));

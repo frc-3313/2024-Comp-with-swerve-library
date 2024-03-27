@@ -65,8 +65,8 @@ public final class Constants
               public static final int ElevatorMotor1_ID = 22;
               public static final int Elevator_ENCODER_ID = 2;
               public static final int ElevatorMotor2_ID = 28;
-              public static final double elvLowest = 1;
               public static final double elvBottomPosition = 0; 
+              public static final double climbLowPosition = 20;
               public static final double elvAmpPosition = 65;
               public static final double SorceIntakePosition = 10; 
               public static final double elvTrapPosition = 75; 

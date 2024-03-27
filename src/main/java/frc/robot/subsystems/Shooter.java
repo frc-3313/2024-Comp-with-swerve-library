@@ -27,6 +27,7 @@ public class Shooter extends SubsystemBase
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
   private double setDistance;
   private double estRPM;
+  private boolean feederStarted;
 
   public Shooter() 
   {
@@ -36,6 +37,7 @@ public class Shooter extends SubsystemBase
     feederMotor.setSmartCurrentLimit(40);
     feederMotor.setInverted(true);
     feederPID = feederMotor.getPIDController();
+    feederStarted = false;
     
     //PID
     kP = 0.02; //how aggresive towards target
@@ -63,33 +65,44 @@ public class Shooter extends SubsystemBase
   
   public void StartFeeder(double speed)
   {
-    feederMotor.set(speed);
+    feederStarted = false;
+    feederPID.setReference(speed, ControlType.kVelocity);
   }
 
   public void StartFeeder()
   {
-    feederMotor.set(maxSpeed);
+    feederStarted = false;
+    feederPID.setReference(maxSpeed, ControlType.kVelocity);
   }
 
   public void StopShooter()
   {
+    feederStarted = false;
     shooterMotorOne.set(0);
   }
 
   public void StopFeeder()
   {
-    feederMotor.set(0);
+    feederStarted = false;
+    feederPID.setReference(0, ControlType.kVelocity);
   }
   public void StopAllMotors()
   {
+    feederStarted = false;
     shooterMotorOne.set(0);
-    feederMotor.set(0);
+    feederPID.setReference(0, ControlType.kVelocity);
   }
 
   public void MoveFeederDistance(double distance)
   {
+    feederStarted = true;
     setDistance = feederEncoder.getPosition() + distance;
     feederPID.setReference(setDistance, ControlType.kPosition);
+  }
+
+  public boolean feederStarted()
+  {
+    return feederStarted;
   }
 
   public boolean hasNote()

@@ -18,16 +18,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootFromSpeaker"
-                }
-              }
-            ]
+            "name": "ShootFromSpeaker"
           }
         }
       ]
