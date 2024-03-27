@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
@@ -75,18 +76,6 @@ public class RobotContainer
     // Configure the trigger bindings
     configureBindings();
 
-    AbsoluteDriveAdv closedAbsoluteDriveAdv = new AbsoluteDriveAdv(drivebase,
-      () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-                                  OperatorConstants.LEFT_Y_DEADBAND),
-      () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-                                  OperatorConstants.LEFT_X_DEADBAND),
-      () -> MathUtil.applyDeadband(driverXbox.getRightX(),
-                                  OperatorConstants.RIGHT_X_DEADBAND),
-      () -> driverXbox.y().getAsBoolean(),
-      () -> driverXbox.a().getAsBoolean(),
-      () -> driverXbox.x().getAsBoolean(),
-      () -> driverXbox.b().getAsBoolean());
-
 
     // Applies deadbands and inverts controls because joysticks
     // are back-right positive while robot
@@ -111,15 +100,11 @@ public class RobotContainer
         () -> driverXbox.x().getAsBoolean(),
         () -> driverXbox.y().getAsBoolean(),
         () -> driverXbox.b().getAsBoolean(),
-        () -> driverXbox.a().getAsBoolean());
-        
-      
-     Command driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
+        () -> driverXbox.a().getAsBoolean());         
+    Command driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
         () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
         () -> -driverXbox.getRightX());
-         
-
     drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocityNew);
     
     //auto_chooser = AutoBuilder.buildAutoChooser();
@@ -153,7 +138,7 @@ public class RobotContainer
 //    new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
 
     //oporator buttons 
-    driverXbox.b().onTrue(new ZeroGyro(drivebase));
+    driverXbox.start().onTrue(new ZeroGyro(drivebase));
 
     //intake from sorce=d pad down
     manipulatorXbox.povDown().whileTrue(new SorceIntakeCMD(intake, elevator, tilter, shooter));
@@ -164,13 +149,13 @@ public class RobotContainer
     //scoer amp = B
     manipulatorXbox.b().onTrue(new PrimeShootCMD(tilter, shooter, elevator, .4, Constants.Tilter.ampPosition, Constants.Elevator.elvAmpPosition));
     manipulatorXbox.b().onFalse(new SequentialCommandGroup(
-      new ShootNoteCMD(tilter, shooter, elevator),
+      new ShootNoteCMD(tilter, shooter, elevator, false),
       new ReturnToNormal(intake, elevator, tilter, shooter)));
 
     //shoot from speaker = Y
     manipulatorXbox.y().onTrue(new PrimeShootCMD(tilter, shooter, elevator, 0.7, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
     manipulatorXbox.y().onFalse(new SequentialCommandGroup(
-      new ShootNoteCMD(tilter, shooter, elevator),
+      new ShootNoteCMD(tilter, shooter, elevator, false),
       new ReturnToNormal(intake, elevator, tilter, shooter)));
 
     manipulatorXbox.rightTrigger(0.5).whileTrue(new SequentialCommandGroup(
@@ -180,7 +165,7 @@ public class RobotContainer
     //shoot from the stage = D pad up
     manipulatorXbox.povUp().onTrue(new PrimeShootCMD(tilter, shooter, elevator, 0.7, Constants.Tilter.shootFromStage, Constants.Elevator.elvBottomPosition));
     manipulatorXbox.povUp().onFalse(new SequentialCommandGroup(
-      new ShootNoteCMD(tilter, shooter, elevator),
+      new ShootNoteCMD(tilter, shooter, elevator, false),
       new ReturnToNormal(intake, elevator, tilter, shooter)));
           
     //return to normal = x

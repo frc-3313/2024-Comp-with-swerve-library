@@ -16,12 +16,12 @@ public class ShootNoteCMD extends Command {
   public Elevator elevator;
   public boolean end;
 
-  public ShootNoteCMD(Tilter tilter, Shooter shooter, Elevator elevator) {
+  public ShootNoteCMD(Tilter tilter, Shooter shooter, Elevator elevator, Boolean end) {
     this.tilter = tilter;
     this.shooter = shooter;
     this.elevator = elevator;
     addRequirements(tilter, shooter, elevator);
-    end = false;
+    this.end = end;
   }
 
   @Override
