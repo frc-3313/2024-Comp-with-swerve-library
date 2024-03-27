@@ -146,9 +146,9 @@ public class RobotContainer
 
     //*** Manipulator ***//
     //manipulatorXbox.povDown().whileTrue(new SorceIntakeCMD(intake, elevator, tilter, shooter));
-    manipulatorXbox.axisGreaterThan(4, 0.5).whileTrue(new SorceIntakeCMD(intake, elevator, tilter, shooter));
+    manipulatorXbox.axisGreaterThan(5, -.5).whileTrue(new SorceIntakeCMD(intake, elevator, tilter, shooter));
     
-    //low pass = left dpad
+    //low pass = right stick forwards
     manipulatorXbox.axisGreaterThan(5, 0.5).onTrue(new PrimeShootCMD(tilter, shooter, elevator, 0.3, Constants.Tilter.stowPosition, Constants.Elevator.elvBottomPosition));
     manipulatorXbox.axisLessThan(5, 0.5).onFalse(new SequentialCommandGroup(
           new ShootNoteCMD(tilter, shooter, elevator),
@@ -158,9 +158,9 @@ public class RobotContainer
     //       new ShootNoteCMD(tilter, shooter, elevator),
     //       new ReturnToNormal(intake, elevator, tilter, shooter)));
   
-    //high pass = right dpad
-    manipulatorXbox.axisGreaterThan(4, 0.5).onTrue(new PrimeShootCMD(tilter, shooter, elevator, 0.3, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
-    manipulatorXbox.axisLessThan(4, 0.5).onFalse(new SequentialCommandGroup(
+    //high pass = right stick left 
+    manipulatorXbox.axisGreaterThan(4, -0.5).onTrue(new PrimeShootCMD(tilter, shooter, elevator, 0.3, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
+    manipulatorXbox.axisLessThan(4, -0.5).onFalse(new SequentialCommandGroup(
           new ShootNoteCMD(tilter, shooter, elevator),
           new ReturnToNormal(intake, elevator, tilter, shooter)));
     // manipulatorXbox.povLeft().onTrue(new PrimeShootCMD(tilter, shooter, elevator, 0.3, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
@@ -193,7 +193,7 @@ public class RobotContainer
       new ShootNoteCMD(tilter, shooter, elevator),
       new ReturnToNormal(intake, elevator, tilter, shooter)));
           
-    //handoff = x
+    //return to normal = x
     manipulatorXbox.x().onTrue(new ReturnToNormal(intake, elevator, tilter, shooter));
 
     //Jog commands
