@@ -96,11 +96,11 @@ public class RobotContainer
         () -> driverXbox.x().getAsBoolean(),
         () -> driverXbox.y().getAsBoolean(),
         () -> driverXbox.b().getAsBoolean(),
-        () -> driverXbox.a().getAsBoolean());         
+        () -> driverXbox.a().getAsBoolean()).withName("DefaultDriveCommand");         
     Command driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
         () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> -driverXbox.getRightX());
+        () -> -driverXbox.getRightX()).withName("DefaultDriveCommand2");
     drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocityNew);
     
     auto_chooser = AutoBuilder.buildAutoChooser();
