@@ -26,6 +26,7 @@ public class Shooter extends SubsystemBase
   private SparkPIDController feederPID;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
   private double setDistance;
+  private double estRPM;
 
   public Shooter() 
   {
@@ -37,7 +38,7 @@ public class Shooter extends SubsystemBase
     feederPID = feederMotor.getPIDController();
     
     //PID
-    kP = 0.01; //how aggresive towards target
+    kP = 0.02; //how aggresive towards target
     kI = 0; //accumlation of past errors
     kD = 0.0005; //how rate of change responds
     kIz = 0;  //integral zone how much of the zone it looks at
@@ -53,14 +54,13 @@ public class Shooter extends SubsystemBase
     feederPID.setOutputRange(kMinOutput, kMaxOutput);
   }
 
-  public void StartShooter()
-  {
-    shooterMotorOne.set(maxSpeed);
-  }
- public void StartShooter(double speed)
+
+ public void SetShooterSpeed(double speed)
   {
     shooterMotorOne.set(speed);
+    estRPM = ((1700/.3) * speed) -300;
   }
+  
   public void StartFeeder(double speed)
   {
     feederMotor.set(speed);
@@ -88,20 +88,20 @@ public class Shooter extends SubsystemBase
 
   public void MoveFeederDistance(double distance)
   {
-    feederPID.setReference(feederEncoder.getPosition() + distance, ControlType.kPosition);
-    setDistance = distance;
+    setDistance = feederEncoder.getPosition() + distance;
+    feederPID.setReference(setDistance, ControlType.kPosition);
   }
 
   public boolean hasNote()
   {
 
-    return shootHasNoteBeam.get();
+    return !shootHasNoteBeam.get();
 
   }
    
    public Boolean noteToClose()
    {
-      return shootToCloseBeam.get();
+      return !shootToCloseBeam.get();
    }
 
   
@@ -112,9 +112,9 @@ public class Shooter extends SubsystemBase
     else
       return false;
   }
-  public boolean IsShooterAboveRPM(int rpm)
+  public boolean IsShooterAboveRPM()
   {
-    if(shooterMotorOne.getEncoder().getVelocity() > rpm)
+    if(shooterMotorOne.getEncoder().getVelocity() > estRPM)
     {
       return true;
     }
@@ -128,8 +128,12 @@ public class Shooter extends SubsystemBase
   public void periodic() 
   {
 
-    SmartDashboard.putBoolean("shooter has note", shootHasNoteBeam.get());
-    SmartDashboard.putBoolean("Note To Close", shootToCloseBeam.get());    
+    SmartDashboard.putBoolean("shooter has note", noteToClose());
+    SmartDashboard.putBoolean("Note To Close", hasNote());    
+    SmartDashboard.putNumber("ShooterRPM", shooterMotorOne.getEncoder().getVelocity());
+    SmartDashboard.putNumber("CurrentDistance", feederEncoder.getPosition());
+    SmartDashboard.putNumber("Feeder Goal", setDistance);
+    SmartDashboard.putNumber("Est RPM", estRPM);
 
   }
 }

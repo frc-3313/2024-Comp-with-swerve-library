@@ -77,13 +77,14 @@ public final class Constants
               //SHOOTER
               public static final int ShooterMotor1_ID = 24;
               public static final int FeederMotor_ID = 26;
-              public static final int FeederBackDistance = -3;
+              DigitalInput ShootBeam = new DigitalInput(1);
+              public static final double FeederBackDistance = -3;
           }
           public static final class Tilter
           {   
               //TILTER
               public static final int TilterMotor_ID = 27;
-              public static final double stowPosition = 245; 
+              public static final double stowPosition = 255; 
               public static final double handOffPosition = 310; 
               public static final double shootFromStage = 305;
               public static final double shootFromSpeaker = 322;

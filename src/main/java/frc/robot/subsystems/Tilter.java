@@ -37,7 +37,7 @@ public class Tilter extends SubsystemBase
     //SmartDashboard.putBoolean("Display Tilter", displaySmartDashboard);
 
     //PID
-    kP = 0.015; //how aggresive towards target
+    kP = 0.01; //how aggresive towards target
     kI = 0; //accumlation of past errors
     kD = 0.001; //how rate of change responds
     kIz = 0;  //integral zone how much of the zone it looks at
