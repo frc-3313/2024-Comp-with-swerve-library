@@ -57,57 +57,42 @@ public class Shooter extends SubsystemBase
     feederPID.setIZone(feedkIz);
     feederPID.setFF(feedkFF);
     feederPID.setOutputRange(feedkMinOutput, feedkMaxOutput);
-
-    shootkP = 0.02; //how aggresive towards target
-    shootkI = 0; //accumlation of past errors
-    shootkD = 0.0005; //how rate of change responds
-    shootkIz = 0;  //integral zone how much of the zone it looks at
-    shootkFF = 0;  //feed forward again estimates the future based on past
-    shootkMaxOutput = 1; //max motor speed
-    shootkMinOutput = -.3; //max motor speed in oppisite direction 
-
-    shooterPID.setP(shootkP);
-    shooterPID.setI(shootkI);
-    shooterPID.setD(shootkD);
-    shooterPID.setIZone(shootkIz);
-    shooterPID.setFF(shootkFF);
-    shooterPID.setOutputRange(shootkMinOutput, shootkMaxOutput);
   }
 
 
  public void SetShooterSpeed(double speed)
   {
-    shooterPID.setReference(speed, ControlType.kVelocity);
-    estRPM = speed-50;
+    shooterMotorOne.set(speed);
+    estRPM = ((1700/.3)*speed)-600;
   }
   
   public void StartFeeder(double speed)
   {
     feederStarted = false;
-    feederPID.setReference(speed, ControlType.kVelocity);
+    feederMotor.set(speed);
   }
 
   public void StartFeeder()
   {
     feederStarted = false;
-    feederPID.setReference(maxSpeed, ControlType.kVelocity);
+    feederMotor.set(maxSpeed);
   }
 
   public void StopShooter()
   {
-    shooterPID.setReference(0, ControlType.kVelocity);
+    shooterMotorOne.set(0);
   }
 
   public void StopFeeder()
   {
     feederStarted = false;
-    feederPID.setReference(0, ControlType.kVelocity);
+    feederMotor.set(0);
   }
   public void StopAllMotors()
   {
     feederStarted = false;
-    shooterPID.setReference(0, ControlType.kVelocity);
-    feederPID.setReference(0, ControlType.kVelocity);
+    shooterMotorOne.set(0);
+    feederMotor.set(0);
   }
 
   public void MoveFeederDistance(double distance)
@@ -162,6 +147,7 @@ public class Shooter extends SubsystemBase
     SmartDashboard.putNumber("CurrentDistance", feederEncoder.getPosition());
     SmartDashboard.putNumber("Feeder Goal", setDistance);
     SmartDashboard.putNumber("Est RPM", estRPM);
+  
 
   }
 }

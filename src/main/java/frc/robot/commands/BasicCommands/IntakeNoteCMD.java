@@ -79,13 +79,20 @@ public class IntakeNoteCMD extends Command
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(shooter.hasNote() && timer.hasElapsed(.2))
+    if(shooter.hasNote() && timer.hasElapsed(.5))
     {
       if(shooter.noteToClose())
       {
         shooter.MoveFeederDistance(Constants.Shooter.FeederBackDistance);
-      }   
-      return true;
+      } 
+      if(timer.hasElapsed(.75))  
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     }
     else
     {
