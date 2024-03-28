@@ -156,9 +156,9 @@ public class RobotContainer
       new ShootNoteCMD(tilter, shooter, elevator, false),
       new ReturnToNormal(intake, elevator, tilter, shooter)));
 
-    manipulatorXbox.rightTrigger(0.5).whileTrue(new SequentialCommandGroup(
-      new SmartShootNoteCMD(tilter, shooter, elevator, limelight),
-      new ReturnToNormal(intake, elevator, tilter, shooter)));
+    // manipulatorXbox.rightTrigger(0.5).whileTrue(new SequentialCommandGroup(
+    //   new SmartShootNoteCMD(tilter, shooter, elevator, limelight),
+    //   new ReturnToNormal(intake, elevator, tilter, shooter)));
         
     //shoot from the stage = D pad up
     manipulatorXbox.povUp().onTrue(new PrimeShootCMD(tilter, shooter, elevator, 0.7, Constants.Tilter.shootFromStage, Constants.Elevator.elvBottomPosition));
