@@ -79,6 +79,8 @@ public final class Constants
               public static final int FeederMotor_ID = 26;
               DigitalInput ShootBeam = new DigitalInput(1);
               public static final double FeederBackDistance = -3;
+              public static final double ampShotSpeed = 0.4;
+              public static final double fastShotSpeed = 0.75;
           }
           public static final class Tilter
           {   
