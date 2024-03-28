@@ -20,7 +20,13 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootFromSpeaker"
+            "name": "PrimeShootFromSpeaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrimeShootFromSpeaker"
           }
         },
         {
@@ -38,7 +44,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootFromSpeaker"
+            "name": "ShootThenReturnToNormal"
           }
         }
       ]

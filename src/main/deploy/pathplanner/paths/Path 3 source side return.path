@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.76,
-        "y": 4.4671669970120575
+        "x": 2.493344245947751,
+        "y": 4.198201444835939
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6396709716496354,
-        "y": 4.02278912819934
+        "x": 2.5284267092750707,
+        "y": 4.186507290393498
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.49,
-        "y": 4.2
+        "x": 0.76,
+        "y": 4.47
       },
       "prevControl": {
-        "x": 1.5928943538798759,
-        "y": 4.174813135951059
+        "x": 1.335622956146197,
+        "y": 3.613493722713942
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.25,
+      "waypointRelativePos": 0.8,
       "command": {
         "type": "parallel",
         "data": {
@@ -41,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "SmartIntakeCMD"
+                "name": "PrimeShootFromSpeaker"
               }
             }
           ]
@@ -57,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 1.789910608246084,
+    "rotation": -57.44427346544563,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Source",
   "previewStartingState": {
-    "rotation": -60.7511736634531,
+    "rotation": 0.39933117210943697,
     "velocity": 0
   },
   "useDefaultConstraints": true

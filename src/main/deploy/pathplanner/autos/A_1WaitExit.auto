@@ -20,7 +20,13 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootFromSpeaker"
+            "name": "PrimeShootFromSpeaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootThenReturnToNormal"
           }
         },
         {
@@ -33,6 +39,12 @@
           "type": "path",
           "data": {
             "pathName": "Path 8 amp side long"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ReturnToNormal"
           }
         }
       ]

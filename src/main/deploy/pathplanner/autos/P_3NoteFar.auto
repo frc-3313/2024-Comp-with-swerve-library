@@ -20,25 +20,31 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootFromSpeaker"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Path 2 sorce side start"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Path 3 sorce side return"
+            "name": "PrimeShootFromSpeaker"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShootFromSpeaker"
+            "name": "ShootThenReturnToNormal"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Path 2 source side start"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Path 3 source side return"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootThenReturnToNormal"
           }
         },
         {
@@ -56,7 +62,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootFromSpeaker"
+            "name": "ShootThenReturnToNormal"
           }
         }
       ]
