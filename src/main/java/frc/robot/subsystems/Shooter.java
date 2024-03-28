@@ -124,9 +124,7 @@ public class Shooter extends SubsystemBase
 
   public boolean hasNote()
   {
-
     return !shootHasNoteBeam.get();
-
   }
    
    public Boolean noteToClose()

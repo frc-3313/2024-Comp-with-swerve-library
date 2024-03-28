@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -120,6 +121,9 @@ public class RobotContainer
     //hold to raise elevator and on release it will climb = right bumper
     driverXbox.rightBumper().whileTrue(new ClimbCMD(elevator, tilter));
 
+    //zero gyro = start button
+    driverXbox.start().onTrue(new ZeroGyro(drivebase));
+
     //TODO
     //Add Button to rotate towards speaker 
     //add button to rotate towards amp
@@ -133,35 +137,48 @@ public class RobotContainer
     //                          ));
 //    new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
 
-    //oporator buttons 
-    driverXbox.start().onTrue(new ZeroGyro(drivebase));
+    //------------------------------------- Manipulator -------------------------------------//
 
-    //intake from sorce=d pad down
-    manipulatorXbox.povDown().whileTrue(new SorceIntakeCMD(intake, elevator, tilter, shooter));
-    //manipulatorXbox.povDown().onFalse(new ReturnToNormal(intake, elevator, tilter, shooter));;
+    //intake from sorce
+    // manipulatorXbox.povDown().whileTrue(new SorceIntakeCMD(intake, elevator, tilter, shooter));
+    // manipulatorXbox.povDown().onFalse(new ReturnToNormal(intake, elevator, tilter, shooter));
+    manipulatorXbox.axisGreaterThan(4, 0.5).onTrue(new SorceIntakeCMD(intake, elevator, tilter, shooter));
+    
+    // //low pass = right stick up
+    // manipulatorXbox.axisGreaterThan(5, 0.5).onTrue(new PrimeShootCMD(tilter, shooter, elevator, 0.3, Constants.Tilter.stowPosition, Constants.Elevator.elvBottomPosition));
+    // manipulatorXbox.axisLessThan(5, 0.5).onFalse(new SequentialCommandGroup(
+    //       new ShootNoteCMD(tilter, shooter, elevator),
+    //       new ReturnToNormal(intake, elevator, tilter, shooter)));
+  
+    // //high pass = right stick left
+    // manipulatorXbox.axisGreaterThan(4, 0.5).onTrue(new PrimeShootCMD(tilter, shooter, elevator, 0.3, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
+    // manipulatorXbox.axisLessThan(4, 0.5).onFalse(new SequentialCommandGroup(
+    //       new ShootNoteCMD(tilter, shooter, elevator),
+    //       new ReturnToNormal(intake, elevator, tilter, shooter)));
+
     //intake=A 
     manipulatorXbox.a().onTrue(new SequentialCommandGroup(new IntakeNoteCMD(intake, shooter, tilter),new ReturnToNormal(intake, elevator, tilter, shooter)));
   
     //scoer amp = B
     manipulatorXbox.b().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.ampShotSpeed, Constants.Tilter.ampPosition, Constants.Elevator.elvAmpPosition));
     manipulatorXbox.b().onFalse(new SequentialCommandGroup(
-      new ShootNoteCMD(tilter, shooter, elevator, false),
+      new ShootNoteCMD(tilter, shooter, elevator),
       new ReturnToNormal(intake, elevator, tilter, shooter)));
 
     //shoot from speaker = Y
     manipulatorXbox.y().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
     manipulatorXbox.y().onFalse(new SequentialCommandGroup(
-      new ShootNoteCMD(tilter, shooter, elevator, false),
+      new ShootNoteCMD(tilter, shooter, elevator),
       new ReturnToNormal(intake, elevator, tilter, shooter)));
 
-    manipulatorXbox.rightTrigger(0.5).whileTrue(new SequentialCommandGroup(
-      new SmartShootNoteCMD(tilter, shooter, elevator, limelight),
-      new ReturnToNormal(intake, elevator, tilter, shooter)));
+    // manipulatorXbox.rightTrigger(0.5).whileTrue(new SequentialCommandGroup(
+    //   new SmartShootNoteCMD(tilter, shooter, elevator, limelight),
+    //   new ReturnToNormal(intake, elevator, tilter, shooter)));
         
     //shoot from the stage = D pad up
     manipulatorXbox.povUp().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromStage, Constants.Elevator.elvBottomPosition));
     manipulatorXbox.povUp().onFalse(new SequentialCommandGroup(
-      new ShootNoteCMD(tilter, shooter, elevator, false),
+      new ShootNoteCMD(tilter, shooter, elevator),
       new ReturnToNormal(intake, elevator, tilter, shooter)));
           
     //return to normal = x

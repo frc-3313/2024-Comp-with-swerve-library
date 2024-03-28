@@ -16,7 +16,7 @@ public class ShootNoteCMD extends Command {
   public Elevator elevator;
   public Boolean endBoolean;
 
-  public ShootNoteCMD(Tilter tilter, Shooter shooter, Elevator elevator, Boolean end) {
+  public ShootNoteCMD(Tilter tilter, Shooter shooter, Elevator elevator) {
     this.tilter = tilter;
     this.shooter = shooter;
     this.elevator = elevator;
@@ -39,7 +39,7 @@ public class ShootNoteCMD extends Command {
   @Override
   public boolean isFinished() 
   {
-    if(shooter.IsShooterAboveRPM() && tilter.atSetpoint() && elevator.atSetpoint())
+    if(shooter.IsShooterAboveRPM())
     {
       if (!endBoolean)
       {

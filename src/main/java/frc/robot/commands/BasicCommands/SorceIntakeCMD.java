@@ -34,8 +34,6 @@ public class SorceIntakeCMD extends Command {
   {
   // tilter.GoToPosition(Constants.Tilter.ampPosition); 
   // shooter.StartShooter();
-    timer= new Timer();
-    timer.start();
     if (!shooter.hasNote()) 
     {
       elevator.GoToHeight(Constants.Elevator.SorceIntakePosition);
@@ -55,7 +53,6 @@ public class SorceIntakeCMD extends Command {
   @Override
   public void end(boolean interrupted) 
   {
-
    elevator.GoToHeight(Constants.Elevator.elvBottomPosition);   
    tilter.GoToPosition(Constants.Tilter.stowPosition); 
    shooter.StopAllMotors(); 
