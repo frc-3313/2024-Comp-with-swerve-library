@@ -5,6 +5,7 @@
 package frc.robot.commands.BasicCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -18,7 +19,6 @@ public class JogShooter extends Command {
     shooter = m_shooter;
     inward = m_inward;
     addRequirements(shooter);
-    
   }
 
   // Called when the command is initially scheduled.
@@ -30,9 +30,9 @@ public class JogShooter extends Command {
     timer = new Timer();
     timer.start();
     if(inward)
-      shooter.StartFeeder(.1);
+      shooter.StartFeeder(Constants.Shooter.slowFeederSpeed);
     else  
-      shooter.StartFeeder(-.1);
+      shooter.StartFeeder(-Constants.Shooter.slowFeederSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

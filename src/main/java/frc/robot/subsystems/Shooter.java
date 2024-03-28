@@ -20,9 +20,8 @@ public class Shooter extends SubsystemBase
   private final CANSparkMax shooterMotorOne = new CANSparkMax((Constants.Shooter.ShooterMotor1_ID), MotorType.kBrushless);
   private final CANSparkMax feederMotor = new CANSparkMax(Constants.Shooter.FeederMotor_ID, MotorType.kBrushless);
   private RelativeEncoder feederEncoder = feederMotor.getEncoder();
-  private static double maxSpeed = 1.0f;
-  private DigitalInput shootToCloseBeam = new DigitalInput(0);
-  private DigitalInput shootHasNoteBeam = new DigitalInput(1);
+  private DigitalInput shootToCloseBeam = new DigitalInput(Constants.Shooter.NoteToCloseSensor);
+  private DigitalInput shootHasNoteBeam = new DigitalInput(Constants.Shooter.NoteToCloseSensor);
   private SparkPIDController feederPID;
   private SparkPIDController shooterPID;
   public double feedkP, feedkI, feedkD, feedkIz, feedkFF, feedkMaxOutput, feedkMinOutput;
@@ -74,7 +73,6 @@ public class Shooter extends SubsystemBase
     shooterPID.setOutputRange(shootkMinOutput, shootkMaxOutput);
   }
 
-
  public void SetShooterSpeed(double speed)
   {
     shooterPID.setReference(speed, ControlType.kVelocity);
@@ -84,13 +82,8 @@ public class Shooter extends SubsystemBase
   public void StartFeeder(double speed)
   {
     feederStarted = false;
+    shooterPID.setOutputRange(-1, 1);
     feederPID.setReference(speed, ControlType.kVelocity);
-  }
-
-  public void StartFeeder()
-  {
-    feederStarted = false;
-    feederPID.setReference(maxSpeed, ControlType.kVelocity);
   }
 
   public void StopShooter()
@@ -113,6 +106,7 @@ public class Shooter extends SubsystemBase
   public void MoveFeederDistance(double distance)
   {
     feederStarted = true;
+    shooterPID.setOutputRange(shootkMinOutput, shootkMaxOutput);
     setDistance = feederEncoder.getPosition() + distance;
     feederPID.setReference(setDistance, ControlType.kPosition);
   }
