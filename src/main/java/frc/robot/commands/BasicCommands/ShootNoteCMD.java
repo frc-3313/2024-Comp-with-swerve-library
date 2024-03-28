@@ -32,7 +32,7 @@ public class ShootNoteCMD extends Command {
   @Override
   public boolean isFinished() 
   {
-    if(shooter.IsShooterAboveRPM() && tilter.atSetpoint() && elevator.atSetpoint())
+    if(shooter.IsShooterAboveRPM())
     {
       if (!shooter.feederStarted())
       {

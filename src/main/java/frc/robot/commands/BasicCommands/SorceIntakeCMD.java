@@ -56,7 +56,7 @@ public class SorceIntakeCMD extends Command {
   public void end(boolean interrupted) 
   {
 
-   elevator.GoToHeight(Constants.Elevator.elvLowest);   
+   elevator.GoToHeight(Constants.Elevator.elvBottomPosition);   
    tilter.GoToPosition(Constants.Tilter.stowPosition); 
    shooter.StopAllMotors(); 
   }

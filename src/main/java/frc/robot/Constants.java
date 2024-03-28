@@ -69,8 +69,8 @@ public final class Constants
               public static final double climbLowPosition = 20;
               public static final double elvAmpPosition = 65;
               public static final double SorceIntakePosition = 10; 
-              public static final double elvTrapPosition = 75; 
-              public static final double elvHighest = 77;
+              public static final double elvTrapPosition = 74; 
+              public static final double elvHighest = 74;
           }
           public static final class Shooter
           {
