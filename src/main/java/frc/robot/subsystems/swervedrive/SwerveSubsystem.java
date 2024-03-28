@@ -256,7 +256,7 @@ public class SwerveSubsystem extends SubsystemBase
                       false); // Open loop is disabled since it shouldn't be used most of the time.
   }
 
-    public void drive(double translationX, double translationY, double rotation,
+  public void drive(double translationX, double translationY, double rotation,
                       Boolean x, Boolean y, Boolean b, Boolean a)
   {
       if(x || y || b || a)
@@ -305,7 +305,7 @@ public class SwerveSubsystem extends SubsystemBase
       }
       else 
       {
-                  swerveDrive.drive(new Translation2d(Math.pow(translationX, 3) * swerveDrive.getMaximumVelocity(),
+        swerveDrive.drive(new Translation2d(Math.pow(translationX, 3) * swerveDrive.getMaximumVelocity(),
                                           Math.pow(translationY, 3) * swerveDrive.getMaximumVelocity()),
                                           Math.pow(rotation, 3) * swerveDrive.getMaximumAngularVelocity(),
                         true,

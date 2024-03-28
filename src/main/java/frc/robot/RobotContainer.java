@@ -164,23 +164,11 @@ public class RobotContainer
   
     //scoer amp = B
     manipulatorXbox.b().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.ampShotSpeed, Constants.Tilter.ampPosition, Constants.Elevator.elvAmpPosition));
-<<<<<<< Updated upstream
-    manipulatorXbox.b().onFalse(new SequentialCommandGroup(
-      new ShootNoteCMD(tilter, shooter, elevator),
-      new ReturnToNormal(intake, elevator, tilter, shooter)));
-
-    //shoot from speaker = Y
-    manipulatorXbox.y().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
-    manipulatorXbox.y().onFalse(new SequentialCommandGroup(
-      new ShootNoteCMD(tilter, shooter, elevator),
-      new ReturnToNormal(intake, elevator, tilter, shooter)));
-=======
     manipulatorXbox.b().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
     //shoot from speaker = Y
     manipulatorXbox.y().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
     manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
->>>>>>> Stashed changes
 
     // manipulatorXbox.rightTrigger(0.5).whileTrue(new SequentialCommandGroup(
     //   new SmartShootNoteCMD(tilter, shooter, elevator, limelight),
@@ -188,13 +176,7 @@ public class RobotContainer
         
     //shoot from the stage = D pad up
     manipulatorXbox.povUp().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromStage, Constants.Elevator.elvBottomPosition));
-<<<<<<< Updated upstream
-    manipulatorXbox.povUp().onFalse(new SequentialCommandGroup(
-      new ShootNoteCMD(tilter, shooter, elevator),
-      new ReturnToNormal(intake, elevator, tilter, shooter)));
-=======
-    manipulatorXbox.povUp().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
->>>>>>> Stashed changes
+     manipulatorXbox.povUp().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
           
     //return to normal = x
     manipulatorXbox.x().onTrue(new ReturnToNormal(intake, elevator, tilter, shooter));
