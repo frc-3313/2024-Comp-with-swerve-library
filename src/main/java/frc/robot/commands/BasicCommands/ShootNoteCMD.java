@@ -15,7 +15,7 @@ public class ShootNoteCMD extends Command {
   public Shooter shooter;
   public Elevator elevator;
 
-  public ShootNoteCMD(Tilter tilter, Shooter shooter, Elevator elevator, Boolean end) {
+  public ShootNoteCMD(Tilter tilter, Shooter shooter, Elevator elevator) {
     this.tilter = tilter;
     this.shooter = shooter;
     this.elevator = elevator;
