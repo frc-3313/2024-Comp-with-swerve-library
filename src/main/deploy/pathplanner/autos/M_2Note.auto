@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.32,
-      "y": 5.54
+      "x": 1.3679858486729504,
+      "y": 5.492445188825977
     },
     "rotation": 0.0
   },
@@ -30,22 +30,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeNote"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Path 1 middle start"
-                }
-              }
-            ]
+            "pathName": "Path 1 middle start"
           }
         },
         {

@@ -32,7 +32,7 @@ public class Shooter extends SubsystemBase
 
   public Shooter() 
   {
-    shooterMotorOne.setIdleMode(IdleMode.kBrake);
+    shooterMotorOne.setIdleMode(IdleMode.kCoast);
     shooterPID = shooterMotorOne.getPIDController();
     feederMotor.setIdleMode(IdleMode.kCoast);
     shooterMotorOne.setSmartCurrentLimit(80);
