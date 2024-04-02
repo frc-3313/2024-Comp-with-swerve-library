@@ -66,7 +66,7 @@ public final class Constants
               public static final int Elevator_ENCODER_ID = 2;
               public static final int ElevatorMotor2_ID = 28;
               public static final double elvBottomPosition = 0; 
-              public static final double climbLowPosition = 8;
+              public static final double climbLowPosition = 20;
               public static final double elvAmpPosition = 65;
               public static final double SorceIntakePosition = 10; 
               public static final double elvTrapPosition = 74; 
@@ -78,11 +78,14 @@ public final class Constants
               public static final int ShooterMotor1_ID = 24;
               public static final int FeederMotor_ID = 26;
               public static final double FeederBackDistance = -3;
-              public static final double fastShotSpeed = .7;
-              public static final double midShotSpeed = .6;
-              public static final double ampShotSpeed = .45;
-              
-              public static final double sourceIntakeSpeed = -.3;
+              public static final double fastShotSpeed = 3600;
+              public static final double midShotSpeed = 2500;
+              public static final double ampShotSpeed = 1500;
+              public static final double sourceIntakeSpeed = -1000;
+              public static final double slowFeederSpeed = 1100;
+              public static final double fastFeederSpeed = 2200;
+              public static final int NoteToCloseSensor = 0;
+              public static final int ShooterHasNoteSensor = 1;
           }
           public static final class Tilter
           {   
@@ -93,6 +96,6 @@ public final class Constants
               public static final double shootFromStage = 305;
               public static final double shootFromSpeaker = 322;
               public static final double ampPosition = 240;
-              public static final double passPosition = 275;
+              public static final double passPosition = 280;
           }
 }

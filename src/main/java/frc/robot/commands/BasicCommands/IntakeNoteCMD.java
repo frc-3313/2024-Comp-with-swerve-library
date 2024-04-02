@@ -56,7 +56,7 @@ public class IntakeNoteCMD extends Command
   {
     if(tilter.atSetpoint())
     {
-      shooter.StartFeeder(.2);
+      shooter.StartFeeder(2200);
       intake.RunIntake(.4);
     }
     if(shooter.hasNote())
@@ -82,20 +82,13 @@ public class IntakeNoteCMD extends Command
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(shooter.hasNote() && timer.hasElapsed(.5))
+    if(shooter.hasNote() && timer.hasElapsed(.2))
     {
       if(shooter.noteToClose())
       {
         shooter.MoveFeederDistance(Constants.Shooter.FeederBackDistance);
-      } 
-      if(timer.hasElapsed(.75))  
-      {
-        return true;
-      }
-      else
-      {
-        return false;
-      }
+      }   
+      return true;
     }
     else
     {

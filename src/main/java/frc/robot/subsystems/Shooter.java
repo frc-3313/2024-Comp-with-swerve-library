@@ -20,9 +20,8 @@ public class Shooter extends SubsystemBase
   private final CANSparkMax shooterMotorOne = new CANSparkMax((Constants.Shooter.ShooterMotor1_ID), MotorType.kBrushless);
   private final CANSparkMax feederMotor = new CANSparkMax(Constants.Shooter.FeederMotor_ID, MotorType.kBrushless);
   private RelativeEncoder feederEncoder = feederMotor.getEncoder();
-  private static double maxSpeed = 1.0f;
-  private DigitalInput shootToCloseBeam = new DigitalInput(0);
-  private DigitalInput shootHasNoteBeam = new DigitalInput(1);
+  private DigitalInput shootToCloseBeam = new DigitalInput(Constants.Shooter.NoteToCloseSensor);
+  private DigitalInput shootHasNoteBeam = new DigitalInput(Constants.Shooter.NoteToCloseSensor);
   private SparkPIDController feederPID;
   private SparkPIDController shooterPID;
   public double feedkP, feedkI, feedkD, feedkIz, feedkFF, feedkMaxOutput, feedkMinOutput;
@@ -57,47 +56,57 @@ public class Shooter extends SubsystemBase
     feederPID.setIZone(feedkIz);
     feederPID.setFF(feedkFF);
     feederPID.setOutputRange(feedkMinOutput, feedkMaxOutput);
-  }
 
+    shootkP = 0.02; //how aggresive towards target
+    shootkI = 0; //accumlation of past errors
+    shootkD = 0.0005; //how rate of change responds
+    shootkIz = 0;  //integral zone how much of the zone it looks at
+    shootkFF = 0;  //feed forward again estimates the future based on past
+    shootkMaxOutput = 1; //max motor speed
+    shootkMinOutput = -.3; //max motor speed in oppisite direction 
+
+    shooterPID.setP(shootkP);
+    shooterPID.setI(shootkI);
+    shooterPID.setD(shootkD);
+    shooterPID.setIZone(shootkIz);
+    shooterPID.setFF(shootkFF);
+    shooterPID.setOutputRange(shootkMinOutput, shootkMaxOutput);
+  }
 
  public void SetShooterSpeed(double speed)
   {
-    shooterMotorOne.set(speed);
-    estRPM = ((1700/.3)*speed)-600;
+    shooterPID.setReference(speed, ControlType.kVelocity);
+    estRPM = speed-50;
   }
   
   public void StartFeeder(double speed)
   {
     feederStarted = false;
-    feederMotor.set(speed);
-  }
-
-  public void StartFeeder()
-  {
-    feederStarted = false;
-    feederMotor.set(maxSpeed);
+    shooterPID.setOutputRange(-1, 1);
+    feederPID.setReference(speed, ControlType.kVelocity);
   }
 
   public void StopShooter()
   {
-    shooterMotorOne.set(0);
+    shooterPID.setReference(0, ControlType.kVelocity);
   }
 
   public void StopFeeder()
   {
     feederStarted = false;
-    feederMotor.set(0);
+    feederPID.setReference(0, ControlType.kVelocity);
   }
   public void StopAllMotors()
   {
     feederStarted = false;
-    shooterMotorOne.set(0);
-    feederMotor.set(0);
+    shooterPID.setReference(0, ControlType.kVelocity);
+    feederPID.setReference(0, ControlType.kVelocity);
   }
 
   public void MoveFeederDistance(double distance)
   {
     feederStarted = true;
+    shooterPID.setOutputRange(shootkMinOutput, shootkMaxOutput);
     setDistance = feederEncoder.getPosition() + distance;
     feederPID.setReference(setDistance, ControlType.kPosition);
   }
@@ -147,7 +156,6 @@ public class Shooter extends SubsystemBase
     SmartDashboard.putNumber("CurrentDistance", feederEncoder.getPosition());
     SmartDashboard.putNumber("Feeder Goal", setDistance);
     SmartDashboard.putNumber("Est RPM", estRPM);
-  
 
   }
 }

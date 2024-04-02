@@ -62,7 +62,7 @@ public class SorceIntakeCMD extends Command {
   @Override
   public boolean isFinished() 
   {
-    if (shooter.noteToClose()) 
+    if (shooter.hasNote()) 
     {
       return true; 
     }

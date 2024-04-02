@@ -48,7 +48,7 @@ public class ShootNoteCMD extends Command {
       }
       return false;
     }
-    else if(shooter.FeederDone() && endBoolean)
+    else if(shooter.FeederDone())
     {
       return true;
     }
