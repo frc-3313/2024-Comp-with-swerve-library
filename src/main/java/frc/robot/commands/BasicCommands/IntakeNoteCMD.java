@@ -35,10 +35,13 @@ public class IntakeNoteCMD extends Command
   public void initialize() 
   {
     timer = new Timer();
+    timer.reset();
     timerStarted = false;
     if(!shooter.hasNote())
     {
       tilter.GoToPosition(Constants.Tilter.handOffPosition);
+      intake.RunIntake(0.4);
+      shooter.StartFeeder(.2);
     }
     else
     {
