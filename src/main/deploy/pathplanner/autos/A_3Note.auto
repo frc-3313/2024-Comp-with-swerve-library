@@ -30,9 +30,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Path 6 amp side start"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Path 6 amp side start"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              }
+            ]
           }
         },
         {
@@ -48,9 +61,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Path 8 amp side long"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Path 8 amp side long"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              }
+            ]
           }
         },
         {
