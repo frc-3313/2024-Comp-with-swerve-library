@@ -30,9 +30,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "P_GrabFarNote"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "P_GrabFarNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              }
+            ]
           }
         },
         {

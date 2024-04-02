@@ -28,6 +28,7 @@ public class ClimbCMD extends Command
     elevator.GoToHeight(Constants.Elevator.elvAmpPosition);
     tilter.GoToPosition(Constants.Tilter.ampPosition);
     elevator.setMotorAmp(80);
+    elevator.setMaxSpeeds(.3, -.1);
     
   }
 

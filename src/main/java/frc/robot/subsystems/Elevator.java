@@ -50,9 +50,10 @@ public class Elevator extends SubsystemBase {
     kP = 0.1; //how aggresive towards target
     kI = 0; //accumlation of past errors
     kD = 0.0001; //how rate of change responds
-    kMaxOutput = 0.3; //max motor speed
-    kMinOutput = 0.3; //max motor speed in oppisite direction 
+    kMaxOutput = 1; //max motor speed
+    kMinOutput = -1; //max motor speed in oppisite direction 
     pid = new PIDController(kP, kI, kD);
+    pid.setIntegratorRange(kMaxOutput, kMinOutput);
     pid.setTolerance(0);
     //SmartDashboard.putBoolean("Display Elevator", displaySmartDashboard);
   }
@@ -90,6 +91,11 @@ public class Elevator extends SubsystemBase {
     elevatorMotor1.setIdleMode(IdleMode.kBrake);
     elevatorMotor2.setIdleMode(IdleMode.kBrake);
   }
+  public void setMaxSpeeds(double speedUp, double speedDown)
+  {
+    pid.setIntegratorRange(speedUp, speedDown);
+  }
+
   public void setMotorAmp(int amp)
   {
     elevatorMotor1.setSmartCurrentLimit(amp);
