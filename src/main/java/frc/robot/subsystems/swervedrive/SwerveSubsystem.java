@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.io.File;
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
@@ -212,8 +211,8 @@ public class SwerveSubsystem extends SubsystemBase
   {
     return run(() -> {
       // Make the robot move
-      swerveDrive.drive(new Translation2d(powerof2(translationX.getAsDouble()) * swerveDrive.getMaximumVelocity(),
-                            powerof2(translationY.getAsDouble()) * swerveDrive.getMaximumVelocity()),
+      swerveDrive.drive(new Translation2d(powerof2(translationX.getAsDouble()) * .75 * swerveDrive.getMaximumVelocity(),
+                            powerof2(translationY.getAsDouble()) * .75 * swerveDrive.getMaximumVelocity()),
                             powerof2(angularRotationX.getAsDouble()) * swerveDrive.getMaximumAngularVelocity(),
                         true,
                         false);

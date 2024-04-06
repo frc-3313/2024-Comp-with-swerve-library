@@ -24,7 +24,6 @@ public class Shooter extends SubsystemBase
   private DigitalInput shootToCloseBeam = new DigitalInput(0);
   private DigitalInput shootHasNoteBeam = new DigitalInput(1);
   private SparkPIDController feederPID;
-  private SparkPIDController shooterPID;
   public double feedkP, feedkI, feedkD, feedkIz, feedkFF, feedkMaxOutput, feedkMinOutput;
   public double shootkP, shootkI, shootkD, shootkIz, shootkFF, shootkMaxOutput, shootkMinOutput;
   private double setDistance;
@@ -34,7 +33,6 @@ public class Shooter extends SubsystemBase
   public Shooter() 
   {
     shooterMotorOne.setIdleMode(IdleMode.kCoast);
-    shooterPID = shooterMotorOne.getPIDController();
     feederMotor.setIdleMode(IdleMode.kCoast);
     shooterMotorOne.setSmartCurrentLimit(80);
     feederMotor.setSmartCurrentLimit(40);
