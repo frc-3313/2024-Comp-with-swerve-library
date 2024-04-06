@@ -65,6 +65,7 @@ public class SwerveSubsystem extends SubsystemBase
     System.out.println("\t\"angle\": " + angleConversionFactor + ",");
     System.out.println("\t\"drive\": " + driveConversionFactor);
     System.out.println("}");
+    
 
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.NONE;
@@ -80,7 +81,7 @@ public class SwerveSubsystem extends SubsystemBase
       throw new RuntimeException(e);
     }
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
-
+    swerveDrive.setCosineCompensator(true);
     setupPathPlanner();
   }
 
@@ -463,5 +464,9 @@ public class SwerveSubsystem extends SubsystemBase
   public void addFakeVisionReading()
   {
     swerveDrive.addVisionMeasurement(new Pose2d(3, 3, Rotation2d.fromDegrees(65)), Timer.getFPGATimestamp());
+  }
+  public void setcossine(boolean cosine)
+  {
+    swerveDrive.setCosineCompensator(cosine);
   }
 }
