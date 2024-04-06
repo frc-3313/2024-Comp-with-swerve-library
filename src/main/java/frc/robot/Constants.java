@@ -81,9 +81,8 @@ public final class Constants
               public static final double fastShotSpeed = .7;
               public static final double midShotSpeed = .6;
               public static final double ampShotSpeed = .45;
+              
               public static final double sourceIntakeSpeed = -.3;
-               public static final int NoteToCloseSensor = 0;
-              public static final int ShooterHasNoteSensor = 1;
           }
           public static final class Tilter
           {   

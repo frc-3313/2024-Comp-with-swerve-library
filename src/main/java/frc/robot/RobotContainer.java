@@ -82,30 +82,23 @@ public class RobotContainer
     // controls are front-left positive
     // left stick controls translation
     // right stick controls the desired angle NOT angular rotation
-    //Command driveFieldOrientedDirectAngle = drivebase.driveCommand(
-    //   () -> MathUtil.applyDeadband(driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-    //    () -> MathUtil.applyDeadband(driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-    //    () -> driverXbox.getRightX(),
-    //    () -> driverXbox.getRightY());
+    Command driveFieldOrientedDirectAngle = drivebase.driveCommand(
+       () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+        () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+        () -> driverXbox.getRightX(),
+        () -> driverXbox.getRightY());
 
     // Applies deadbands and inverts controls because joysticks
     // are back-right positive while robot
     // controls are front-left positive
     // left stick controls translati on
     // right stick controls the angular velocity of the robot
-    Command driveFieldOrientedAnglularVelocityNew = drivebase.driveCommand(
-        () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> -driverXbox.getRightX(), 
-        () -> driverXbox.x().getAsBoolean(),
-        () -> driverXbox.y().getAsBoolean(),
-        () -> driverXbox.b().getAsBoolean(),
-        () -> driverXbox.a().getAsBoolean()).withName("DefaultDriveCommand");         
+      
     Command driveFieldOrientedAnglularVelocity = drivebase.driveCommand(
         () -> MathUtil.applyDeadband(-driverXbox.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
         () -> MathUtil.applyDeadband(-driverXbox.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-        () -> -driverXbox.getRightX()).withName("DefaultDriveCommand2");
-    drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocityNew);
+        () -> -driverXbox.getRightX());
+    drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
     
     auto_chooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData(auto_chooser);
@@ -142,10 +135,9 @@ public class RobotContainer
 
     //------------------------------------- Manipulator -------------------------------------//
 
-    //intake from sorce
-    // manipulatorXbox.povDown().whileTrue(new SorceIntakeCMD(intake, elevator, tilter, shooter));
-    // manipulatorXbox.povDown().onFalse(new ReturnToNormal(intake, elevator, tilter, shooter));
-    manipulatorXbox.axisGreaterThan(4, 0.5).onTrue(new SorceIntakeCMD(intake, elevator, tilter, shooter));
+    //intake from sorce=d pad down
+    manipulatorXbox.povDown().whileTrue(new SorceIntakeCMD(intake, elevator, tilter, shooter));
+    //manipulatorXbox.povDown().onFalse(new ReturnToNormal(intake, elevator, tilter, shooter));
     
     // //low pass = right stick up
     // manipulatorXbox.axisGreaterThan(5, 0.5).onTrue(new PrimeShootCMD(tilter, shooter, elevator, 0.3, Constants.Tilter.stowPosition, Constants.Elevator.elvBottomPosition));
@@ -169,19 +161,26 @@ public class RobotContainer
     //shoot from speaker = Y
     manipulatorXbox.y().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
     manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
-    manipulatorXbox.rightTrigger(.5).onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
-    manipulatorXbox.rightTrigger(.5).onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
-    // manipulatorXbox.rightTrigger(0.5).whileTrue(new SequentialCommandGroup(
-    //   new SmartShootNoteCMD(tilter, shooter, elevator, limelight),
-    //   new ReturnToNormal(intake, elevator, tilter, shooter)));
-        
-    //shoot from the stage = D pad up
-    manipulatorXbox.povUp().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromStage, Constants.Elevator.elvBottomPosition));
-     manipulatorXbox.povUp().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
-          
+    //shoot from speaker = right trigger
+    manipulatorXbox.rightTrigger(0.5).onTrue(new PrimeShootCMD(
+      tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
+    manipulatorXbox.rightTrigger(0.5).onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
+
+    //pass high
+    manipulatorXbox.povRight().onTrue(new PrimeShootCMD(
+      tilter, shooter, elevator, .65, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
+    manipulatorXbox.povRight().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
+
+    //pass low
+    manipulatorXbox.povLeft().onTrue(new PrimeShootCMD(
+      tilter, shooter, elevator, .7, Constants.Tilter.passPosition, Constants.Elevator.elvBottomPosition));
+    manipulatorXbox.povLeft().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
+
     //return to normal = x
     manipulatorXbox.x().onTrue(new ReturnToNormal(intake, elevator, tilter, shooter));
+    
+    
 
     //Jog commands
     manipulatorXbox.rightBumper().whileTrue(new JogIntake(intake, false));
