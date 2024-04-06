@@ -39,7 +39,7 @@ public class ShootNoteCMD extends Command {
   @Override
   public boolean isFinished() 
   {
-    if(shooter.IsShooterAboveRPM())
+    if(shooter.IsShooterAboveRPM() && tilter.atSetpoint())
     {
       if (!endBoolean)
       {
@@ -48,7 +48,7 @@ public class ShootNoteCMD extends Command {
       }
       return false;
     }
-    else if(shooter.FeederDone())
+    else if(shooter.FeederDone() && endBoolean)
     {
       return true;
     }

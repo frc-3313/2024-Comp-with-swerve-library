@@ -169,6 +169,8 @@ public class RobotContainer
     //shoot from speaker = Y
     manipulatorXbox.y().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
     manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
+    manipulatorXbox.rightTrigger(.5).onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
+    manipulatorXbox.rightTrigger(.5).onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
     // manipulatorXbox.rightTrigger(0.5).whileTrue(new SequentialCommandGroup(
     //   new SmartShootNoteCMD(tilter, shooter, elevator, limelight),
@@ -182,7 +184,7 @@ public class RobotContainer
     manipulatorXbox.x().onTrue(new ReturnToNormal(intake, elevator, tilter, shooter));
 
     //Jog commands
-     //manipulatorXbox.rightBumper().onTrue(new JogIntake(intake, false));
+    manipulatorXbox.rightBumper().whileTrue(new JogIntake(intake, false));
      //manipulatorXbox.rightTrigger(.5).onTrue(new JogIntake(intake, true));
      //manipulatorXbox.leftBumper().onTrue(new JogShooter(shooter, false));
      //manipulatorXbox.leftTrigger(.5).onTrue(new JogShooter(shooter, true)); 

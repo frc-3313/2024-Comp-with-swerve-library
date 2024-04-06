@@ -32,18 +32,19 @@ public class Tilter extends SubsystemBase
     tilterMotor.setInverted(true);
     alternateEncoder = tilterMotor.getAbsoluteEncoder(kAltEncType);
     alternateEncoder.setPositionConversionFactor(360);
+    alternateEncoder.setZeroOffset((180));
     pidController = tilterMotor.getPIDController();
     pidController.setFeedbackDevice(alternateEncoder);
     //SmartDashboard.putBoolean("Display Tilter", displaySmartDashboard);
 
     //PID
-    kP = 0.01; //how aggresive towards target
+    kP = 0.025; //how aggresive towards target
     kI = 0; //accumlation of past errors
-    kD = 0.001; //how rate of change responds
+    kD = 0.00001; //how rate of change responds
     kIz = 0;  //integral zone how much of the zone it looks at
     kFF = 0;  //feed forward again estimates the future based on past
-    kMaxOutput = .5; //max motor speed
-    kMinOutput = -.5; //max motor speed in oppisite direction 
+    kMaxOutput = 1; //max motor speed
+    kMinOutput = -1; //max motor speed in oppisite direction 
 
     pidController.setP(kP);
     pidController.setI(kI);
@@ -92,7 +93,7 @@ public class Tilter extends SubsystemBase
   public void periodic() 
   {
   
-     // SmartDashboard.putNumber("tilter absolute enc", alternateEncoder.getPosition());
+      SmartDashboard.putNumber("tilter absolute enc", alternateEncoder.getPosition());
       SmartDashboard.putBoolean("tilter at set", atSetpoint());
     
     pidController.setReference(newTargetPosition, CANSparkMax.ControlType.kPosition);

@@ -34,7 +34,8 @@ public class PrimeShootCMD extends InstantCommand {
   public void initialize() 
   {
     shooter.SetShooterSpeed(shootSpeed);
-    tilter.GoToPosition(shootAngle);
     elevator.GoToHeight(elevatorHeight);
+    tilter.GoToPosition(shootAngle);
+    
   }
 }

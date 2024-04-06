@@ -4,6 +4,8 @@
 
 package frc.robot.commands.BasicCommands;
 
+import javax.lang.model.util.ElementScanner14;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,13 +37,10 @@ public class IntakeNoteCMD extends Command
   public void initialize() 
   {
     timer = new Timer();
-    timer.reset();
     timerStarted = false;
     if(!shooter.hasNote())
     {
       tilter.GoToPosition(Constants.Tilter.handOffPosition);
-      intake.RunIntake(0.4);
-      shooter.StartFeeder(.2);
     }
     else
     {
@@ -54,9 +53,9 @@ public class IntakeNoteCMD extends Command
   @Override
   public void execute() 
   {
-    if(tilter.atSetpoint())
+    if(tilter.atSetpoint() && !shooter.hasNote())
     {
-      shooter.StartFeeder(2200);
+      shooter.StartFeeder(.2);
       intake.RunIntake(.4);
     }
     if(shooter.hasNote())
@@ -82,13 +81,16 @@ public class IntakeNoteCMD extends Command
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(shooter.hasNote() && timer.hasElapsed(.2))
+    if(shooter.hasNote() && timer.hasElapsed(.5))
     {
       if(shooter.noteToClose())
       {
         shooter.MoveFeederDistance(Constants.Shooter.FeederBackDistance);
-      }   
-      return true;
+      } 
+      if(timer.hasElapsed(.75))
+        return true;
+      else
+        return false;
     }
     else
     {

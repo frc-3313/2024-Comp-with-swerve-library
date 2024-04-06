@@ -30,9 +30,9 @@ public class JogShooter extends Command {
     timer = new Timer();
     timer.start();
     if(inward)
-      shooter.StartFeeder(Constants.Shooter.slowFeederSpeed);
+      shooter.StartFeeder(.3);
     else  
-      shooter.StartFeeder(-Constants.Shooter.slowFeederSpeed);
+      shooter.StartFeeder(-.3);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

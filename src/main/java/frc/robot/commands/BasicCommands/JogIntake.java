@@ -30,9 +30,9 @@ public class JogIntake extends Command {
     timer = new Timer();
     timer.start();
     if(inward)
-      intake.RunIntake(.1);
+      intake.RunIntake(.3);
     else  
-      intake.RunIntake(-.1);
+      intake.RunIntake(-.3);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -46,7 +46,7 @@ public class JogIntake extends Command {
   @Override
   public void end(boolean interrupted) 
   {
-
+    intake.StopIntake();
     
   // shooter.StopAllMotors(); 
   }
@@ -54,12 +54,7 @@ public class JogIntake extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(timer.hasElapsed(.1))
-    {
-      intake.StopIntake();
-      return true;
-    }
-    else
+
       return false;
   }
 }
