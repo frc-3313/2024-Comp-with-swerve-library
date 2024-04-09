@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.81,
-      "y": 6.602
+      "x": 0.76,
+      "y": 6.6
     },
     "rotation": 57.0
   },
@@ -52,6 +52,12 @@
           "type": "path",
           "data": {
             "pathName": "Path 7 amp side return"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrimeShootFromSpeaker"
           }
         },
         {

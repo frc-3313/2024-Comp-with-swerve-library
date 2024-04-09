@@ -30,9 +30,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Path 1 middle start"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Path 1 middle start"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              }
+            ]
           }
         },
         {
@@ -44,25 +57,38 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootThenReturnToNormal"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Path 4 middle long"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Path 15 middle long return"
+            "name": "PrimeShootFromSpeaker"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "ShootThenReturnToNormal"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Path 4 middle long"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Path 15 middle long return"
           }
         }
       ]

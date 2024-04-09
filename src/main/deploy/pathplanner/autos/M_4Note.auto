@@ -44,6 +44,12 @@
         {
           "type": "named",
           "data": {
+            "name": "PrimeShootFromSpeaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ShootThenReturnToNormal"
           }
         },
@@ -62,6 +68,12 @@
         {
           "type": "named",
           "data": {
+            "name": "PrimeShootFromSpeaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ShootThenReturnToNormal"
           }
         },
@@ -75,6 +87,12 @@
           "type": "path",
           "data": {
             "pathName": "14 middle grab sorce note return"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrimeShootFromSpeaker"
           }
         },
         {

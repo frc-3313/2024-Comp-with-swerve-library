@@ -26,7 +26,7 @@ public class IntakeNoteCMD extends Command
     intake = m_intake;
     shooter = m_Shooter;
     tilter = m_Tilter;
-    addRequirements(shooter, intake, tilter);
+    addRequirements(shooter, intake, tilter); 
     
   }
 
@@ -79,13 +79,13 @@ public class IntakeNoteCMD extends Command
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(shooter.hasNote() && timer.hasElapsed(.5))
+    if(shooter.hasNote() && timer.hasElapsed(.2))
     {
       if(shooter.noteToClose())
       {
         shooter.MoveFeederDistance(Constants.Shooter.FeederBackDistance);
       } 
-      if(timer.hasElapsed(.75))
+      if(timer.hasElapsed(.4))
         return true;
       else
         return false;
@@ -94,5 +94,11 @@ public class IntakeNoteCMD extends Command
     {
       return false;
     }
+    
+  }
+  @Override
+  public InterruptionBehavior getInterruptionBehavior()
+  {
+    return Command.InterruptionBehavior.kCancelIncoming;
   }
 }

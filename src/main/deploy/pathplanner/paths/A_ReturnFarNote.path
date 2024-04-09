@@ -3,29 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.06,
-        "y": 7.44
+        "x": 7.87,
+        "y": 7.37
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.16,
-        "y": 7.44
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.083473803311243,
-        "y": 7.658900408709909
-      },
-      "prevControl": {
-        "x": 3.938007579654732,
-        "y": 7.7091671014359955
-      },
-      "nextControl": {
-        "x": 2.1319417184288914,
-        "y": 7.602927933128594
+        "x": 7.969367026578015,
+        "y": 7.381233611576153
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +20,8 @@
         "y": 6.6
       },
       "prevControl": {
-        "x": 0.7055360964984974,
-        "y": 6.5161329432054576
+        "x": 3.6878701785907144,
+        "y": 7.341567937292645
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,31 +30,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.35,
+      "waypointRelativePos": 0.7,
       "rotationDegrees": 0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 1.55,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "PrimeShootFromSpeaker"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 6.0,
     "maxAcceleration": 1.0,

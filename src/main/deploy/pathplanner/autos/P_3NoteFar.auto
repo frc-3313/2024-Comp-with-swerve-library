@@ -57,6 +57,12 @@
         {
           "type": "named",
           "data": {
+            "name": "PrimeShootFromSpeaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ShootThenReturnToNormal"
           }
         },
@@ -67,7 +73,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "P_GrabFarNote"
+                  "pathName": "Path 5 source side long"
                 }
               },
               {
@@ -83,12 +89,6 @@
           "type": "path",
           "data": {
             "pathName": "P_ReturnFarNote"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootThenReturnToNormal"
           }
         }
       ]

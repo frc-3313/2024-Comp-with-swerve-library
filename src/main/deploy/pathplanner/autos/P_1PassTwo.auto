@@ -3,9 +3,9 @@
   "startingPose": {
     "position": {
       "x": 0.76,
-      "y": 6.6
+      "y": 4.47
     },
-    "rotation": 57.0
+    "rotation": -57.49000000000001
   },
   "command": {
     "type": "sequential",
@@ -30,25 +30,19 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 8.0
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "A_GrabFarNote"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "IntakeNote"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Path 5 source side long"
                 }
               }
             ]
@@ -57,7 +51,44 @@
         {
           "type": "path",
           "data": {
-            "pathName": "A_ReturnFarNote"
+            "pathName": "S_Pass2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PassLowCommand"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootThenReturnToNormal"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "S_Pass3"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PassLowCommand"
           }
         },
         {
@@ -69,6 +100,6 @@
       ]
     }
   },
-  "folder": "Amp",
+  "folder": "Pillar",
   "choreoAuto": false
 }

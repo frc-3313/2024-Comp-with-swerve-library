@@ -211,8 +211,8 @@ public class SwerveSubsystem extends SubsystemBase
   {
     return run(() -> {
       // Make the robot move
-      swerveDrive.drive(new Translation2d(powerof2(translationX.getAsDouble()) * .75 * swerveDrive.getMaximumVelocity(),
-                            powerof2(translationY.getAsDouble()) * .75 * swerveDrive.getMaximumVelocity()),
+      swerveDrive.drive(new Translation2d(powerof2(translationX.getAsDouble()) * .95 * swerveDrive.getMaximumVelocity(),
+                            powerof2(translationY.getAsDouble()) * .95 * swerveDrive.getMaximumVelocity()),
                             powerof2(angularRotationX.getAsDouble()) * swerveDrive.getMaximumAngularVelocity(),
                         true,
                         false);
@@ -467,5 +467,9 @@ public class SwerveSubsystem extends SubsystemBase
   public void setcossine(boolean cosine)
   {
     swerveDrive.setCosineCompensator(cosine);
+  }
+  public void setHeadingCorrection(boolean correction)
+  {
+    swerveDrive.setHeadingCorrection(correction);
   }
 }

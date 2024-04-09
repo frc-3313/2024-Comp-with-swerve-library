@@ -66,7 +66,7 @@ public final class Constants
               public static final int Elevator_ENCODER_ID = 2;
               public static final int ElevatorMotor2_ID = 28;
               public static final double elvBottomPosition = 0; 
-              public static final double climbLowPosition = 3;
+              public static final double climbLowPosition = 0;
               public static final double elvAmpPosition = 65;
               public static final double SorceIntakePosition = 10; 
               public static final double elvTrapPosition = 74; 
@@ -91,8 +91,8 @@ public final class Constants
               public static final double stowPosition = 140;  //255; 
               public static final double handOffPosition = 195;//310; this one
               public static final double shootFromStage = 190; //305;
-              public static final double shootFromSpeaker = 202; //322;
+              public static final double shootFromSpeaker = 199; //322;
               public static final double ampPosition = 120; //240;
-              public static final double passPosition = 165; //280;
+              public static final double passLowPosition = 140; //280;
           }
 }

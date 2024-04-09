@@ -10,12 +10,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.BasicCommands.CancelCMD;
 import frc.robot.commands.BasicCommands.ClimbCMD;
 import frc.robot.commands.BasicCommands.IntakeNoteCMD;
 import frc.robot.commands.BasicCommands.JogIntake;
+import frc.robot.commands.BasicCommands.JogShooter;
 import frc.robot.commands.BasicCommands.PrimeShootCMD;
 import frc.robot.commands.BasicCommands.ReturnToNormal;
 import frc.robot.commands.BasicCommands.SorceIntakeCMD;
@@ -67,6 +70,7 @@ public class RobotContainer
     NamedCommands.registerCommand("ReturnToNormal", new ReturnToNormal(intake, elevator, tilter, shooter));
     NamedCommands.registerCommand("ShootThenReturnToNormal", new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
     NamedCommands.registerCommand("IntakeNote", new IntakeNoteCMD(intake, shooter, tilter));
+    NamedCommands.registerCommand("PassLowCommand", new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.stowPosition, Constants.Elevator.elvBottomPosition));
     
     // Configure the trigger bindings
     configureBindings();
@@ -108,9 +112,10 @@ public class RobotContainer
     //intake from sorce=d pad down
     manipulatorXbox.povDown().whileTrue(new SorceIntakeCMD(intake, elevator, tilter, shooter));
 
+    Command intakeNoteCMD = new IntakeNoteCMD(intake, shooter, tilter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming);
+    //intake=A
 
-    //intake=A 
-    manipulatorXbox.a().onTrue(new SequentialCommandGroup(new IntakeNoteCMD(intake, shooter, tilter),new ReturnToNormal(intake, elevator, tilter, shooter)));
+    manipulatorXbox.a().onTrue(new SequentialCommandGroup(new IntakeNoteCMD(intake, shooter, tilter).withInterruptBehavior(InterruptionBehavior.kCancelIncoming),new ReturnToNormal(intake, elevator, tilter, shooter)));
   
     //scoer amp = B
     manipulatorXbox.b().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.ampShotSpeed, Constants.Tilter.ampPosition, Constants.Elevator.elvAmpPosition));
@@ -122,7 +127,7 @@ public class RobotContainer
 
     //shoot from speaker = right trigger
     manipulatorXbox.rightTrigger(0.5).onTrue(new PrimeShootCMD(
-      tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
+      tilter, shooter, elevator, 1.0, 165.9, Constants.Elevator.elvBottomPosition));
     manipulatorXbox.rightTrigger(0.5).onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
     //pass high
@@ -132,16 +137,19 @@ public class RobotContainer
 
     //pass low
     manipulatorXbox.povLeft().onTrue(new PrimeShootCMD(
-      tilter, shooter, elevator, .7, Constants.Tilter.passPosition, Constants.Elevator.elvBottomPosition));
+      tilter, shooter, elevator, .7, Constants.Tilter.passLowPosition, Constants.Elevator.elvBottomPosition));
     manipulatorXbox.povLeft().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
     //return to normal = x
     manipulatorXbox.x().onTrue(new ReturnToNormal(intake, elevator, tilter, shooter));
+    manipulatorXbox.x().onTrue(new CancelCMD(intakeNoteCMD));
+    
+    if(manipulatorXbox.getHID().getBButton())
 
     //Jog commands
     manipulatorXbox.rightBumper().whileTrue(new JogIntake(intake, false));
      //manipulatorXbox.rightTrigger(.5).onTrue(new JogIntake(intake, true));
-     //manipulatorXbox.leftBumper().onTrue(new JogShooter(shooter, false));
+     manipulatorXbox.leftBumper().onTrue(new JogShooter(shooter, false));
      //manipulatorXbox.leftTrigger(.5).onTrue(new JogShooter(shooter, true)); 
    
     // manipulatorXbox.start().onTrue(new ElevatorGoPosition(elevator, Constants.Elevator.elvAmpPosition, tilter));
