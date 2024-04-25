@@ -30,21 +30,60 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Path 1 middle start"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Path 1 middle Return"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PrimeShootFromSpeaker"
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Path 1 middle start"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Path 1 middle Return"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "IntakeNote"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ReturnToNormal"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Jognote"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "PrimeShootFromSpeaker"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
@@ -54,21 +93,60 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Path 11 middle grab amp note"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Path 13 middle grab amp note return"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PrimeShootFromSpeaker"
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Path 11 middle grab amp note"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Path 13 middle grab amp note return"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "IntakeNote"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ReturnToNormal"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Jognote"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "PrimeShootFromSpeaker"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
@@ -78,21 +156,60 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Path 12 middle grab sorce note"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "14 middle grab sorce note return"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PrimeShootFromSpeaker"
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Path 12 middle grab sorce note"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "14 middle grab sorce note return"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "IntakeNote"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ReturnToNormal"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Jognote"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "PrimeShootFromSpeaker"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {

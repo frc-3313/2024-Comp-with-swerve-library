@@ -23,7 +23,9 @@ import frc.robot.commands.BasicCommands.PrimeShootCMD;
 import frc.robot.commands.BasicCommands.ReturnToNormal;
 import frc.robot.commands.BasicCommands.SorceIntakeCMD;
 import frc.robot.commands.BasicCommands.ZeroGyro;
+import frc.robot.commands.BasicCommands.autoIntakeNoteCMD;
 import frc.robot.commands.CompoundCommands.ShootThenReturnToNormal;
+import frc.robot.commands.CompoundCommands.autojognote;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Elevator;
@@ -69,9 +71,10 @@ public class RobotContainer
     NamedCommands.registerCommand("PrimeShootAmp", new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.ampShotSpeed, Constants.Tilter.ampPosition, Constants.Elevator.elvAmpPosition));
     NamedCommands.registerCommand("ReturnToNormal", new ReturnToNormal(intake, elevator, tilter, shooter));
     NamedCommands.registerCommand("ShootThenReturnToNormal", new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
-    NamedCommands.registerCommand("IntakeNote", new IntakeNoteCMD(intake, shooter, tilter));
+    NamedCommands.registerCommand("IntakeNote", new autoIntakeNoteCMD(intake, shooter, tilter));
     NamedCommands.registerCommand("PassLowCommand", new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.stowPosition, Constants.Elevator.elvBottomPosition));
-    
+    NamedCommands.registerCommand("Jognote", new autojognote(shooter  ));    
+
     // Configure the trigger bindings
     configureBindings();
 
@@ -106,6 +109,8 @@ public class RobotContainer
 
     //zero gyro = start button
     driverXbox.start().onTrue(new ZeroGyro(drivebase));
+    driverXbox.a().onTrue(drivebase.sysidDriveMotorCommand());
+    driverXbox.b().onTrue(drivebase.sysidAngleMotorCommand());
 
     //------------------------------------- Manipulator -------------------------------------//
 

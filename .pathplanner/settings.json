@@ -15,7 +15,7 @@
     "Pillar"
   ],
   "defaultMaxVel": 6.0,
-  "defaultMaxAccel": 0.6,
+  "defaultMaxAccel": 1.4,
   "defaultMaxAngVel": 360.0,
   "defaultMaxAngAccel": 720.0,
   "maxModuleSpeed": 7.0

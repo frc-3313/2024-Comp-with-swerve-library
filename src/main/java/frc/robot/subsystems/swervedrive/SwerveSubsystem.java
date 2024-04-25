@@ -25,12 +25,14 @@ import java.io.File;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
+import swervelib.SwerveDriveTest;
 import swervelib.math.SwerveMath;
 import swervelib.parser.SwerveControllerConfiguration;
 import swervelib.parser.SwerveDriveConfiguration;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 
 public class SwerveSubsystem extends SubsystemBase
 {
@@ -471,5 +473,13 @@ public class SwerveSubsystem extends SubsystemBase
   public void setHeadingCorrection(boolean correction)
   {
     swerveDrive.setHeadingCorrection(correction);
+  }
+  public Command sysidDriveMotorCommand()
+  {
+    return SwerveDriveTest.generateSysIdCommand(SwerveDriveTest.setDriveSysIdRoutine(new Config(), this, swerveDrive, 12), 3.0, 5.0, 3.0);
+  }
+  public Command sysidAngleMotorCommand()
+  {
+    return SwerveDriveTest.generateSysIdCommand(SwerveDriveTest.setAngleSysIdRoutine(new Config(), this, swerveDrive), 3.0, 5.0, 3.0);
   }
 }
