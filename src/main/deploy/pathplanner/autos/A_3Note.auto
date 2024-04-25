@@ -12,12 +12,6 @@
     "data": {
       "commands": [
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "PrimeShootFromSpeaker"
@@ -89,6 +83,18 @@
           "type": "path",
           "data": {
             "pathName": "A_ReturnFarNote"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrimeShootFromSpeaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootThenReturnToNormal"
           }
         }
       ]

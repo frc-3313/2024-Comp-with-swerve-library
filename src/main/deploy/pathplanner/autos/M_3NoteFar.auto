@@ -86,9 +86,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Path 15 middle long return"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PrimeShootFromSpeaker"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Path 15 middle long return"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootThenReturnToNormal"
           }
         }
       ]
