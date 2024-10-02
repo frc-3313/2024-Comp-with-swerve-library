@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight extends SubsystemBase {
   
-  private final NetworkTable limelightTable;
+  private NetworkTable limelightTable;
   private double tx, ty, ta, tv;
 
   //camera offsets
@@ -72,5 +72,8 @@ public class Limelight extends SubsystemBase {
 
   public boolean isTargetValid() {
     return (tv == 1.0); 
+  }
+  public void setLEDMode(int mode)  { 
+      limelightTable.getEntry("ledMode").setNumber(mode);
   }
 }
