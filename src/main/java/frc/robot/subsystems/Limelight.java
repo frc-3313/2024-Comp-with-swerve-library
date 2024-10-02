@@ -24,7 +24,7 @@ public class Limelight extends SubsystemBase {
 
   public Limelight() 
   {
-    limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+    limelightTable = NetworkTableInstance.getDefault().getTable("limelight-mech");
   }
 
   @Override

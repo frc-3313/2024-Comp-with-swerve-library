@@ -28,10 +28,12 @@ import frc.robot.commands.CompoundCommands.ShootThenReturnToNormal;
 import frc.robot.commands.CompoundCommands.autojognote;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
-//import frc.robot.subsystems.Limelight;
+import frc.robot.commands.BasicCommands.aimCommand;
+import frc.robot.subsystems.Limelight;
 import java.io.File;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -52,7 +54,7 @@ public class RobotContainer
   private final Elevator elevator = new Elevator();
   private final Tilter tilter = new Tilter();
   private final Shooter shooter = new Shooter();
-  //private final Limelight limelight = new Limelight();
+  private final Limelight limelight = new Limelight();
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private CommandXboxController manipulatorXbox = new CommandXboxController(1);
 
@@ -111,7 +113,8 @@ public class RobotContainer
     driverXbox.start().onTrue(new ZeroGyro(drivebase));
     driverXbox.a().onTrue(drivebase.sysidDriveMotorCommand());
     driverXbox.b().onTrue(drivebase.sysidAngleMotorCommand());
-
+    //aim limelight
+    driverXbox.y().onTrue(new aimCommand(drivebase, limelight));
     //------------------------------------- Manipulator -------------------------------------//
 
     //intake from sorce=d pad down
