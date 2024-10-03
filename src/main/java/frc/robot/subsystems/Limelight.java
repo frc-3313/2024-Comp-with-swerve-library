@@ -30,10 +30,11 @@ public class Limelight extends SubsystemBase {
   @Override
   public void periodic() 
   {
+    //
     tx = limelightTable.getEntry("tx").getDouble(0);
     ty = limelightTable.getEntry("ty").getDouble(0);
     ta = limelightTable.getEntry("ta").getDouble(0);
-    tv = limelightTable.getEntry("tv").getDouble(0);
+    tv = limelightTable.getEntry("tv").getBoolean(0);
 
     SmartDashboard.putBoolean("TargetLocket", isTargetValid());
     SmartDashboard.putNumber("DistanceToTarget", GetDistanceInches());
@@ -49,8 +50,8 @@ public class Limelight extends SubsystemBase {
   public double GetDistanceInches()
   {
     double angleToGoalDegrees = GetYAngle();
-    double angleToGoalRadians = angleToGoalDegrees * (3.14259 / 180);
-    double distanceFromLimelightToGoalInches = (goalHeight - limelightLensHeight) / Math.tan(angleToGoalRadians);
+    double angleToGoalRadians = angleToGoalDegrees * (Math.pi() / 180);
+    double distanceFromLimelightToGoalInches = (goalHeight - limelightLensHeight) / Math.sin(angleToGoalRadians);
     return distanceFromLimelightToGoalInches;
   }
 
