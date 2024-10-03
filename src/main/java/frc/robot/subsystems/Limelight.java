@@ -15,12 +15,12 @@ public class Limelight extends SubsystemBase {
   private double tx, ty, ta, tv;
 
   //camera offsets
-  private double cameraAngleOffset = 20.0;
+  private double cameraAngleOffset = 0;
   private double fineAngleAdjustment = 0;
-  private double goalHeight = 66.88;
-  private double limelightLensHeight = 12;
+  private double goalHeight = 78.079;
+  private double limelightLensHeight = 12; //Limelight Hight inches 19.5
   private double shootHeightOffset = 25; //Shooter to ground
-  private double shootDistanceOffset = 0; //lime light to shooter
+  private double shootDistanceOffset = 0; //lime light to shooter idealy <12
 
   public Limelight() 
   {
