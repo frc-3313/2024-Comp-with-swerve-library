@@ -148,6 +148,9 @@ public class RobotContainer
     //return to normal = x
     manipulatorXbox.x().onTrue(new ReturnToNormal(intake, elevator, tilter, shooter));
     manipulatorXbox.x().onTrue(new CancelCMD(intakeNoteCMD));
+
+    //Autotarget = right bumper
+    manipulatorXbox.rightBumper().whileTrue(new Autotarget(limelight, swerveDrive, shooter, tilter, driverController, 2));
     
     if(manipulatorXbox.getHID().getBButton())
 
