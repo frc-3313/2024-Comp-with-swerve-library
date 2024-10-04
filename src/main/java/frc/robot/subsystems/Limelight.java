@@ -18,8 +18,8 @@ public class Limelight extends SubsystemBase {
   //camera offsets
   private double cameraAngleOffset = 0;
   private double fineAngleAdjustment = 0;
-  private double goalHeight = 78.079;
-  private double limelightLensHeight = 12; //Limelight Hight inches 19.5
+  private double goalHeight = 30.5;
+  private double limelightLensHeight = 19; //Limelight Hight inches 19.5
   private double shootHeightOffset = 25; //Shooter to ground
   private double shootDistanceOffset = 0; //lime light to shooter idealy <12
 
@@ -53,7 +53,7 @@ public class Limelight extends SubsystemBase {
   {
     double angleToGoalDegrees = GetYAngle();
     double angleToGoalRadians = angleToGoalDegrees * (Math.PI / 180);
-    double distanceFromLimelightToGoalInches = (goalHeight - limelightLensHeight) / Math.sin(angleToGoalRadians);
+    double distanceFromLimelightToGoalInches = (goalHeight - limelightLensHeight) / Math.tan(angleToGoalRadians);
     return distanceFromLimelightToGoalInches;
   }
 

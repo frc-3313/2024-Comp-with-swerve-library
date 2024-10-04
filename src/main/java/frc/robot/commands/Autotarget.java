@@ -27,9 +27,9 @@ public class Autotarget extends Command {
   private final PIDController steeringPID;
   private final int targetTagID;
   private double targetDistance;
-  private double kP = 0.15; // Proportional gain
+  private double kP = 0.18; // Proportional gain
   private final double kI = 0.0; // Integral gain
-  private  double kD = 0.0; // Derivative gain
+  private  double kD = 0.005; // Derivative gain
   boolean firsttime = true;
   /** Creates a new Autotarget. */
   public Autotarget(Limelight limelight, SwerveSubsystem drive, Shooter shooter, Tilter tilter, CommandXboxController controller, int tagID) {
@@ -57,6 +57,7 @@ public class Autotarget extends Command {
   public void execute() {
     double translationX = driveController.getRawAxis (1);
     double translationY = driveController.getRawAxis (0);
+    double rotation = driveController.getRightX();
 
     SmartDashboard.putBoolean("target Valid Auto", limelight.isTargetValid());
     SmartDashboard.putNumber("Distance to April Tag", targetDistance);
@@ -69,7 +70,6 @@ public class Autotarget extends Command {
     }
     kP = SmartDashboard.getNumber("kP", kP);
     kD = SmartDashboard.getNumber("kD", kD);
-
 
     steeringPID.setD(kP);
     steeringPID.setD(kD);
@@ -87,17 +87,27 @@ public class Autotarget extends Command {
           double speed = calculateSpeedToTarget();
             
           // Convert steering adjustment to swerve drive inputs
-          double rotation = MathUtil.clamp(steeringAdjust, -1.0, 1.0); // Ensure rotation speed is within limits
+          double autoRotation = MathUtil.clamp(steeringAdjust, -1.0, 1.0); // Ensure rotation speed is within limits
             
           // Drive the swerve robot
-          driveSubsystem.drive(translation, rotation, false);
+          driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX),
+                            driveSubsystem.powerof2(translationY)),
+                            driveSubsystem.powerof2(autoRotation),
+                        true);
         }  else {
           // Stop if no target is visible
-          driveSubsystem.drive(translation, 0, false);
+          // TODO maxvelocity and maxangularvelocity
+          driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX),
+                            driveSubsystem.powerof2(translationY)),
+                            driveSubsystem.powerof2(rotation),
+                        true);
     }
     } else {
           // Stop if no target is visible
-          driveSubsystem.drive(translation, 0, false);
+          driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX),
+                            driveSubsystem.powerof2(translationY)),
+                            driveSubsystem.powerof2(rotation),
+                        true);
     }
     // if (distanceToTag < targetDistance){
     //   double shootAngle = CalculateShootAngle(distanceToTag);
