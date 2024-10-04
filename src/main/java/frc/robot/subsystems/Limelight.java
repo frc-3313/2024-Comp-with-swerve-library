@@ -81,7 +81,6 @@ public class Limelight extends SubsystemBase {
   }
 
   public int getAprilTagID() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getAprilTagID'");
+    return (int) limelightTable.getEntry("tid").getDouble(-1);
   }
 }
