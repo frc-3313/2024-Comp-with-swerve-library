@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Autotarget;
 import frc.robot.commands.BasicCommands.CancelCMD;
 import frc.robot.commands.BasicCommands.ClimbCMD;
 import frc.robot.commands.BasicCommands.IntakeNoteCMD;
@@ -28,10 +29,12 @@ import frc.robot.commands.CompoundCommands.ShootThenReturnToNormal;
 import frc.robot.commands.CompoundCommands.autojognote;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
-//import frc.robot.subsystems.Limelight;
+import frc.robot.commands.BasicCommands.aimCommand;
+import frc.robot.subsystems.Limelight;
 import java.io.File;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -52,7 +55,7 @@ public class RobotContainer
   private final Elevator elevator = new Elevator();
   private final Tilter tilter = new Tilter();
   private final Shooter shooter = new Shooter();
-  //private final Limelight limelight = new Limelight();
+  private final Limelight limelight = new Limelight();
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private CommandXboxController manipulatorXbox = new CommandXboxController(1);
 
@@ -111,7 +114,8 @@ public class RobotContainer
     driverXbox.start().onTrue(new ZeroGyro(drivebase));
     driverXbox.a().onTrue(drivebase.sysidDriveMotorCommand());
     driverXbox.b().onTrue(drivebase.sysidAngleMotorCommand());
-
+    //aim limelight
+    driverXbox.y().onTrue(new aimCommand(drivebase, limelight));
     //------------------------------------- Manipulator -------------------------------------//
 
     //intake from sorce=d pad down
@@ -148,10 +152,11 @@ public class RobotContainer
     //return to normal = x
     manipulatorXbox.x().onTrue(new ReturnToNormal(intake, elevator, tilter, shooter));
     manipulatorXbox.x().onTrue(new CancelCMD(intakeNoteCMD));
+    
 
     //Autotarget = right bumper
-    manipulatorXbox.rightBumper().whileTrue(new Autotarget(limelight, swerveDrive, shooter, tilter, driverController, 2));
-    
+    manipulatorXbox.rightBumper().whileTrue(new Autotarget(limelight, drivebase, shooter, tilter, driverXbox, 2));
+  
     if(manipulatorXbox.getHID().getBButton())
 
     //Jog commands

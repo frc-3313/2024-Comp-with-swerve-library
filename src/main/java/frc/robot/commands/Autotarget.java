@@ -4,35 +4,38 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystem.Limelight;
-import frc.robot.subsystem.SwerveSubsystem;
-import frc.robot.subsystem.Shooter;
-import frc.robot.subsystem.Tilter;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.helpers.LimelightHelpers;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Tilter;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Autotarget extends CommandBase {
+public class Autotarget extends Command {
 
   private final Limelight limelight;
   private final SwerveSubsystem swerveDrive;
   private final Shooter shooter;
   private final Tilter tilter;
-  private final Joystick driveContoller;
-  private final int targetTagID = 8;
-  private final double targetDistance;
+  private final CommandXboxController driveController;
+  private final int targetTagID;
+  private double targetDistance;
 
   private static final double kP = 0.02;
 
   /** Creates a new Autotarget. */
-  public Autotarget(Limelight limelight, SwerveSubsystem swerveDrive, Shooter shooter, Tilter tilter, Joystick controller, int tagID) {
+  public Autotarget(Limelight limelight, SwerveSubsystem swerveDrive, Shooter shooter, Tilter tilter, CommandXboxController controller, int tagID) {
     this.limelight = limelight;
-    this.swerveDrive = SwerveSubsystem;
-    this.shooter = Shooter;
-    this.tilter = Tilter;
-    this.controller = controller;
+    this.swerveDrive = swerveDrive;
+    this.shooter = shooter;
+    this.tilter = tilter;
+    this.driveController = controller;
     this.targetTagID = tagID;
-    addRequirements(Limelight, SwerveSubsystem, Shooter)
+    addRequirements(limelight, swerveDrive, shooter);
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -44,41 +47,45 @@ public class Autotarget extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double translationX = controller.getRawAxis (1);
-    double translationY = controller.getRawAxis (0);
+    double translationX = driveController.getRawAxis (1);
+    double translationY = driveController.getRawAxis (0);
 
     double rotationalSpeed = 0.0;
+    SmartDashboard.putBoolean("target Valid Auto", limelight.isTargetValid());
+    SmartDashboard.putNumber("Distance to April Tag", targetDistance);
+    SmartDashboard.putNumber("targetTagID", targetTagID);
 
-    if (limelight.hasValidTarget()){
+    if (limelight.isTargetValid()){
+      
       int detectedTagID = limelight.getAprilTagID();
       if (detectedTagID == targetTagID) {
-        double horizontalOffest = limelight.getTx();
+        double horizontalOffest = limelight.getTX();
         rotationalSpeed = kP *horizontalOffest;
-        SmartDashboard.putNumber("Distance to April Tag", distanceToTag);
+        targetDistance = limelight.GetDistanceInches();
       }
     }
     
-    swerveDrive.drive(translationX, translationY, rotationalSpeed);
 
-    double[] pose = limelight.getAprilTagPose();
-    double distanceToTag = pose[2];
+     swerveDrive.drive(new Translation2d(swerveDrive.powerof2(translationX) * .95,
+                            swerveDrive.powerof2(translationY) * .95),
+                            swerveDrive.powerof2(rotationalSpeed),
+                        true);
     
-    // if (distanceToTag > targetDistance){
+    // if (distanceToTag < targetDistance){
     //   double shootAngle = CalculateShootAngle(distanceToTag);
     //   shooter.setShooterAngle(shootAngle);
     // }
-    else {
-      //FIX add normal drive code here
-    }
+    // else {
+    //   //FIX add normal drive code here
+    // }
 
   }
 
   // Called once the command ends or is interrupted.
-  @Override
   private void rotateSwerveToTarget(double horizontalOffest) {
     if (Math.abs(horizontalOffest) > 1.0){
       
-      swerveDrive.rotate(rotationalSpeed);
+      //swerveDrive.rotate(rotationalSpeed);
     }
   }
 
