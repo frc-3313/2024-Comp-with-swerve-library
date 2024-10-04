@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 
-public class aimCommand extends Command{
+public class ObjectaimCommand extends Command{
   /** Creates a new aimCommand. */
   
     // private final NetworkTable limelightTable;
@@ -25,7 +25,7 @@ public class aimCommand extends Command{
     private final double kI = 0.0; // Integral gain
     private final double kD = 0.0; // Derivative gain
     
-    public aimCommand(SwerveSubsystem drive, Limelight limelight)
+    public ObjectaimCommand(SwerveSubsystem drive, Limelight limelight)
     {
 
     

@@ -9,7 +9,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Limelight extends SubsystemBase {
+public class Coral extends SubsystemBase {
   
   private final NetworkTable limelightTable;
   private double tx, ty, ta, tv;
@@ -22,7 +22,7 @@ public class Limelight extends SubsystemBase {
   private double shootHeightOffset = 25; //Shooter to ground
   private double shootDistanceOffset = 0; //lime light to shooter
 
-  public Limelight() 
+  public Coral() 
   {
     limelightTable = NetworkTableInstance.getDefault().getTable("limelight-mech");
   }

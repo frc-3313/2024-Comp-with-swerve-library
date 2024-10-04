@@ -11,22 +11,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight extends SubsystemBase {
   
-  private final NetworkTable limelightTable;
-  private double tx, ty, ta, tv;
   private NetworkTable limelightTable;
   private double tx, ty, ta;
   private double tv;
 
   //camera offsets
-  private double cameraAngleOffset = 20.0;
   private double cameraAngleOffset = 0;
   private double fineAngleAdjustment = 0;
-  private double goalHeight = 66.88;
-  private double limelightLensHeight = 12;
   private double goalHeight = 78.079;
   private double limelightLensHeight = 12; //Limelight Hight inches 19.5
   private double shootHeightOffset = 25; //Shooter to ground
-  private double shootDistanceOffset = 0; //lime light to shooter
   private double shootDistanceOffset = 0; //lime light to shooter idealy <12
 
   public Limelight() 
@@ -58,8 +52,6 @@ public class Limelight extends SubsystemBase {
   public double GetDistanceInches()
   {
     double angleToGoalDegrees = GetYAngle();
-    double angleToGoalRadians = angleToGoalDegrees * (3.14259 / 180);
-    double distanceFromLimelightToGoalInches = (goalHeight - limelightLensHeight) / Math.tan(angleToGoalRadians);
     double angleToGoalRadians = angleToGoalDegrees * (Math.PI / 180);
     double distanceFromLimelightToGoalInches = (goalHeight - limelightLensHeight) / Math.sin(angleToGoalRadians);
     return distanceFromLimelightToGoalInches;
@@ -82,7 +74,6 @@ public class Limelight extends SubsystemBase {
   }
 
   public boolean isTargetValid() {
-    return (tv == 1.0); 
     return .75 <= tv; 
   }
   public void setLEDMode(int mode)  { 
