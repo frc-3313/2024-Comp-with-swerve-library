@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-public class StakeMachine 
+public class StateMachine 
 {
     private boolean searchingForTarget;
     private boolean lockedOnTarget;
