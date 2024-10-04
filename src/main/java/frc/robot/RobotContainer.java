@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Autotarget;
 import frc.robot.commands.BasicCommands.CancelCMD;
 import frc.robot.commands.BasicCommands.ClimbCMD;
 import frc.robot.commands.BasicCommands.IntakeNoteCMD;
@@ -152,6 +153,10 @@ public class RobotContainer
     manipulatorXbox.x().onTrue(new ReturnToNormal(intake, elevator, tilter, shooter));
     manipulatorXbox.x().onTrue(new CancelCMD(intakeNoteCMD));
     
+
+    //Autotarget = right bumper
+    manipulatorXbox.rightBumper().whileTrue(new Autotarget(limelight, drivebase, shooter, tilter, driverXbox, 2));
+  
     if(manipulatorXbox.getHID().getBButton())
 
     //Jog commands
