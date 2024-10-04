@@ -50,7 +50,7 @@ public class Autotarget extends Command {
     double translationX = driveController.getRawAxis (1);
     double translationY = driveController.getRawAxis (0);
 
-    double rotationalSpeed = 0.1;
+    double rotationalSpeed = 0.5;
     SmartDashboard.putBoolean("target Valid Auto", limelight.isTargetValid());
     SmartDashboard.putNumber("Distance to April Tag", targetDistance);
     SmartDashboard.putNumber("targetTagID", targetTagID);
