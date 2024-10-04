@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Limelight extends SubsystemBase {
   
   private NetworkTable limelightTable;
-  private double tx, ty, ta, tv;
+  private double tx, ty, ta;
+  private double tv;
 
   //camera offsets
   private double cameraAngleOffset = 0;
@@ -24,7 +25,7 @@ public class Limelight extends SubsystemBase {
 
   public Limelight() 
   {
-    limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+    limelightTable = NetworkTableInstance.getDefault().getTable("limelight-mech");
   }
 
   @Override
@@ -34,11 +35,12 @@ public class Limelight extends SubsystemBase {
     tx = limelightTable.getEntry("tx").getDouble(0);
     ty = limelightTable.getEntry("ty").getDouble(0);
     ta = limelightTable.getEntry("ta").getDouble(0);
-    tv = limelightTable.getEntry("tv").getBoolean(0);
+    tv = limelightTable.getEntry("tv").getDouble(0);
 
     SmartDashboard.putBoolean("TargetLocket", isTargetValid());
     SmartDashboard.putNumber("DistanceToTarget", GetDistanceInches());
     SmartDashboard.putNumber("AngleToTarget", GetYAngle());
+    SmartDashboard.putNumber("Tv", tv);
 
   }
 
@@ -50,7 +52,7 @@ public class Limelight extends SubsystemBase {
   public double GetDistanceInches()
   {
     double angleToGoalDegrees = GetYAngle();
-    double angleToGoalRadians = angleToGoalDegrees * (Math.pi() / 180);
+    double angleToGoalRadians = angleToGoalDegrees * (Math.PI / 180);
     double distanceFromLimelightToGoalInches = (goalHeight - limelightLensHeight) / Math.sin(angleToGoalRadians);
     return distanceFromLimelightToGoalInches;
   }
@@ -72,9 +74,14 @@ public class Limelight extends SubsystemBase {
   }
 
   public boolean isTargetValid() {
-    return (tv == 1.0); 
+    return .75 <= tv; 
   }
   public void setLEDMode(int mode)  { 
       limelightTable.getEntry("ledMode").setNumber(mode);
+  }
+
+  public int getAprilTagID() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'getAprilTagID'");
   }
 }
