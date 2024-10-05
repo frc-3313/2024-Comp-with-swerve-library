@@ -155,7 +155,7 @@ public class RobotContainer
     
 
     //Autotarget = right bumper
-    manipulatorXbox.rightBumper().whileTrue(new Autotarget(limelight, drivebase, shooter, tilter, driverXbox, 2));
+    manipulatorXbox.rightBumper().whileTrue(new Autotarget(limelight, drivebase, shooter, elevator, tilter, driverXbox, 2));
   
     if(manipulatorXbox.getHID().getBButton())
 
