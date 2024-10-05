@@ -9,30 +9,18 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.helpers.LimelightHelpers;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.controller.PIDController;
-import frc.robot.Constants;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.BasicCommands.PrimeShootCMD;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Tilter;
-
 public class Autotarget extends Command {
 
   private final Limelight limelight;
-  private final SwerveSubsystem driveSubsystem;
-  private final Shooter shooter;
   private final Tilter tilter;
-  private final Elevator elevator;
+  private final SwerveSubsystem driveSubsystem;
   private final CommandXboxController driveController;
   private final PIDController steeringPID;
-  private final PrimeShootCMD aimBot;
   private final int targetTagID;
   private double targetDistance;
   private double kP = 0.18; // Proportional gain
@@ -42,17 +30,14 @@ public class Autotarget extends Command {
   private double angle = 30; // angle of the goal from the shooter
 
   /** Creates a new Autotarget. */
-  public Autotarget(Limelight limelight, SwerveSubsystem drive, Shooter shooter, Elevator elevator, Tilter tilter, CommandXboxController controller, int tagID) {
+  public Autotarget(Limelight limelight, SwerveSubsystem drive,Tilter tilter, CommandXboxController controller, int tagID) {
     this.limelight = limelight;
     this.driveSubsystem = drive;
-    this.shooter = shooter;
     this.tilter = tilter;
-    this.elevator= elevator;
     this.driveController = controller;
     this.targetTagID = tagID;
     this.steeringPID = new PIDController(kP, kI, kD);
-    this.aimBot = new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, angle, Constants.Elevator.elvBottomPosition);
-    addRequirements(limelight, drive, shooter, tilter, elevator);
+    addRequirements(limelight, drive, tilter);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -105,8 +90,8 @@ public class Autotarget extends Command {
         // Tells the tilter to go to angle to get the goal
         angle = limelight.CalculateShootAngle();
         SmartDashboard.putNumber("AngleToGoal", angle);
-        aimBot.tilter.GoToPosition(angle);
-        
+        tilter.GoToPosition(angle);
+
       } else {
         // Stop if target is not correct
         // TODO maxVelocity and maxAngularVelocity
