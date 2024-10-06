@@ -87,7 +87,7 @@ public class Autotarget extends Command {
                             driveSubsystem.powerof2(autoRotation),
                         true);
 
-        // Tells the tilter to go to angle to get the goal
+        // Tells the tilter to go to angle to get to the goal
         angle = limelight.CalculateShootAngle();
         SmartDashboard.putNumber("AngleToGoal", angle);
         tilter.GoToPosition(angle);

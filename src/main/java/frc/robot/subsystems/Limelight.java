@@ -23,7 +23,7 @@ public class Limelight extends SubsystemBase {
   private double shootHeightOffset = 25; //Shooter to ground
   private double shootDistanceOffset = 0; //lime light to shooter idealy <12
   private double fineDistanceAdjustment = 0; // distance way from the wall, to adjust for note drop
-  private double fineShootAjustment = 120; // minimun angle the shooter should be at to not do any damage, at least 120, adjust as needed
+  private double fineShootAjustment = 120; // angle needed for the shooter to be perpendicular to the wall, so that the angle added by CalculateShootAngle is accurate for the angle needed
 
   public Limelight() 
   {
