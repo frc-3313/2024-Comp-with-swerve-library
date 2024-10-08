@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -11,9 +12,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Limelight;
+import edu.wpi.first.wpilibj.DriverStation;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Driver;
+
 import swervelib.parser.SwerveParser;
 
 /**
@@ -30,6 +34,7 @@ public class Robot extends TimedRobot
   private RobotContainer m_robotContainer;
 
   private Timer disabledTimer;
+  private String teamColor; 
 
   public Robot()
   {
@@ -122,6 +127,7 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousPeriodic()
   {
+    determineTeamColor();
   }
 
   @Override
@@ -139,6 +145,7 @@ public class Robot extends TimedRobot
     m_robotContainer.setMotorBrake(true);
     m_robotContainer.drivebase.setcossine(false);
     m_robotContainer.drivebase.setHeadingCorrection(false);
+    determineTeamColor();
   }
 
   /**
@@ -186,4 +193,17 @@ public class Robot extends TimedRobot
   public void simulationPeriodic()
   {
   }
+
+  private void determineTeamColor() {
+    // Get the alliance color
+    if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+        teamColor = "Red";
+    } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
+        teamColor = "Blue";
+    } else {
+        teamColor = "Unknown"; // Not in a match or other situation
+    }
+}
+
+
 }

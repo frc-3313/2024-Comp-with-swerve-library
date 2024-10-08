@@ -43,7 +43,10 @@ public class Autotarget extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    steeringPID.setP(kP);
+    steeringPID.setD(kD);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -55,17 +58,7 @@ public class Autotarget extends Command {
     SmartDashboard.putBoolean("target Valid Auto", limelight.isTargetValid());
     SmartDashboard.putNumber("Distance to April Tag", targetDistance);
     SmartDashboard.putNumber("targetTagID", targetTagID);
-    if(firsttime)
-    {
-      SmartDashboard.putNumber("kP", kP);
-      SmartDashboard.putNumber("kD", kD);  
-      firsttime = false; 
-    }
-    kP = SmartDashboard.getNumber("kP", kP);
-    kD = SmartDashboard.getNumber("kD", kD);
-
-    steeringPID.setP(kP);
-    steeringPID.setD(kD);
+    
 
     if (limelight.isTargetValid()){ 
       int detectedTagID = limelight.getAprilTagID();
