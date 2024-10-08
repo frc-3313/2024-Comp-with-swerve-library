@@ -34,7 +34,6 @@ public class Robot extends TimedRobot
   private RobotContainer m_robotContainer;
 
   private Timer disabledTimer;
-  private String teamColor; 
 
   public Robot()
   {
@@ -127,7 +126,6 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousPeriodic()
   {
-    determineTeamColor();
   }
 
   @Override
@@ -145,7 +143,6 @@ public class Robot extends TimedRobot
     m_robotContainer.setMotorBrake(true);
     m_robotContainer.drivebase.setcossine(false);
     m_robotContainer.drivebase.setHeadingCorrection(false);
-    determineTeamColor();
   }
 
   /**
@@ -193,17 +190,4 @@ public class Robot extends TimedRobot
   public void simulationPeriodic()
   {
   }
-
-  private void determineTeamColor() {
-    // Get the alliance color
-    if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-        teamColor = "Red";
-    } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
-        teamColor = "Blue";
-    } else {
-        teamColor = "Unknown"; // Not in a match or other situation
-    }
-}
-
-
 }

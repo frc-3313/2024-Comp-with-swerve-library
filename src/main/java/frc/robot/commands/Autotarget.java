@@ -12,6 +12,8 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.Tilter;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.controller.PIDController;
 public class Autotarget extends Command {
@@ -21,21 +23,20 @@ public class Autotarget extends Command {
   private final SwerveSubsystem driveSubsystem;
   private final CommandXboxController driveController;
   private final PIDController steeringPID;
-  private final int targetTagID;
   private double targetDistance;
   private double kP = 0.18; // Proportional gain
   private final double kI = 0.0; // Integral gain
   private  double kD = 0.005; // Derivative gain
   boolean firsttime = true;
   private double angle = 30; // angle of the goal from the shooter
+  private int speakerID;
 
   /** Creates a new Autotarget. */
-  public Autotarget(Limelight limelight, SwerveSubsystem drive,Tilter tilter, CommandXboxController controller, int tagID) {
+  public Autotarget(Limelight limelight, SwerveSubsystem drive,Tilter tilter, CommandXboxController controller) {
     this.limelight = limelight;
     this.driveSubsystem = drive;
     this.tilter = tilter;
     this.driveController = controller;
-    this.targetTagID = tagID;
     this.steeringPID = new PIDController(kP, kI, kD);
     addRequirements(limelight, drive, tilter);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -44,6 +45,16 @@ public class Autotarget extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
+    if(DriverStation.getAlliance().get() == Alliance.Red)
+    {
+      speakerID = 4;
+    }
+    else
+    {
+      speakerID = 8;
+    }
+
     steeringPID.setP(kP);
     steeringPID.setD(kD);
   }
@@ -57,12 +68,11 @@ public class Autotarget extends Command {
 
     SmartDashboard.putBoolean("target Valid Auto", limelight.isTargetValid());
     SmartDashboard.putNumber("Distance to April Tag", targetDistance);
-    SmartDashboard.putNumber("targetTagID", targetTagID);
     
 
     if (limelight.isTargetValid()){ 
       int detectedTagID = limelight.getAprilTagID();
-      if (detectedTagID == targetTagID) {
+      if (detectedTagID == speakerID) {
         double tx = limelight.getTX();
         targetDistance = limelight.GetDistanceInches();
         // Use PID to calculate steering adjustment

@@ -62,7 +62,6 @@ public class RobotContainer
   // CommandJoystick driverController   = new CommandJoystick(3);//(OperatorConstants.DRIVER_CONTROLLER_PORT);
   private CommandXboxController driverXbox = new CommandXboxController(0);
   private SendableChooser<Command> auto_chooser = new SendableChooser<>();
-  private int speakerAprilTag;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -156,7 +155,7 @@ public class RobotContainer
     
 
     //Autotarget = right bumper
-    manipulatorXbox.rightBumper().whileTrue(new Autotarget(limelight, drivebase, tilter, driverXbox, speakerAprilTag));
+    manipulatorXbox.rightBumper().whileTrue(new Autotarget(limelight, drivebase, tilter, driverXbox));
     // if(manipulatorXbox.getHID().getRightBumper()){
     //   manipulatorXbox.y().whileTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, null, Constants.Elevator.elvBottomPosition));
     //   manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, null, shooter, elevator));
@@ -194,17 +193,5 @@ public class RobotContainer
   public void setMotorBrake(boolean brake)
   {
     drivebase.setMotorBrake(brake);
-  }
-
-  public void setAprilTags(String teamColor)
-  {
-    if (teamColor == "Red")
-    {
-      speakerAprilTag = 4;
-    }
-    else if (teamColor == "Blue")
-    {
-      speakerAprilTag = 8;
-    }
   }
 }
