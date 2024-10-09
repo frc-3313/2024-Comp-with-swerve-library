@@ -34,7 +34,6 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
 import frc.robot.commands.BasicCommands.aimCommand;
-import frc.robot.subsystems.Limelight;
 import java.io.File;
 
 import com.pathplanner.lib.auto.AutoBuilder;
