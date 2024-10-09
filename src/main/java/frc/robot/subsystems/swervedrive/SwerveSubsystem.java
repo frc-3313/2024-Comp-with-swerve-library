@@ -291,7 +291,16 @@ public class SwerveSubsystem extends SubsystemBase
   public void simulationPeriodic()
   {
   }
+  
+  public double GetMaxAngularVelocity()
+  {
+    return swerveDrive.getMaximumAngularVelocity();
+  }
 
+  public double GetMaxVelocity()
+  {
+    return swerveDrive.getMaximumAngularVelocity();
+  }
   /**
    * Get the swerve drive kinematics object.
    *

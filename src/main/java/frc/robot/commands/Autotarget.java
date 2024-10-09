@@ -84,9 +84,9 @@ public class Autotarget extends Command {
         double autoRotation = MathUtil.clamp(steeringAdjust, -1.0, 1.0); // Ensure rotation speed is within limits
             
         // Drive the swerve robot
-        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX),
-                            driveSubsystem.powerof2(translationY)),
-                            driveSubsystem.powerof2(autoRotation),
+        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX) * driveSubsystem.GetMaxVelocity(),
+                            driveSubsystem.powerof2(translationY) * driveSubsystem.GetMaxVelocity()),
+                            driveSubsystem.powerof2(autoRotation) * driveSubsystem.GetMaxAngularVelocity(),
                         true);
 
         // Tells the tilter to go to angle to get to the goal
@@ -96,17 +96,17 @@ public class Autotarget extends Command {
 
       } else {
         // Stop if target is not correct
-        // TODO maxVelocity and maxAngularVelocity
-        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX),
-                            driveSubsystem.powerof2(translationY)),
-                            driveSubsystem.powerof2(rotation),
+        // Done maxVelocity and maxAngularVelocity
+        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX) * driveSubsystem.GetMaxVelocity(),
+                            driveSubsystem.powerof2(translationY) * driveSubsystem.GetMaxVelocity()),
+                            driveSubsystem.powerof2(rotation) * driveSubsystem.GetMaxAngularVelocity(),
                         true);
       }
     } else {
           // Stop if no target is visible
-          driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX),
-                            driveSubsystem.powerof2(translationY)),
-                            driveSubsystem.powerof2(rotation),
+          driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX) * driveSubsystem.GetMaxVelocity(),
+                            driveSubsystem.powerof2(translationY) * driveSubsystem.GetMaxVelocity()),
+                            driveSubsystem.powerof2(rotation) * driveSubsystem.GetMaxAngularVelocity(),
                         true);
     }
     // if (distanceToTag < targetDistance){
