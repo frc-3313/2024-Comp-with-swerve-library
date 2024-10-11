@@ -15,14 +15,13 @@ public class Limelight extends SubsystemBase {
   private NetworkTable limelightTable;
   private double tx, ty, ta;
   private double tv;
-  //camera offsets
-  private double cameraAngleOffset = 41;
-  private double fineAngleAdjustment = 0;
-  private double goalHeight = 78;
-  private double limelightLensHeight = 8.25; //Limelight Hight inches 19.5
-  private double shootHeightOffset = 10; //Shooter to limelight
-  private double shootDistanceOffset = 9; //lime light to shooter idealy <12
-  private double fineDistanceAdjustment = 0; // distance way from the wall, to adjust for note drop
+  //Limelight Offsets
+  private double cameraAngleOffset = 41; //Should be angle that the Limelight is facing in degrees, but in actuality, it is not. 41 just seems to work.
+  private double goalHeight = 78; //Height of the speaker in inches
+  private double limelightLensHeight = 8.25; //Limelight height in inches
+  private double shootHeightOffset = 10; //Height from Limelight to Shooter pivot in inches
+  private double shootDistanceOffset = 9; //Distance from Limelight to Shooter pivot in inches
+  private double fineDistanceAdjustment = 0; // Distance away from the wall in inches, to adjust for note drop
 
   public Limelight() 
   {
@@ -60,8 +59,8 @@ public class Limelight extends SubsystemBase {
 
   public double CalculateShootAngle()
   {
-    //arctan, tan^-1, or atan will find the angle of the height/distance in radians, and dividing by PI/180 will convert to degrees
-    double shootAngle = (Math.atan((goalHeight - shootHeightOffset) / (GetDistanceInches() + shootDistanceOffset - fineDistanceAdjustment))) / (Math.PI /180);
+    //arctan, tan^-1, or atan will find the angle of the height/distance in radians, then Math.toDegrees will convert to degrees
+    double shootAngle = Math.toDegrees(Math.atan((goalHeight - shootHeightOffset) / (GetDistanceInches() + shootDistanceOffset - fineDistanceAdjustment)));
     return shootAngle;
   }
 
