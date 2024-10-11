@@ -76,9 +76,6 @@ public class Autotarget extends Command {
         targetDistance = limelight.GetDistanceInches();
         // Use PID to calculate steering adjustment
         double steeringAdjust = steeringPID.calculate(tx, 0.0); // Aim for zero offset
-
-        // Determine speed based on distance to target (implement your distance logic here)
-        double speed = calculateSpeedToTarget();
             
         // Convert steering adjustment to swerve drive inputs
         double autoRotation = MathUtil.clamp(steeringAdjust, -1.0, 1.0); // Ensure rotation speed is within limits
@@ -92,7 +89,7 @@ public class Autotarget extends Command {
         // Tells the tilter to go to angle to get to the goal
         angle = limelight.CalculateShootAngle();
         SmartDashboard.putNumber("AngleToGoal", angle);
-        tilter.GoToPosition(angle);
+        tilter.GoToPosition(angle +140);
 
       } else {
         // Stop if target is not correct

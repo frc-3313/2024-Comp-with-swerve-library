@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.helpers.LimelightHelpers;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight extends SubsystemBase {
@@ -14,16 +15,14 @@ public class Limelight extends SubsystemBase {
   private NetworkTable limelightTable;
   private double tx, ty, ta;
   private double tv;
-
   //camera offsets
-  private double cameraAngleOffset = 0;
+  private double cameraAngleOffset = 41;
   private double fineAngleAdjustment = 0;
-  private double goalHeight = 30.5;
-  private double limelightLensHeight = 19; //Limelight Hight inches 19.5
-  private double shootHeightOffset = 25; //Shooter to ground
-  private double shootDistanceOffset = 0; //lime light to shooter idealy <12
+  private double goalHeight = 78;
+  private double limelightLensHeight = 8.25; //Limelight Hight inches 19.5
+  private double shootHeightOffset = 10; //Shooter to limelight
+  private double shootDistanceOffset = 9; //lime light to shooter idealy <12
   private double fineDistanceAdjustment = 0; // distance way from the wall, to adjust for note drop
-  private double fineShootAjustment = 120; // angle needed for the shooter to be perpendicular to the wall, so that the angle added by CalculateShootAngle is accurate for the angle needed
 
   public Limelight() 
   {
@@ -48,7 +47,7 @@ public class Limelight extends SubsystemBase {
 
   public double GetYAngle()
   {
-    return (getTY() + cameraAngleOffset + fineAngleAdjustment);
+    return (getTY() + cameraAngleOffset);
   }
 
   public double GetDistanceInches()
@@ -62,7 +61,7 @@ public class Limelight extends SubsystemBase {
   public double CalculateShootAngle()
   {
     //arctan, tan^-1, or atan will find the angle of the height/distance in radians, and dividing by PI/180 will convert to degrees
-    double shootAngle = (Math.atan((goalHeight - shootHeightOffset) / (GetDistanceInches() + shootDistanceOffset - fineDistanceAdjustment))) / (Math.PI /180) + fineShootAjustment;
+    double shootAngle = (Math.atan((goalHeight - shootHeightOffset) / (GetDistanceInches() + shootDistanceOffset - fineDistanceAdjustment))) / (Math.PI /180);
     return shootAngle;
   }
 

@@ -130,10 +130,10 @@ public class RobotContainer
     manipulatorXbox.b().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
     //shoot from speaker = Y
-    manipulatorXbox.y().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
-    manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
+    // manipulatorXbox.y().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
+    // manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
-    //shoot from speaker = right trigger
+    //pass far = right trigger
     manipulatorXbox.rightTrigger(0.5).onTrue(new PrimeShootCMD(
       tilter, shooter, elevator, 1.0, 165.9, Constants.Elevator.elvBottomPosition));
     manipulatorXbox.rightTrigger(0.5).onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
@@ -153,12 +153,12 @@ public class RobotContainer
     manipulatorXbox.x().onTrue(new CancelCMD(intakeNoteCMD));
     
 
-    //Autotarget = right bumper
+    // Autotarget = right bumper
     manipulatorXbox.rightBumper().whileTrue(new Autotarget(limelight, drivebase, tilter, driverXbox));
-    // if(manipulatorXbox.getHID().getRightBumper()){
-    //   manipulatorXbox.y().whileTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, null, Constants.Elevator.elvBottomPosition));
-    //   manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, null, shooter, elevator));
-    // }
+    if(manipulatorXbox.getHID().getRightBumper()){
+      manipulatorXbox.y().whileTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, null, Constants.Elevator.elvBottomPosition));
+      manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, null, shooter, elevator));
+    }
     
     if(manipulatorXbox.getHID().getBButton())
 

@@ -12,6 +12,7 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import frc.robot.Constants;
+import edu.wpi.first.math.trajectory.constraint.MaxVelocityConstraint;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -66,7 +67,23 @@ public class Tilter extends SubsystemBase
 
   public void GoToPosition(double position)
   {
-    newTargetPosition = position;
+    if(position < frc.robot.Constants.Tilter.MaxLow)
+    {
+      newTargetPosition = frc.robot.Constants.Tilter.MaxLow;
+    }
+    else if(position > frc.robot.Constants.Tilter.MaxHigh)
+    {
+      newTargetPosition = frc.robot.Constants.Tilter.MaxHigh;
+    }
+    else
+    { 
+      newTargetPosition = position;
+    }
+  }
+
+  public void GoToAngle(double angle)
+  {
+    newTargetPosition = Constants.Tilter.zeroDegrees + 150;
   }
 
   public boolean atSetpoint() {
