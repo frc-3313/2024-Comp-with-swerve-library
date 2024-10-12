@@ -60,7 +60,8 @@ public class Autotarget extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
+  public void execute() 
+  {
     double translationX = driveController.getRawAxis (1);
     double translationY = driveController.getRawAxis (0);
     double rotation = driveController.getRightX();
@@ -69,9 +70,11 @@ public class Autotarget extends Command {
     SmartDashboard.putNumber("Distance to April Tag", targetDistance);
     
 
-    if (limelight.isTargetValid()){ 
+    if (limelight.isTargetValid())
+    { 
       int detectedTagID = limelight.getAprilTagID();
-      if (detectedTagID == speakerID) {
+      if (detectedTagID == speakerID) 
+      {
         double tx = limelight.getTX();
         targetDistance = limelight.GetDistanceInches();
         // Use PID to calculate steering adjustment
@@ -81,9 +84,9 @@ public class Autotarget extends Command {
         double autoRotation = MathUtil.clamp(steeringAdjust, -1.0, 1.0); // Ensure rotation speed is within limits
             
         // Drive the swerve robot
-        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX),
-                            driveSubsystem.powerof2(translationY)),
-                            driveSubsystem.powerof2(autoRotation),
+        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX)* driveSubsystem.getMaximumVelocity(),
+                            driveSubsystem.powerof2(translationY)* driveSubsystem.getMaximumVelocity()),
+                            driveSubsystem.powerof2(autoRotation)* driveSubsystem.getMaximumAngularVelocity(),
                         true);
 
         // Tells the tilter to go to angle to get to the goal
@@ -91,20 +94,23 @@ public class Autotarget extends Command {
         SmartDashboard.putNumber("AngleToGoal", angle);
         tilter.GoToPosition(angle +140);
 
-      } else {
+      } 
+      else 
+      {
         // Stop if target is not correct
-        // TODO maxVelocity and maxAngularVelocity
-        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX),
-                            driveSubsystem.powerof2(translationY)),
-                            driveSubsystem.powerof2(rotation),
+        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX) * driveSubsystem.getMaximumVelocity(),
+                            driveSubsystem.powerof2(translationY)* driveSubsystem.getMaximumVelocity()),
+                            driveSubsystem.powerof2(rotation)* driveSubsystem.getMaximumAngularVelocity(),
                         true);
       }
-    } else {
-          // Stop if no target is visible
-          driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX),
-                            driveSubsystem.powerof2(translationY)),
-                            driveSubsystem.powerof2(rotation),
-                        true);
+    } 
+    else 
+    {
+      // Stop if no target is visible
+      driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX)* driveSubsystem.getMaximumVelocity(),
+                        driveSubsystem.powerof2(translationY)* driveSubsystem.getMaximumVelocity()),
+                        driveSubsystem.powerof2(rotation)* driveSubsystem.getMaximumAngularVelocity(),
+                    true);
     }
     // if (distanceToTag < targetDistance){
     //   double shootAngle = CalculateShootAngle(distanceToTag);
@@ -114,22 +120,6 @@ public class Autotarget extends Command {
     //   //FIX add normal drive code here
     // }
 
-  }
-  private double calculateSpeedToTarget() {
-    // Implement logic to calculate the speed based on your desired approach distance
-    // For example, you could adjust speed based on distance from the target
-    return 0.5; // Replace with actual speed calculation based on your logic
-  }
-  // Called once the command ends or is interrupted.
-  private void rotateSwerveToTarget(double tx) {
-    if (Math.abs(tx) > 1.0){
-      
-      //swerveDrive.rotate(rotationalSpeed);
-    }
-  }
-
-  private double CalculateShootAngle(double distance){
-    return 45 - (distance * 0.5);
   }
 
   // Returns true when the command should end.

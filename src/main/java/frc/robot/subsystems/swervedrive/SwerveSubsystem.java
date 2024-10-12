@@ -302,6 +302,14 @@ public class SwerveSubsystem extends SubsystemBase
     return swerveDrive.kinematics;
   }
 
+   public double getMaximumAngularVelocity()
+  {
+    return swerveDrive.getMaximumAngularVelocity();
+  }
+  public double getMaximumVelocity()
+  {
+    return swerveDrive.getMaximumVelocity();
+  }
   /**
    * Resets odometry to the given pose. Gyro angle and module positions do not need to be reset when calling this
    * method.  However, if either gyro angle or module position is reset, this must be called in order for odometry to
