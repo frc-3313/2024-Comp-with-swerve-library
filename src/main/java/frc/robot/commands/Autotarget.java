@@ -4,25 +4,29 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-import frc.robot.subsystems.Tilter;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Tilter;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 public class Autotarget extends Command {
 
   private final Limelight limelight;
   private final Tilter tilter;
   private final SwerveSubsystem driveSubsystem;
   private final CommandXboxController driveController;
+  private final Shooter shooter;
   private final PIDController steeringPID;
   private double targetDistance;
+  private double minimumShootDis = 144; //12 feet
   private double kP = 0.18; // Proportional gain
   private final double kI = 0.0; // Integral gain
   private  double kD = 0.005; // Derivative gain
@@ -31,34 +35,29 @@ public class Autotarget extends Command {
   private int speakerID;
 
   /** Creates a new Autotarget. */
-  public Autotarget(Limelight limelight, SwerveSubsystem drive,Tilter tilter, CommandXboxController controller) {
+  public Autotarget(Limelight limelight, SwerveSubsystem drive,Tilter tilter, CommandXboxController controller, Shooter shooter) {
     this.limelight = limelight;
     this.driveSubsystem = drive;
     this.tilter = tilter;
     this.driveController = controller;
+    this.shooter = shooter;
     this.steeringPID = new PIDController(kP, kI, kD);
     addRequirements(limelight, drive, tilter);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-    if(DriverStation.getAlliance().get() == Alliance.Red)
-    {
-      speakerID = 4;
-    }
-    else
-    {
-      speakerID = 8;
-    }
+  public void initialize() 
+  {
+    if(DriverStation.getAlliance().get() == Alliance.Red) {speakerID = 4;}
+    else {speakerID = 8;}
 
     steeringPID.setP(kP);
     steeringPID.setD(kD);
+
+    shooter.SetShooterSpeed(0.65);
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() 
   {
@@ -94,6 +93,18 @@ public class Autotarget extends Command {
         SmartDashboard.putNumber("AngleToGoal", angle);
         tilter.GoToPosition(angle +140);
 
+        //NEW UNTESTED CODE ----------- SHOOT AFTER TARGET LOCATED
+        //once at full speed run feeter
+        //after the note is no longer in the shooter 
+        //set isfinished to true
+        if(targetDistance <= minimumShootDis)
+        {
+          shooter.SetShooterSpeed(.65);
+          if(shooter.IsShooterAboveRPM())
+          {
+            shooter.StartFeeder();
+          }
+        }
       } 
       else 
       {
@@ -112,19 +123,18 @@ public class Autotarget extends Command {
                         driveSubsystem.powerof2(rotation)* driveSubsystem.getMaximumAngularVelocity(),
                     true);
     }
-    // if (distanceToTag < targetDistance){
-    //   double shootAngle = CalculateShootAngle(distanceToTag);
-    //   shooter.setShooterAngle(shootAngle);
-    // }
-    // else {
-    //   //FIX add normal drive code here
-    // }
-
   }
 
-  // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
-    return false;
+  public boolean isFinished() 
+  {
+    return !shooter.hasNote();
+  }
+
+  @Override
+  public void end(boolean interrupted) 
+  {
+      shooter.StopAllMotors();
+      tilter.GoToPosition(Constants.Tilter.stowPosition);
   }
 }

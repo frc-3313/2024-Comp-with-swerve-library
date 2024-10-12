@@ -154,7 +154,7 @@ public class RobotContainer
     
 
     // Autotarget = right bumper
-    manipulatorXbox.rightBumper().whileTrue(new Autotarget(limelight, drivebase, tilter, driverXbox));
+    manipulatorXbox.rightBumper().whileTrue(new Autotarget(limelight, drivebase, tilter, driverXbox, shooter));
     // if(manipulatorXbox.getHID().getRightBumper()){
     //   manipulatorXbox.y().whileTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, null, Constants.Elevator.elvBottomPosition));
     //   manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, null, shooter, elevator));
@@ -165,7 +165,7 @@ public class RobotContainer
     //Jog commands
     manipulatorXbox.rightBumper().whileTrue(new JogIntake(intake, false));
      //manipulatorXbox.rightTrigger(.5).onTrue(new JogIntake(intake, true));
-     manipulatorXbox.leftBumper().onTrue(new JogShooter(shooter, false));
+    manipulatorXbox.leftBumper().onTrue(new JogShooter(shooter, false));
      //manipulatorXbox.leftTrigger(.5).onTrue(new JogShooter(shooter, true)); 
    
     // manipulatorXbox.start().onTrue(new ElevatorGoPosition(elevator, Constants.Elevator.elvAmpPosition, tilter));
