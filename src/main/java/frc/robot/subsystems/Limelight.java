@@ -20,7 +20,7 @@ public class Limelight extends SubsystemBase {
   private double limelightLensHeight = 8.25; //Limelight height in inches
   private double shootHeightOffset = 10; //Height from Limelight to Shooter pivot in inches
   private double shootDistanceOffset = 9; //Distance from Limelight to Shooter pivot in inches
-  private double fineDistanceAdjustment = 0; // Distance away from the wall in inches, to adjust for note drop
+  private double fineDistanceAdjustment = 12; // Distance away from the wall in inches, to adjust for note drop
 
   public Limelight() 
   {
