@@ -43,7 +43,6 @@ public class Autotarget extends Command {
     this.shooter = shooter;
     this.steeringPID = new PIDController(kP, kI, kD);
     addRequirements(limelight, drive, tilter);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   @Override
@@ -56,10 +55,6 @@ public class Autotarget extends Command {
     steeringPID.setD(kD);
     steeringPID.setI(kI);
 
-    SmartDashboard.putNumber("kp", kP);
-    SmartDashboard.putNumber("kd", kD);
-    SmartDashboard.putNumber("kI", kI);
-
     shooter.SetShooterSpeed(0.65);
   }
 
@@ -69,22 +64,6 @@ public class Autotarget extends Command {
     double translationX = driveController.getRawAxis (1);
     double translationY = driveController.getRawAxis (0);
     double rotation = driveController.getRightX();
-
-    SmartDashboard.putBoolean("target Valid", limelight.isTargetValid());
-    SmartDashboard.putNumber("lined up", limelight.getTX());
-    SmartDashboard.putNumber("Distance to April Tag", targetDistance);
-
-    
-    if(firsttime)
-    {
-      SmartDashboard.putNumber("kP", kP);
-      SmartDashboard.putNumber("kD", kD);  
-      SmartDashboard.putNumber("kI", kI);
-      firsttime = false; 
-    }
-    kP = SmartDashboard.getNumber("kP", kP);
-    kD = SmartDashboard.getNumber("kD", kD);
-    kI = SmartDashboard.getNumber("kI", kI);
 
     steeringPID.setP(kP);
     steeringPID.setD(kD);

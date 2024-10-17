@@ -30,17 +30,8 @@ public class Limelight extends SubsystemBase {
   @Override
   public void periodic() 
   {
-    //
-    tx = limelightTable.getEntry("tx").getDouble(0);
-    ty = limelightTable.getEntry("ty").getDouble(0);
-    ta = limelightTable.getEntry("ta").getDouble(0);
-    tv = limelightTable.getEntry("tv").getDouble(0);
-
     SmartDashboard.putBoolean("TargetLocket", isTargetValid());
     SmartDashboard.putNumber("DistanceToTarget", GetDistanceInches());
-    SmartDashboard.putNumber("AngleToTarget", GetYAngle());
-    SmartDashboard.putNumber("Tv", tv);
-
   }
 
   public double GetYAngle()
@@ -58,7 +49,7 @@ public class Limelight extends SubsystemBase {
 
   public double CalculateShootAngle(double distance)
   {
-    return ((-0.264725)*distance)+(66.0655);
+    return ((-0.278)*distance)+(66.62);
   }
 
   public double getTX() {
