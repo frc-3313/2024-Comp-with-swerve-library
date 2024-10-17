@@ -56,11 +56,9 @@ public class Limelight extends SubsystemBase {
     return distanceFromLimelightToGoalInches;
   }
 
-  public double CalculateShootAngle()
+  public double CalculateShootAngle(double distance)
   {
-    //arctan, tan^-1, or atan will find the angle of the height/distance in radians, then Math.toDegrees will convert to degrees
-    double shootAngle = Math.toDegrees(Math.atan((goalHeight - shootHeightOffset) / (GetDistanceInches() + shootDistanceOffset - fineDistanceAdjustment)));
-    return shootAngle;
+    return ((-0.264725)*distance)+(66.0655);
   }
 
   public double getTX() {

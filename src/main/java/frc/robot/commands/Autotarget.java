@@ -26,10 +26,10 @@ public class Autotarget extends Command {
   private final Shooter shooter;
   private final PIDController steeringPID;
   private double targetDistance;
-  private double minimumShootDis = 144; //12 feet
+  private double minimumShootDis = 120; //12 feet
   private double kP = 0.05; // Proportional gain
-  private final double kI = 0.0; // Integral gain
-  private  double kD = 0.00; // Derivative gain
+  private double kI = 0.1; // Integral gain
+  private double kD = 0.00; // Derivative gain
   boolean firsttime = true;
   private double angle = 30; // angle of the goal from the shooter
   private int speakerID;
@@ -54,9 +54,11 @@ public class Autotarget extends Command {
 
     steeringPID.setP(kP);
     steeringPID.setD(kD);
+    steeringPID.setI(kI);
 
     SmartDashboard.putNumber("kp", kP);
     SmartDashboard.putNumber("kd", kD);
+    SmartDashboard.putNumber("kI", kI);
 
     shooter.SetShooterSpeed(0.65);
   }
@@ -77,15 +79,16 @@ public class Autotarget extends Command {
     {
       SmartDashboard.putNumber("kP", kP);
       SmartDashboard.putNumber("kD", kD);  
+      SmartDashboard.putNumber("kI", kI);
       firsttime = false; 
     }
     kP = SmartDashboard.getNumber("kP", kP);
     kD = SmartDashboard.getNumber("kD", kD);
+    kI = SmartDashboard.getNumber("kI", kI);
 
     steeringPID.setP(kP);
     steeringPID.setD(kD);
-
-    
+    steeringPID.setI(kI);  
 
     if (limelight.isTargetValid())
     { 
@@ -101,13 +104,13 @@ public class Autotarget extends Command {
         double autoRotation = MathUtil.clamp(steeringAdjust, -1.0, 1.0); // Ensure rotation speed is within limits
             
         // Drive the swerve robot
-        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX)* driveSubsystem.getMaximumVelocity(),
-                            driveSubsystem.powerof2(translationY)* driveSubsystem.getMaximumVelocity()),
+        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(-translationX)* driveSubsystem.getMaximumVelocity(),
+                            driveSubsystem.powerof2(-translationY)* driveSubsystem.getMaximumVelocity()),
                             driveSubsystem.powerof2(autoRotation)* driveSubsystem.getMaximumAngularVelocity(),
                         true);
 
         // Tells the tilter to go to angle to get to the goal
-        angle = limelight.CalculateShootAngle();
+        angle = limelight.CalculateShootAngle(targetDistance);
         SmartDashboard.putNumber("AngleToGoal", angle);
         tilter.GoToPosition(angle +140);
 
@@ -127,18 +130,18 @@ public class Autotarget extends Command {
       else 
       {
         // Stop if target is not correct
-        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX) * driveSubsystem.getMaximumVelocity(),
-                            driveSubsystem.powerof2(translationY)* driveSubsystem.getMaximumVelocity()),
-                            driveSubsystem.powerof2(rotation)* driveSubsystem.getMaximumAngularVelocity(),
+        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(-translationX) * driveSubsystem.getMaximumVelocity(),
+                            driveSubsystem.powerof2(-translationY)* driveSubsystem.getMaximumVelocity()),
+                            driveSubsystem.powerof2(-rotation)* driveSubsystem.getMaximumAngularVelocity(),
                         true);
       }
     } 
     else 
     {
       // Stop if no target is visible
-      driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(translationX)* driveSubsystem.getMaximumVelocity(),
-                        driveSubsystem.powerof2(translationY)* driveSubsystem.getMaximumVelocity()),
-                        driveSubsystem.powerof2(rotation)* driveSubsystem.getMaximumAngularVelocity(),
+      driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(-translationX)* driveSubsystem.getMaximumVelocity(),
+                        driveSubsystem.powerof2(-translationY)* driveSubsystem.getMaximumVelocity()),
+                        driveSubsystem.powerof2(-rotation)* driveSubsystem.getMaximumAngularVelocity(),
                     true);
     }
   }
