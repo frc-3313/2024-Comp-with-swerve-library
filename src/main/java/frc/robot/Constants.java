@@ -88,11 +88,14 @@ public final class Constants
           {   
               //TILTER
               public static final int TilterMotor_ID = 27;
+              public static final double zeroDegrees = 150;
               public static final double stowPosition = 140;  //255; 
               public static final double handOffPosition = 195;//310; this one
               public static final double shootFromStage = 190; //305;
-              public static final double shootFromSpeaker = 199; //322;
+              public static final double shootFromSpeaker = 175; //322;
               public static final double ampPosition = 120; //240;
               public static final double passLowPosition = 140; //280;
+              public static final double MaxLow = 115; 
+              public static final double MaxHigh = 205;
           }
 }

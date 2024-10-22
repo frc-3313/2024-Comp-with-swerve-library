@@ -14,16 +14,13 @@ public class Limelight extends SubsystemBase {
   private NetworkTable limelightTable;
   private double tx, ty, ta;
   private double tv;
-
-  //camera offsets
-  private double cameraAngleOffset = 0;
-  private double fineAngleAdjustment = 0;
-  private double goalHeight = 30.5;
-  private double limelightLensHeight = 19; //Limelight Hight inches 19.5
-  private double shootHeightOffset = 25; //Shooter to ground
-  private double shootDistanceOffset = 0; //lime light to shooter idealy <12
-  private double fineDistanceAdjustment = 0; // distance way from the wall, to adjust for note drop
-  private double fineShootAjustment = 120; // angle needed for the shooter to be perpendicular to the wall, so that the angle added by CalculateShootAngle is accurate for the angle needed
+  //Limelight Offsets
+  private double cameraAngleOffset = 41; //Should be angle that the Limelight is facing in degrees, but in actuality, it is not. 41 just seems to work.
+  private double goalHeight = 78; //Height of the speaker in inches
+  private double limelightLensHeight = 8.25; //Limelight height in inches
+  private double shootHeightOffset = 10; //Height from Limelight to Shooter pivot in inches
+  private double shootDistanceOffset = 9; //Distance from Limelight to Shooter pivot in inches
+  private double fineDistanceAdjustment = 12; // Distance away from the wall in inches, to adjust for note drop
 
   public Limelight() 
   {
@@ -33,22 +30,18 @@ public class Limelight extends SubsystemBase {
   @Override
   public void periodic() 
   {
-    //
+    SmartDashboard.putNumber("DistanceToTarget", GetDistanceInches());
+
     tx = limelightTable.getEntry("tx").getDouble(0);
     ty = limelightTable.getEntry("ty").getDouble(0);
     ta = limelightTable.getEntry("ta").getDouble(0);
     tv = limelightTable.getEntry("tv").getDouble(0);
-
-    SmartDashboard.putBoolean("TargetLocket", isTargetValid());
-    SmartDashboard.putNumber("DistanceToTarget", GetDistanceInches());
-    SmartDashboard.putNumber("AngleToTarget", GetYAngle());
-    SmartDashboard.putNumber("Tv", tv);
-
+    
   }
 
   public double GetYAngle()
   {
-    return (getTY() + cameraAngleOffset + fineAngleAdjustment);
+    return (getTY() + cameraAngleOffset);
   }
 
   public double GetDistanceInches()
@@ -59,11 +52,9 @@ public class Limelight extends SubsystemBase {
     return distanceFromLimelightToGoalInches;
   }
 
-  public double CalculateShootAngle()
+  public double CalculateShootAngle(double distance)
   {
-    //arctan, tan^-1, or atan will find the angle of the height/distance in radians, and dividing by PI/180 will convert to degrees
-    double shootAngle = (Math.atan((goalHeight - shootHeightOffset) / (GetDistanceInches() + shootDistanceOffset - fineDistanceAdjustment))) / (Math.PI /180) + fineShootAjustment;
-    return shootAngle;
+    return ((-0.278)*distance)+(66.62);
   }
 
   public double getTX() {
