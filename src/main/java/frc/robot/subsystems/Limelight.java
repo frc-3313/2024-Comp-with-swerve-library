@@ -30,8 +30,13 @@ public class Limelight extends SubsystemBase {
   @Override
   public void periodic() 
   {
-    SmartDashboard.putBoolean("TargetLocket", isTargetValid());
     SmartDashboard.putNumber("DistanceToTarget", GetDistanceInches());
+
+    tx = limelightTable.getEntry("tx").getDouble(0);
+    ty = limelightTable.getEntry("ty").getDouble(0);
+    ta = limelightTable.getEntry("ta").getDouble(0);
+    tv = limelightTable.getEntry("tv").getDouble(0);
+    
   }
 
   public double GetYAngle()
