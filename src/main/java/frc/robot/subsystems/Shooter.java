@@ -32,8 +32,8 @@ public class Shooter extends SubsystemBase
 
   public Shooter() 
   {
-    shooterMotorOne.setIdleMode(IdleMode.kCoast);
-    feederMotor.setIdleMode(IdleMode.kCoast);
+    shooterMotorOne.setIdleMode(IdleMode.kBrake);
+    feederMotor.setIdleMode(IdleMode.kBrake);
     shooterMotorOne.setSmartCurrentLimit(80);
     feederMotor.setSmartCurrentLimit(40);
     feederMotor.setInverted(true);

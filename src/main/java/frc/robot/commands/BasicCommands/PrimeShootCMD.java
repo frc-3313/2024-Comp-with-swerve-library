@@ -38,50 +38,13 @@ public class PrimeShootCMD extends InstantCommand {
   @Override
   public void initialize() 
   {
-    timer = new Timer();
-    noteWasToClose = false;
-    timer.start();
-    if(!shooter.noteToClose())
-    { 
-      shooter.SetShooterSpeed(shootSpeed);
-      elevator.GoToHeight(elevatorHeight);
-      tilter.GoToPosition(shootAngle);
-    }
-    else
-    {
-      noteWasToClose = true;
-     shooter.MoveFeederDistance(Constants.Shooter.FeederBackDistance);
-    }
-    
-  }
-  @Override
-  public void execute() 
-  {
-    if(!shooter.noteToClose() || timer.hasElapsed(.2))
-    { 
-      shooter.SetShooterSpeed(shootSpeed);
-      elevator.GoToHeight(elevatorHeight);
-      tilter.GoToPosition(shootAngle);
-    }
-  }
-    // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) 
-  {
-  }
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    if((shooter.hasNote() && timer.hasElapsed(.2)) || !noteWasToClose)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
+      shooter.SetShooterSpeed(shootSpeed);
+      elevator.GoToHeight(elevatorHeight);
+      tilter.GoToPosition(shootAngle);
+
     
   }
+ 
 
 }

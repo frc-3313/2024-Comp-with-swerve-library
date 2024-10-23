@@ -75,7 +75,8 @@ public class RobotContainer
     NamedCommands.registerCommand("ShootThenReturnToNormal", new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
     NamedCommands.registerCommand("IntakeNote", new autoIntakeNoteCMD(intake, shooter, tilter));
     NamedCommands.registerCommand("PassLowCommand", new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.stowPosition, Constants.Elevator.elvBottomPosition));
-    NamedCommands.registerCommand("Jognote", new autojognote(shooter  ));    
+    NamedCommands.registerCommand("Jognote", new autojognote(shooter));
+    NamedCommands.registerCommand("AutoShoot", new Autotarget(limelight, drivebase, tilter, driverXbox, shooter));    
 
     // Configure the trigger bindings
     configureBindings();
