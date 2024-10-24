@@ -26,8 +26,8 @@ public class Autotarget extends Command {
   private final PIDController steeringPID;
   private double targetDistance;
   private double minimumShootDis = 120; //12 feet
-  private double kP = 0.04; // Proportional gain
-  private double kI = 0.05; // Integral gain, pervios i was .1
+  private double kP = 0.035; // Proportional gain
+  private double kI = 0.03; // Integral gain, pervios i was .1
   private double kD = 0.0; // Derivative gain
   boolean firsttime = true;
   private double angle = 30; // angle of the goal from the shooter
@@ -69,8 +69,8 @@ public class Autotarget extends Command {
     double translationY = driveController.getRawAxis (0);
     double rotation = driveController.getRightX();
 
-    SmartDashboard.putBoolean("target Valid", limelight.isTargetValid());
-    SmartDashboard.putNumber("getTX", limelight.getTX());
+    SmartDashboard.putBoolean("target Valid", LimelightHelpers.getTV(Constants.Limelight.FRONT));
+    SmartDashboard.putNumber("getTX", LimelightHelpers.getTX(Constants.Limelight.FRONT));
 
     if (LimelightHelpers.getTV(Constants.Limelight.FRONT))
     { 
