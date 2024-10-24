@@ -21,8 +21,8 @@ public class Shooter extends SubsystemBase
   private final CANSparkMax feederMotor = new CANSparkMax(Constants.Shooter.FeederMotor_ID, MotorType.kBrushless);
   private RelativeEncoder feederEncoder = feederMotor.getEncoder();
   private static double maxSpeed = 1.0f;
-  private DigitalInput shootToCloseBeam = new DigitalInput(0);
-  private DigitalInput shootHasNoteBeam = new DigitalInput(1);
+  private DigitalInput shootToCloseBeam = new DigitalInput(1);
+  private DigitalInput shootHasNoteBeam = new DigitalInput(0);
   private SparkPIDController feederPID;
   public double feedkP, feedkI, feedkD, feedkIz, feedkFF, feedkMaxOutput, feedkMinOutput;
   public double shootkP, shootkI, shootkD, shootkIz, shootkFF, shootkMaxOutput, shootkMinOutput;
@@ -139,13 +139,12 @@ public class Shooter extends SubsystemBase
   public void periodic() 
   {
 
-    SmartDashboard.putBoolean("shooter has note", noteToClose());
-    SmartDashboard.putBoolean("Note To Close", hasNote());    
+    SmartDashboard.putBoolean("shooter has note", hasNote());
+    SmartDashboard.putBoolean("Note To Close", noteToClose());    
     SmartDashboard.putNumber("ShooterRPM", shooterMotorOne.getEncoder().getVelocity());
     SmartDashboard.putNumber("CurrentDistance", feederEncoder.getPosition());
     SmartDashboard.putNumber("Feeder Goal", setDistance);
-    SmartDashboard.putNumber("Est RPM", estRPM);
-  
+    SmartDashboard.putNumber("Est RPM", estRPM); 
 
   }
 }
