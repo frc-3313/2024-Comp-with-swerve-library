@@ -29,7 +29,6 @@ import frc.robot.commands.CompoundCommands.ShootThenReturnToNormal;
 import frc.robot.commands.CompoundCommands.autojognote;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
@@ -54,7 +53,6 @@ public class RobotContainer
   private final Elevator elevator = new Elevator();
   private final Tilter tilter = new Tilter();
   private final Shooter shooter = new Shooter();
-  private final Limelight limelight = new Limelight();
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private CommandXboxController manipulatorXbox = new CommandXboxController(1);
 
@@ -76,7 +74,7 @@ public class RobotContainer
     NamedCommands.registerCommand("IntakeNote", new autoIntakeNoteCMD(intake, shooter, tilter));
     NamedCommands.registerCommand("PassLowCommand", new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.stowPosition, Constants.Elevator.elvBottomPosition));
     NamedCommands.registerCommand("Jognote", new autojognote(shooter));
-    NamedCommands.registerCommand("AutoShoot", new Autotarget(limelight, drivebase, tilter, driverXbox, shooter));    
+    NamedCommands.registerCommand("AutoShoot", new Autotarget(drivebase, tilter, driverXbox, shooter));    
 
     // Configure the trigger bindings
     configureBindings();
@@ -112,10 +110,7 @@ public class RobotContainer
 
     //zero gyro = start button
     driverXbox.start().onTrue(new ZeroGyro(drivebase));
-    driverXbox.a().onTrue(drivebase.sysidDriveMotorCommand());
-    driverXbox.b().onTrue(drivebase.sysidAngleMotorCommand());
-    //aim limelight
-    driverXbox.y().onTrue(new aimCommand(drivebase, limelight));
+
     //------------------------------------- Manipulator -------------------------------------//
 
     //intake from sorce=d pad down
@@ -155,7 +150,7 @@ public class RobotContainer
     
 
     // Autotarget = right bumper
-    manipulatorXbox.rightBumper().whileTrue(new Autotarget(limelight, drivebase, tilter, driverXbox, shooter));
+    manipulatorXbox.rightBumper().whileTrue(new Autotarget(drivebase, tilter, driverXbox, shooter));
     // if(manipulatorXbox.getHID().getRightBumper()){
     //   manipulatorXbox.y().whileTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, null, Constants.Elevator.elvBottomPosition));
     //   manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, null, shooter, elevator));

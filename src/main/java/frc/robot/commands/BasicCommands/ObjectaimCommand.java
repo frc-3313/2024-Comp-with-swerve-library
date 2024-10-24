@@ -3,11 +3,12 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.BasicCommands;
-import frc.robot.subsystems.Limelight;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
+import frc.robot.helpers.LimelightHelpers;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class ObjectaimCommand extends Command{
@@ -16,17 +17,13 @@ public class ObjectaimCommand extends Command{
   // private final NetworkTable limelightTable;
   private final PIDController steeringPID;
   private final SwerveSubsystem driveSubsystem; // Assume you have a drive subsystem
-  private final Limelight limelight;
   private final double kP = 0.1; // Proportional gain
   private final double kI = 0.0; // Integral gain
   private final double kD = 0.0; // Derivative gain
     
-  public ObjectaimCommand(SwerveSubsystem drive, Limelight limelight)
+  public ObjectaimCommand(SwerveSubsystem drive)
   {
-
-  
     this.driveSubsystem = drive;
-    this.limelight = limelight;
     this.steeringPID = new PIDController(kP, kI, kD);
   }
 
@@ -39,8 +36,8 @@ public class ObjectaimCommand extends Command{
   public void execute() 
   {
      // Get the data from the Limelight
-    double tx = limelight.getTX(); // Horizontal offset
-    boolean targetVisible = limelight.isTargetValid();// Target visibility
+    double tx = LimelightHelpers.getTX(Constants.Limelight.FRONT); // Horizontal offset
+    boolean targetVisible = LimelightHelpers.getTV(Constants.Limelight.FRONT);// Target visibility
     Translation2d translation = new Translation2d();  // Adjust as necessary
     if (targetVisible) 
     {
