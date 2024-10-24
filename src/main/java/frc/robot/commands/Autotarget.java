@@ -13,13 +13,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
-import frc.robot.subsystems.Limelight;
+import frc.robot.helpers.LimelightHelpers;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 public class Autotarget extends Command {
 
-  private final Limelight limelight;
   private final Tilter tilter;
   private final SwerveSubsystem driveSubsystem;
   private final CommandXboxController driveController;
@@ -32,24 +31,29 @@ public class Autotarget extends Command {
   private double kD = 0.00; // Derivative gain
   boolean firsttime = true;
   private double angle = 30; // angle of the goal from the shooter
-  private int speakerID;
+  private Double speakerID;
+  private double cameraAngleOffset = 41; //Should be angle that the Limelight is facing in degrees, but in actuality, it is not. 41 just seems to work.
+  private double goalHeight = 78; //Height of the speaker in inches
+  private double limelightLensHeight = 8.25; //Limelight height in inches
+  //private double shootHeightOffset = 10; //Height from Limelight to Shooter pivot in inches
+  //private double shootDistanceOffset = 9; //Distance from Limelight to Shooter pivot in inches
+  //private double fineDistanceAdjustment = 12; // Distance away from the wall in inches, to adjust for note drop
 
   /** Creates a new Autotarget. */
-  public Autotarget(Limelight limelight, SwerveSubsystem drive,Tilter tilter, CommandXboxController controller, Shooter shooter) {
-    this.limelight = limelight;
+  public Autotarget(SwerveSubsystem drive,Tilter tilter, CommandXboxController controller, Shooter shooter) {
     this.driveSubsystem = drive;
     this.tilter = tilter;
     this.driveController = controller;
     this.shooter = shooter;
     this.steeringPID = new PIDController(kP, kI, kD);
-    addRequirements(limelight, drive, tilter);
+    addRequirements(drive, tilter);
   }
 
   @Override
   public void initialize() 
   {
-    if(DriverStation.getAlliance().get() == Alliance.Red) {speakerID = 4;}
-    else {speakerID = 7;}
+    if(DriverStation.getAlliance().get() == Alliance.Red) {speakerID = 4.0;}
+    else {speakerID = 7.0;}
 
     steeringPID.setP(kP);
     steeringPID.setD(kD);
@@ -65,15 +69,15 @@ public class Autotarget extends Command {
     double translationY = driveController.getRawAxis (0);
     double rotation = driveController.getRightX();
 
-    SmartDashboard.putBoolean("target Valid", limelight.isTargetValid());
+    SmartDashboard.putBoolean("target Valid", LimelightHelpers.getTV(Constants.Limelight.FRONT));
 
-    if (limelight.isTargetValid())
+    if (LimelightHelpers.getTV(Constants.Limelight.FRONT))
     { 
-      int detectedTagID = limelight.getAprilTagID();
+      double detectedTagID = LimelightHelpers.getFiducialID(Constants.Limelight.FRONT);
       if (detectedTagID == speakerID) 
       {
-        double tx = limelight.getTX();
-        targetDistance = limelight.GetDistanceInches();
+        double tx = LimelightHelpers.getTX(Constants.Limelight.FRONT);
+        targetDistance = GetDistanceInches();
         // Use PID to calculate steering adjustment
         double steeringAdjust = steeringPID.calculate(tx, 0.0); // Aim for zero offset
             
@@ -82,13 +86,13 @@ public class Autotarget extends Command {
             
         // Drive the swerve robot
 
-        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(-translationX)* driveSubsystem.getMaximumVelocity(),
-                            driveSubsystem.powerof2(-translationY)* driveSubsystem.getMaximumVelocity()),
-                            driveSubsystem.powerof2(autoRotation)* driveSubsystem.getMaximumAngularVelocity(),
+        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(-translationX)* driveSubsystem.swerveDrive.getMaximumVelocity(),
+                            driveSubsystem.powerof2(-translationY)* driveSubsystem.swerveDrive.getMaximumVelocity()),
+                            driveSubsystem.powerof2(autoRotation)* driveSubsystem.swerveDrive.getMaximumAngularVelocity(),
                         true);
 
         // Tells the tilter to go to angle to get to the goal
-        angle = limelight.CalculateShootAngle(targetDistance);
+        angle = CalculateShootAngle(targetDistance);
         SmartDashboard.putNumber("AngleToGoal", angle);
         tilter.GoToPosition(angle +140);
 
@@ -96,7 +100,7 @@ public class Autotarget extends Command {
         //once at full speed run feeter
         //after the note is no longer in the shooter 
         //set isfinished to true
-        if(targetDistance <= minimumShootDis && limelight.getTX() < 0.35 && limelight.getTX() > -03  && tilter.atSetpoint())
+        if(targetDistance <= minimumShootDis && LimelightHelpers.getTX(Constants.Limelight.FRONT) < 0.35 && LimelightHelpers.getTX(Constants.Limelight.FRONT) > -03  && tilter.atSetpoint())
         {
           shooter.SetShooterSpeed(.80);
           if(shooter.IsShooterAboveRPM())
@@ -109,18 +113,18 @@ public class Autotarget extends Command {
       {
         // Stop if target is not correct
 
-        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(-translationX) * driveSubsystem.getMaximumVelocity(),
-                            driveSubsystem.powerof2(-translationY)* driveSubsystem.getMaximumVelocity()),
-                            driveSubsystem.powerof2(-rotation)* driveSubsystem.getMaximumAngularVelocity(),
+        driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(-translationX) * driveSubsystem.swerveDrive.getMaximumVelocity(),
+                            driveSubsystem.powerof2(-translationY)* driveSubsystem.swerveDrive.getMaximumVelocity()),
+                            driveSubsystem.powerof2(-rotation)* driveSubsystem.swerveDrive.getMaximumAngularVelocity(),
                         true);
       }
     } 
     else 
     {
       // Stop if no target is visible
-      driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(-translationX)* driveSubsystem.getMaximumVelocity(),
-                        driveSubsystem.powerof2(-translationY)* driveSubsystem.getMaximumVelocity()),
-                        driveSubsystem.powerof2(-rotation)* driveSubsystem.getMaximumAngularVelocity(),
+      driveSubsystem.drive(new Translation2d(driveSubsystem.powerof2(-translationX)* driveSubsystem.swerveDrive.getMaximumVelocity(),
+                        driveSubsystem.powerof2(-translationY)* driveSubsystem.swerveDrive.getMaximumVelocity()),
+                        driveSubsystem.powerof2(-rotation)* driveSubsystem.swerveDrive.getMaximumAngularVelocity(),
                     true);
     }
   }
@@ -136,5 +140,20 @@ public class Autotarget extends Command {
   {
       shooter.StopAllMotors();
       tilter.GoToPosition(Constants.Tilter.stowPosition);
+  }
+  public double CalculateShootAngle(double distance)
+  {
+    return ((-0.278)*distance)+(66.62);
+  }
+  public double GetDistanceInches()
+  {
+    double angleToGoalDegrees = GetYAngle();
+    double angleToGoalRadians = angleToGoalDegrees * (Math.PI / 180);
+    double distanceFromLimelightToGoalInches = (goalHeight - limelightLensHeight) / Math.tan(angleToGoalRadians);
+    return distanceFromLimelightToGoalInches;
+  }
+  public double GetYAngle()
+  {
+    return (LimelightHelpers.getTY(Constants.Limelight.FRONT) + cameraAngleOffset);
   }
 }

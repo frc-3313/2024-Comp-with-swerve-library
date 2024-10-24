@@ -9,7 +9,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Limelight extends SubsystemBase {
+public class Limelightold extends SubsystemBase {
   
   private NetworkTable limelightTable;
   private double tx, ty, ta;
@@ -22,7 +22,7 @@ public class Limelight extends SubsystemBase {
   private double shootDistanceOffset = 9; //Distance from Limelight to Shooter pivot in inches
   private double fineDistanceAdjustment = 12; // Distance away from the wall in inches, to adjust for note drop
 
-  public Limelight() 
+  public Limelightold() 
   {
     limelightTable = NetworkTableInstance.getDefault().getTable("limelight-mech");
   }

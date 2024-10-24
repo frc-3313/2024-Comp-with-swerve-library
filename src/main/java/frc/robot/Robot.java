@@ -105,8 +105,6 @@ public class Robot extends TimedRobot
     m_robotContainer.setMotorBrake(true);
     m_robotContainer.drivebase.zeroGyro();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    m_robotContainer.drivebase.setcossine(true);
-    m_robotContainer.drivebase.setHeadingCorrection(true);
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null)
@@ -136,8 +134,7 @@ public class Robot extends TimedRobot
     }
     m_robotContainer.setDriveMode();
     m_robotContainer.setMotorBrake(true);
-    m_robotContainer.drivebase.setcossine(false);
-    m_robotContainer.drivebase.setHeadingCorrection(false);
+
   }
 
   /**
