@@ -53,7 +53,7 @@ public class IntakeNoteCMD extends Command
   {
     if(tilter.atSetpoint() && !shooter.hasNote())
     {
-      shooter.StartFeeder(.2);
+      shooter.StartFeeder(.6);
       intake.RunIntake(.4);
     }
     if(shooter.hasNote())

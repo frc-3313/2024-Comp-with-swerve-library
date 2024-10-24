@@ -27,9 +27,9 @@ public class Autotarget extends Command {
   private final PIDController steeringPID;
   private double targetDistance;
   private double minimumShootDis = 120; //12 feet
-  private double kP = 0.05; // Proportional gain
-  private double kI = 0.1; // Integral gain
-  private double kD = 0.00; // Derivative gain
+  private double kP = 0.04; // Proportional gain
+  private double kI = 0.05; // Integral gain, pervios i was .1
+  private double kD = 0.0; // Derivative gain
   boolean firsttime = true;
   private double angle = 30; // angle of the goal from the shooter
   private int speakerID;
@@ -55,7 +55,7 @@ public class Autotarget extends Command {
     steeringPID.setD(kD);
     steeringPID.setI(kI);
 
-    shooter.SetShooterSpeed(0.65);  
+    shooter.SetShooterSpeed(0.8);  
   }
 
   @Override
@@ -66,6 +66,7 @@ public class Autotarget extends Command {
     double rotation = driveController.getRightX();
 
     SmartDashboard.putBoolean("target Valid", limelight.isTargetValid());
+    SmartDashboard.putNumber("getTX", limelight.getTX());
 
     if (limelight.isTargetValid())
     { 
@@ -96,9 +97,8 @@ public class Autotarget extends Command {
         //once at full speed run feeter
         //after the note is no longer in the shooter 
         //set isfinished to true
-        if(targetDistance <= minimumShootDis && limelight.getTX() < 0.35 && limelight.getTX() > -03  && tilter.atSetpoint())
+        if(targetDistance <= minimumShootDis && limelight.getTX() < 3 && limelight.getTX() > -3  && tilter.atSetpoint())
         {
-          shooter.SetShooterSpeed(.80);
           if(shooter.IsShooterAboveRPM())
           {
             shooter.StartFeeder();
@@ -138,3 +138,4 @@ public class Autotarget extends Command {
       tilter.GoToPosition(Constants.Tilter.stowPosition);
   }
 }
+
