@@ -42,7 +42,6 @@ import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.SwerveDriveTest;
 import swervelib.math.SwerveMath;
-import swervelib.parser.PIDFConfig;
 import swervelib.parser.SwerveControllerConfiguration;
 import swervelib.parser.SwerveDriveConfiguration;
 import swervelib.parser.SwerveParser;
@@ -87,7 +86,7 @@ public class SwerveSubsystem extends SubsystemBase
     System.out.println("}");
 
     // Configure the Telemetry before creating the SwerveDrive to avoid unnecessary objects being created.
-    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.NONE;
     try
     {
       swerveDrive = new SwerveParser(directory).createSwerveDrive(Constants.DrivebaseConstants.MAX_SPEED);

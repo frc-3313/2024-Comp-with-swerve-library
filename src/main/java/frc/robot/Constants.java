@@ -83,7 +83,7 @@ public final class Constants
       public static final double midShotSpeed = .6;
       public static final double ampShotSpeed = .45;
       
-      public static final double sourceIntakeSpeed = -.3;
+      public static final double sourceIntakeSpeed = -.5;
   }
   public static final class Tilter
   {   
