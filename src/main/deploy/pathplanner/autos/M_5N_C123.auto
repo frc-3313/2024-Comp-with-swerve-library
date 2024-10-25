@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "PP"
+                  "pathName": "MM"
                 }
               }
             ]
@@ -61,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "P5_5Z"
+                  "pathName": "M1_1M"
                 }
               }
             ]
@@ -86,7 +86,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Z4_4Z"
+                  "pathName": "M2_2M"
                 }
               }
             ]
@@ -105,7 +105,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Z3"
+                  "pathName": "M3"
                 }
               },
               {
@@ -115,17 +115,11 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShoot"
           }
         }
       ]
     }
   },
-  "folder": "Pillar",
+  "folder": "Middle",
   "choreoAuto": false
 }

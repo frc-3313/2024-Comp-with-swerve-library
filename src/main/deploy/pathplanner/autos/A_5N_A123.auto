@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "PP"
+                  "pathName": "AA"
                 }
               }
             ]
@@ -61,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "P5_5Z"
+                  "pathName": "A1_1A"
                 }
               }
             ]
@@ -86,7 +86,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Z4_4Z"
+                  "pathName": "A2_2A"
                 }
               }
             ]
@@ -105,7 +105,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Z3"
+                  "pathName": "A3_3A"
                 }
               },
               {
@@ -126,6 +126,6 @@
       ]
     }
   },
-  "folder": "Pillar",
+  "folder": "Amp",
   "choreoAuto": false
 }
