@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.77,
-      "y": 4.43
+      "x": 0.8,
+      "y": 6.67
     },
-    "rotation": -60.0
+    "rotation": 58.67
   },
   "command": {
     "type": "sequential",
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "SP5_5Z"
+                  "pathName": "AA"
                 }
               }
             ]
@@ -61,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Z4_4Z"
+                  "pathName": "A1_1A"
                 }
               }
             ]
@@ -71,30 +71,11 @@
           "type": "named",
           "data": {
             "name": "AutoShoot"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Z3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeNote"
-                }
-              }
-            ]
           }
         }
       ]
     }
   },
-  "folder": "Pillar",
+  "folder": "Amp",
   "choreoAuto": false
 }
