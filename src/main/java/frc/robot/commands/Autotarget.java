@@ -54,7 +54,7 @@ public class Autotarget extends Command {
   {
     if(DriverStation.getAlliance().get() == Alliance.Red) {speakerID = 4.0;}
     else {speakerID = 7.0;}
-
+    LimelightHelpers.setPriorityTagID(Constants.Limelight.FRONT, speakerID.intValue());
     steeringPID.setP(kP);
     steeringPID.setD(kD);
     steeringPID.setI(kI);
