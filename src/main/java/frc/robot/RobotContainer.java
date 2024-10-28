@@ -126,18 +126,18 @@ public class RobotContainer
     manipulatorXbox.b().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
     // shoot from speaker = Y
-    manipulatorXbox.y().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
-    manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
+    //manipulatorXbox.y().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
+    //manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
     //pass far = right trigger
-    manipulatorXbox.rightTrigger(0.5).onTrue(new PrimeShootCMD(
-      tilter, shooter, elevator, 1.0, 165.9, Constants.Elevator.elvBottomPosition));
-    manipulatorXbox.rightTrigger(0.5).onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
+    //manipulatorXbox.rightTrigger(0.5).onTrue(new PrimeShootCMD(
+    //  tilter, shooter, elevator, 1.0, 165.9, Constants.Elevator.elvBottomPosition));
+    //manipulatorXbox.rightTrigger(0.5).onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
     //pass high
-    manipulatorXbox.povRight().onTrue(new PrimeShootCMD(
-      tilter, shooter, elevator, .62, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
-    manipulatorXbox.povRight().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
+    //manipulatorXbox.povRight().onTrue(new PrimeShootCMD(
+    //  tilter, shooter, elevator, .62, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
+    //manipulatorXbox.povRight().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
     //pass low
     manipulatorXbox.povLeft().onTrue(new PrimeShootCMD(
@@ -155,13 +155,11 @@ public class RobotContainer
     //   manipulatorXbox.y().whileTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, null, Constants.Elevator.elvBottomPosition));
     //   manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, null, shooter, elevator));
     // }
-    
-    if(manipulatorXbox.getHID().getBButton())
 
     //Jog commands
-    manipulatorXbox.rightBumper().whileTrue(new JogIntake(intake, false));
+    //manipulatorXbox.rightBumper().whileTrue(new JogIntake(intake, false));
      //manipulatorXbox.rightTrigger(.5).onTrue(new JogIntake(intake, true));
-    manipulatorXbox.leftBumper().onTrue(new JogShooter(shooter, false));
+    //manipulatorXbox.leftBumper().onTrue(new JogShooter(shooter, false));
      //manipulatorXbox.leftTrigger(.5).onTrue(new JogShooter(shooter, true)); 
    
     // manipulatorXbox.start().onTrue(new ElevatorGoPosition(elevator, Constants.Elevator.elvAmpPosition, tilter));

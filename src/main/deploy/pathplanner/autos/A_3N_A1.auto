@@ -2,21 +2,15 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.32,
-      "y": 5.54
+      "x": 0.8,
+      "y": 6.67
     },
-    "rotation": 0.0
+    "rotation": 58.67
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
         {
           "type": "named",
           "data": {
@@ -42,33 +36,46 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Path 1 middle start"
+                  "pathName": "AA"
                 }
               }
             ]
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Path 1 middle Return"
+            "name": "AutoShoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeNote"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "A1_1A"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "PrimeShootFromSpeaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootThenReturnToNormal"
+            "name": "AutoShoot"
           }
         }
       ]
     }
   },
-  "folder": "Middle",
+  "folder": "Amp",
   "choreoAuto": false
 }
