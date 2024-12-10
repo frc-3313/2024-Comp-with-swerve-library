@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Autotarget;
 import frc.robot.commands.BasicCommands.CancelCMD;
 import frc.robot.commands.BasicCommands.ClimbCMD;
 import frc.robot.commands.BasicCommands.IntakeNoteCMD;
@@ -31,7 +32,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tilter;
-//import frc.robot.subsystems.Limelight;
+import frc.robot.commands.BasicCommands.aimCommand;
 import java.io.File;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -52,7 +53,6 @@ public class RobotContainer
   private final Elevator elevator = new Elevator();
   private final Tilter tilter = new Tilter();
   private final Shooter shooter = new Shooter();
-  //private final Limelight limelight = new Limelight();
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private CommandXboxController manipulatorXbox = new CommandXboxController(1);
 
@@ -73,7 +73,8 @@ public class RobotContainer
     NamedCommands.registerCommand("ShootThenReturnToNormal", new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
     NamedCommands.registerCommand("IntakeNote", new autoIntakeNoteCMD(intake, shooter, tilter));
     NamedCommands.registerCommand("PassLowCommand", new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.stowPosition, Constants.Elevator.elvBottomPosition));
-    NamedCommands.registerCommand("Jognote", new autojognote(shooter  ));    
+    NamedCommands.registerCommand("Jognote", new autojognote(shooter));
+    NamedCommands.registerCommand("AutoShoot", new Autotarget(drivebase, tilter, driverXbox, shooter));    
 
     // Configure the trigger bindings
     configureBindings();
@@ -109,8 +110,6 @@ public class RobotContainer
 
     //zero gyro = start button
     driverXbox.start().onTrue(new ZeroGyro(drivebase));
-    driverXbox.a().onTrue(drivebase.sysidDriveMotorCommand());
-    driverXbox.b().onTrue(drivebase.sysidAngleMotorCommand());
 
     //------------------------------------- Manipulator -------------------------------------//
 
@@ -126,19 +125,19 @@ public class RobotContainer
     manipulatorXbox.b().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.ampShotSpeed, Constants.Tilter.ampPosition, Constants.Elevator.elvAmpPosition));
     manipulatorXbox.b().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
-    //shoot from speaker = Y
-    manipulatorXbox.y().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
-    manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
+    // shoot from speaker = Y
+    //manipulatorXbox.y().onTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
+    //manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
-    //shoot from speaker = right trigger
-    manipulatorXbox.rightTrigger(0.5).onTrue(new PrimeShootCMD(
-      tilter, shooter, elevator, 1.0, 165.9, Constants.Elevator.elvBottomPosition));
-    manipulatorXbox.rightTrigger(0.5).onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
+    //pass far = right trigger
+    //manipulatorXbox.rightTrigger(0.5).onTrue(new PrimeShootCMD(
+    //  tilter, shooter, elevator, 1.0, 165.9, Constants.Elevator.elvBottomPosition));
+    //manipulatorXbox.rightTrigger(0.5).onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
     //pass high
-    manipulatorXbox.povRight().onTrue(new PrimeShootCMD(
-      tilter, shooter, elevator, .62, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
-    manipulatorXbox.povRight().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
+    //manipulatorXbox.povRight().onTrue(new PrimeShootCMD(
+    //  tilter, shooter, elevator, .62, Constants.Tilter.shootFromSpeaker, Constants.Elevator.elvBottomPosition));
+    //manipulatorXbox.povRight().onFalse(new ShootThenReturnToNormal(intake, tilter, shooter, elevator));
 
     //pass low
     manipulatorXbox.povLeft().onTrue(new PrimeShootCMD(
@@ -149,12 +148,18 @@ public class RobotContainer
     manipulatorXbox.x().onTrue(new ReturnToNormal(intake, elevator, tilter, shooter));
     manipulatorXbox.x().onTrue(new CancelCMD(intakeNoteCMD));
     
-    if(manipulatorXbox.getHID().getBButton())
+
+    // Autotarget = right bumper
+    manipulatorXbox.rightBumper().whileTrue(new Autotarget(drivebase, tilter, driverXbox, shooter));
+    // if(manipulatorXbox.getHID().getRightBumper()){
+    //   manipulatorXbox.y().whileTrue(new PrimeShootCMD(tilter, shooter, elevator, Constants.Shooter.fastShotSpeed, null, Constants.Elevator.elvBottomPosition));
+    //   manipulatorXbox.y().onFalse(new ShootThenReturnToNormal(intake, null, shooter, elevator));
+    // }
 
     //Jog commands
-    manipulatorXbox.rightBumper().whileTrue(new JogIntake(intake, false));
+    //manipulatorXbox.rightBumper().whileTrue(new JogIntake(intake, false));
      //manipulatorXbox.rightTrigger(.5).onTrue(new JogIntake(intake, true));
-     manipulatorXbox.leftBumper().onTrue(new JogShooter(shooter, false));
+    //manipulatorXbox.leftBumper().onTrue(new JogShooter(shooter, false));
      //manipulatorXbox.leftTrigger(.5).onTrue(new JogShooter(shooter, true)); 
    
     // manipulatorXbox.start().onTrue(new ElevatorGoPosition(elevator, Constants.Elevator.elvAmpPosition, tilter));

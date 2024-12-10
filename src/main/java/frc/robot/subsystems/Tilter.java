@@ -66,7 +66,23 @@ public class Tilter extends SubsystemBase
 
   public void GoToPosition(double position)
   {
-    newTargetPosition = position;
+    if(position < frc.robot.Constants.Tilter.MaxLow)
+    {
+      newTargetPosition = frc.robot.Constants.Tilter.MaxLow;
+    }
+    else if(position > frc.robot.Constants.Tilter.MaxHigh)
+    {
+      newTargetPosition = frc.robot.Constants.Tilter.MaxHigh;
+    }
+    else
+    { 
+      newTargetPosition = position;
+    }
+  }
+
+  public void GoToAngle(double angle)
+  {
+    newTargetPosition = Constants.Tilter.zeroDegrees + 150;
   }
 
   public boolean atSetpoint() {

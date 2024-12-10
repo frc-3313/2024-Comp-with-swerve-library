@@ -18,6 +18,7 @@ public class SorceIntakeCMD extends Command {
   public Tilter tilter;
   public Shooter shooter;
   public Timer timer;
+  public boolean timerStarted;
   /** Creates a new AmpScoreCMD. */
   public SorceIntakeCMD(Intake m_Intake, Elevator m_Elevator, Tilter m_Tilter, Shooter m_Shooter){
     intake = m_Intake;
@@ -32,6 +33,8 @@ public class SorceIntakeCMD extends Command {
   @Override
   public void initialize() 
   {
+    timer = new Timer();
+    timerStarted = false;
   // tilter.GoToPosition(Constants.Tilter.ampPosition); 
   // shooter.StartShooter();
     if (!shooter.hasNote()) 
@@ -46,26 +49,51 @@ public class SorceIntakeCMD extends Command {
   @Override
   public void execute() 
   {
-
+    if(shooter.noteToClose())
+    {
+      if(!timerStarted)
+      {
+        timer.start();
+        elevator.GoToHeight(Constants.Elevator.elvBottomPosition);   
+        tilter.GoToPosition(Constants.Tilter.stowPosition); 
+        shooter.StopShooter(); 
+      }
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) 
   {
-   elevator.GoToHeight(Constants.Elevator.elvBottomPosition);   
-   tilter.GoToPosition(Constants.Tilter.stowPosition); 
-   shooter.StopAllMotors(); 
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() 
   {
-    if (shooter.noteToClose()) 
+
+    if(shooter.noteToClose() && timer.hasElapsed(.2))
     {
-      return true; 
+      if(shooter.noteToClose())
+      {
+        shooter.MoveFeederDistance(Constants.Shooter.FeederBackDistance);
+      } 
+      if(timer.hasElapsed(.4))
+        return true;
+      else
+        return false;
     }
-    return false;
+    else
+    {
+      if(timer.hasElapsed(.4))
+      {  
+        return false;
+      }
+      else
+      {
+        return true;
+      }
+    }
   }
 }

@@ -11,8 +11,8 @@
   "autoFolders": [
     "Amp",
     "Middle",
-    "Testing",
-    "Pillar"
+    "Pillar",
+    "Testing"
   ],
   "defaultMaxVel": 6.0,
   "defaultMaxAccel": 1.4,

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.io.File;
 import java.io.IOException;
+
 import swervelib.parser.SwerveParser;
 
 /**
@@ -70,7 +71,9 @@ public class Robot extends TimedRobot
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     SmartDashboard.putData(CommandScheduler.getInstance());
+    
   }
+
 
   /**
    * This function is called once each time the robot enters Disabled mode.
@@ -102,8 +105,6 @@ public class Robot extends TimedRobot
     m_robotContainer.setMotorBrake(true);
     m_robotContainer.drivebase.zeroGyro();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    m_robotContainer.drivebase.setcossine(true);
-    m_robotContainer.drivebase.setHeadingCorrection(true);
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null)
@@ -133,8 +134,7 @@ public class Robot extends TimedRobot
     }
     m_robotContainer.setDriveMode();
     m_robotContainer.setMotorBrake(true);
-    m_robotContainer.drivebase.setcossine(false);
-    m_robotContainer.drivebase.setHeadingCorrection(false);
+
   }
 
   /**

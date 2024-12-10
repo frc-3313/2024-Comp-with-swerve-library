@@ -11,8 +11,7 @@ import frc.robot.Constants;
 import frc.robot.helpers.LimelightHelpers;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
-
-public class aimCommand extends Command{
+public class ObjectaimCommand extends Command{
   /** Creates a new aimCommand. */
   
   // private final NetworkTable limelightTable;
@@ -21,11 +20,11 @@ public class aimCommand extends Command{
   private final double kP = 0.1; // Proportional gain
   private final double kI = 0.0; // Integral gain
   private final double kD = 0.0; // Derivative gain
-  
-  public aimCommand(SwerveSubsystem drive)
+    
+  public ObjectaimCommand(SwerveSubsystem drive)
   {
-      this.driveSubsystem = drive;
-      this.steeringPID = new PIDController(kP, kI, kD);
+    this.driveSubsystem = drive;
+    this.steeringPID = new PIDController(kP, kI, kD);
   }
 
   // Called when the command is initially scheduled.
@@ -36,7 +35,7 @@ public class aimCommand extends Command{
   @Override
   public void execute() 
   {
-    // Get the data from the Limelight
+     // Get the data from the Limelight
     double tx = LimelightHelpers.getTX(Constants.Limelight.FRONT); // Horizontal offset
     boolean targetVisible = LimelightHelpers.getTV(Constants.Limelight.FRONT);// Target visibility
     Translation2d translation = new Translation2d();  // Adjust as necessary
@@ -47,7 +46,7 @@ public class aimCommand extends Command{
 
       // Convert steering adjustment to swerve drive inputs           
       double rotation = MathUtil.clamp(steeringAdjust, -1.0, 1.0); // Ensure rotation speed is within limits
-        
+      
       // Drive the swerve robot
       driveSubsystem.drive(translation, rotation, false);
     } 
@@ -57,7 +56,6 @@ public class aimCommand extends Command{
       driveSubsystem.drive(translation, 0, false);
     }
   }
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
